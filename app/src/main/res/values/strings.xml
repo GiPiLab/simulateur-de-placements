@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Simulateur de placements</string>
+    <string name="labelCapital">Capital :</string>
+    <string name="labelTaux">Taux (en %) :</string>
+    <string name="buttonCalculer">Calculer</string>
+    <string name="labelVariation">Variation (versement ou retrait) :</string>
+    <string name="eurosPar">€ par</string>
+    <string name="saisissezLeCapital">Saisissez le capital</string>
+    <string name="saisissezLeTaux">Saisissez le taux</string>
+    <string name="saisissezLaVariationPeriodique">Saisissez la variation périodique (retrait ou versement)</string>
+    <string name="capitalDoitEtreInferieurA">le capital doit être inférieur ou égale à %1s</string>
+    <string name="tauxDoitEtreInferieurA">Le taux doit être inférieur ou égal à %1s</string>
+    <string name="capitalDoitEtrePositif">Le capital doit être positif</string>
+    <string name="tauxDoitEtrePositifOuNul">Le taux doit être positif ou nul</string>
+    <string name="dureeDoitEtrePositive">La durée doit être positive</string>
+    <string name="dureeDoitEtreInferieureA">La durée doit être inférieure ou égale à %1d</string>
+    <string name="variationDoitEtreInferieureAuCapital">La variation doit être inférieure au capital</string>
+    <string name="mensualite">"Mensualité %1$d - %2$s"</string>
+    <string name="retraitDe"><![CDATA["<i>retrait de %1s</i>"]]></string>
+    <string name="versementDe"><![CDATA["<i>versement de %1s</i>"]]></string>
+    <string name="capitalPlace"><![CDATA["capital placé : %1s"]]></string>
+    <string name="interets"><![CDATA["intérêts : %1s"]]></string>
+    <string name="interetsTotaux"><![CDATA["intérêts totaux : %1s"]]></string>
+    <string name="valeurAcquise"><![CDATA["<b>valeur acquise : %1s"]]></string>
+    <string name="anneeIeme"><![CDATA["<b>Année %1$d</b>"]]></string>
+    <string name="capitalPlaceDebutAnnee">Capital placé en début d\'année = %1s</string>
+    <string name="capitalPlaceFinAnnee">Capital placé en fin d\'année = %1s</string>
+    <string name="valeurAcquiseFinAnnee">Valeur acquise en fin d\'année = %1s</string>
+    <string name="interetsObtenusSurAnnee">Intérêts obtenus sur l\'année = %1s</string>
+    <string name="dureeXmois">"Durée : %1d mois"</string>
+    <string name="dateDebutPlacement">Date de début du placement</string>
+    <string name="dateFinPlacement">Date de fin du placement</string>
+    <string name="editCapitalHint"><i>le capital placé</i></string>
+    <string name="editTauxHint"><i>le taux annuel en %</i></string>
+    <string name="editVariationHint"><i><![CDATA["somme versée (>0) ou retirée (<0)"]]></i></string>
+    <string name="labelSectionDureePlacement">Durée du placement :</string>
+    <string name="switchChoisirDateON">Régler date de fin</string>
+    <string name="switchChoisirDateOFF">Régler date de début</string>
+
+    <string-array name="periodiciteVariation">
+        <item>mois</item>
+        <item>trimestre</item>
+    </string-array>
+
+</resources>
