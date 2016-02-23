@@ -9,22 +9,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.gipilab.simulateurdeplacements.ResultTableActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <ExpandableListView
         android:id="@+id/listViewResult"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewResult"
-        android:layout_centerHorizontal="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:choiceMode="none"
         android:fastScrollEnabled="true"
         android:numColumns="auto_fit"
         tools:listitem="@android:layout/simple_list_item_1" />
 
-    <TextView
-        android:id="@+id/textViewResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </RelativeLayout>
