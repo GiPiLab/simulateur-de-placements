@@ -2,6 +2,8 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
+import org.gipilab.simulateurdeplacements.R.string;
+
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by thibault on 12/02/16.
  */
-class Annualite {
+final class Annualite {
 
     private int ieme;
     private ArrayList<Mensualite> mensualites;
@@ -21,13 +23,13 @@ class Annualite {
 
 
     Annualite() {
-        setIeme(1);
-        setMensualites(new ArrayList<Mensualite>());
-        setCapitalPlaceDebutAnnee(BigDecimal.ZERO);
-        setCapitalPlaceFinAnnee(BigDecimal.ZERO);
-        setValeurAcquiseFinAnnee(BigDecimal.ZERO);
-        setInteretsFinAnnee(BigDecimal.ZERO);
-        setInteretsTotaux(BigDecimal.ZERO);
+        ieme = 1;
+        mensualites = new ArrayList<Mensualite>(12);
+        capitalPlaceDebutAnnee = BigDecimal.ZERO;
+        capitalPlaceFinAnnee = BigDecimal.ZERO;
+        valeurAcquiseFinAnnee = BigDecimal.ZERO;
+        interetsFinAnnee = BigDecimal.ZERO;
+        interetsTotaux = BigDecimal.ZERO;
     }
 
 
@@ -35,22 +37,22 @@ class Annualite {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         formatter.setMaximumFractionDigits(2);
 
-        String sb = context.getString(R.string.anneeIeme, getIeme());
+        String sb = context.getString(string.anneeIeme, this.ieme);
         sb += "<br>";
-        sb += context.getString(R.string.capitalPlaceDebutAnnee, formatter.format(getCapitalPlaceDebutAnnee()));
+        sb += context.getString(string.capitalPlaceDebutAnnee, formatter.format(this.capitalPlaceDebutAnnee));
         sb += "<br>";
-        sb += context.getString(R.string.capitalPlaceFinAnnee, formatter.format(getCapitalPlaceFinAnnee()));
+        sb += context.getString(string.capitalPlaceFinAnnee, formatter.format(this.capitalPlaceFinAnnee));
         sb += "<br>";
-        sb += context.getString(R.string.valeurAcquiseFinAnnee, formatter.format(getValeurAcquiseFinAnnee()));
+        sb += context.getString(string.valeurAcquiseFinAnnee, formatter.format(this.valeurAcquiseFinAnnee));
         sb += "<br>";
-        sb += context.getString(R.string.interetsObtenusSurAnnee, formatter.format(getInteretsFinAnnee()));
+        sb += context.getString(string.interetsObtenusSurAnnee, formatter.format(this.interetsFinAnnee));
         sb += "<br>";
-        sb += context.getString(R.string.interetsTotaux, formatter.format(getInteretsTotaux()));
+        sb += context.getString(string.interetsTotaux, formatter.format(this.interetsTotaux));
         return sb;
     }
 
     public int getIeme() {
-        return ieme;
+        return this.ieme;
     }
 
     public void setIeme(int ieme) {
@@ -58,7 +60,7 @@ class Annualite {
     }
 
     public ArrayList<Mensualite> getMensualites() {
-        return mensualites;
+        return this.mensualites;
     }
 
     public void setMensualites(ArrayList<Mensualite> mensualites) {
@@ -66,7 +68,7 @@ class Annualite {
     }
 
     public BigDecimal getCapitalPlaceDebutAnnee() {
-        return capitalPlaceDebutAnnee;
+        return this.capitalPlaceDebutAnnee;
     }
 
     public void setCapitalPlaceDebutAnnee(BigDecimal capitalPlaceDebutAnnee) {
@@ -74,7 +76,7 @@ class Annualite {
     }
 
     public BigDecimal getCapitalPlaceFinAnnee() {
-        return capitalPlaceFinAnnee;
+        return this.capitalPlaceFinAnnee;
     }
 
     public void setCapitalPlaceFinAnnee(BigDecimal capitalPlaceFinAnnee) {
@@ -82,7 +84,7 @@ class Annualite {
     }
 
     public BigDecimal getValeurAcquiseFinAnnee() {
-        return valeurAcquiseFinAnnee;
+        return this.valeurAcquiseFinAnnee;
     }
 
     public void setValeurAcquiseFinAnnee(BigDecimal valeurAcquiseFinAnnee) {
@@ -90,7 +92,7 @@ class Annualite {
     }
 
     public BigDecimal getInteretsFinAnnee() {
-        return interetsFinAnnee;
+        return this.interetsFinAnnee;
     }
 
     public void setInteretsFinAnnee(BigDecimal interetsFinAnnee) {
@@ -98,7 +100,7 @@ class Annualite {
     }
 
     public BigDecimal getInteretsTotaux() {
-        return interetsTotaux;
+        return this.interetsTotaux;
     }
 
     public void setInteretsTotaux(BigDecimal interetsTotaux) {

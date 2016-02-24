@@ -16,7 +16,7 @@ class Placement implements Serializable {
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
     public static final int MAXDUREE = 1000;
-    public static final BigDecimal MAXVARIATION = MAXCAPITAL;
+    public static final BigDecimal MAXVARIATION = Placement.MAXCAPITAL;
 
     private BigDecimal tauxAnnuel = BigDecimal.ZERO;
     private BigDecimal capitalInitial = BigDecimal.ZERO;
@@ -24,7 +24,7 @@ class Placement implements Serializable {
     private BigDecimal variation = BigDecimal.ZERO;
     private Calendar dateDebut = Calendar.getInstance();
 
-    private int duree = 0;
+    private int duree;
     private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
 
 
@@ -74,37 +74,37 @@ class Placement implements Serializable {
 
         Calendar cal;
 
-        if (getDateDebut() == null)
+        if (this.getDateDebut() == null)
             cal = Calendar.getInstance();
-        else cal = getDateDebut();
+        else cal = this.getDateDebut();
 
-        BigDecimal tauxMensuel = getTauxAnnuel().divide(BigDecimal.valueOf(12), MathContext.DECIMAL128);
-        BigDecimal capitalPlace = getCapitalInitial();
+        BigDecimal tauxMensuel = this.tauxAnnuel.divide(BigDecimal.valueOf(12), MathContext.DECIMAL128);
+        BigDecimal capitalPlace = this.capitalInitial;
         BigDecimal interetsTotaux = BigDecimal.ZERO;
         BigDecimal interetsDeAnnee = BigDecimal.ZERO;
 
-        for (int i = 1; i <= getDuree(); i++) {
+        for (int i = 1; i <= this.duree; i++) {
 
             Mensualite mensualite = new Mensualite();
             mensualite.setDateMensualite(cal.getTime());
 
-            if (i > 1 && getVariation().compareTo(BigDecimal.ZERO) != 0) {
-                switch (getFrequenceVariation()) {
+            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
+                switch (this.frequenceVariation) {
                     case MENSUELLE:
-                        mensualite.setVariation(getVariation());
-                        capitalPlace = capitalPlace.add(getVariation());
+                        mensualite.setVariation(this.variation);
+                        capitalPlace = capitalPlace.add(this.variation);
                         break;
 
                     case TRIMESTRIELLE:
                         if ((i - 1) % 3 == 0) {
-                            mensualite.setVariation(getVariation());
-                            capitalPlace = capitalPlace.add(getVariation());
+                            mensualite.setVariation(this.variation);
+                            capitalPlace = capitalPlace.add(this.variation);
                         }
                         break;
                 }
             }
             mensualite.setIeme(i);
-            mensualite.setCapitalInitial(getCapitalInitial());
+            mensualite.setCapitalInitial(this.capitalInitial);
             mensualite.setCapitalCourant(capitalPlace);
             mensualite.setInteretsObtenus(capitalPlace.multiply(tauxMensuel, MathContext.DECIMAL128));
             mensualite.setInteretsTotaux(interetsTotaux.add(mensualite.getInteretsObtenus()));
@@ -130,32 +130,44 @@ class Placement implements Serializable {
     }
 
     BigDecimal getTauxAnnuel() {
-        return tauxAnnuel;
+        return this.tauxAnnuel;
     }
 
-    void setTauxAnnuel(BigDecimal tauxAnnuel) throws InputMismatchException {
-        if (tauxAnnuel.compareTo(BigDecimal.ZERO) < 0 || tauxAnnuel.compareTo(MAXTAUX) > 0) {
+    /**
+     * @param tauxAnnuel
+     * @throws InputMismatchException
+     */
+    void setTauxAnnuel(BigDecimal tauxAnnuel) {
+        if (tauxAnnuel.compareTo(BigDecimal.ZERO) < 0 || tauxAnnuel.compareTo(Placement.MAXTAUX) > 0) {
             throw new InputMismatchException("taux hors bornes");
         }
         this.tauxAnnuel = tauxAnnuel;
     }
 
     BigDecimal getCapitalInitial() {
-        return capitalInitial;
+        return this.capitalInitial;
     }
 
-    void setCapitalInitial(BigDecimal capitalInitial) throws InputMismatchException {
-        if (capitalInitial.compareTo(BigDecimal.ZERO) <= 0 || capitalInitial.compareTo(MAXCAPITAL) > 0) {
+    /**
+     * @param capitalInitial
+     * @throws InputMismatchException
+     */
+    void setCapitalInitial(BigDecimal capitalInitial) {
+        if (capitalInitial.compareTo(BigDecimal.ZERO) <= 0 || capitalInitial.compareTo(Placement.MAXCAPITAL) > 0) {
             throw new InputMismatchException("capital hors bornes");
         }
         this.capitalInitial = capitalInitial;
     }
 
     BigDecimal getInteretsObtenus() {
-        return interetsObtenus;
+        return this.interetsObtenus;
     }
 
-    void setInteretsObtenus(BigDecimal interetsObtenus) throws InputMismatchException {
+    /**
+     * @param interetsObtenus
+     * @throws InputMismatchException
+     */
+    void setInteretsObtenus(BigDecimal interetsObtenus) {
         if (interetsObtenus.compareTo(BigDecimal.ZERO) < 0) {
             throw new InputMismatchException("interets negatifs");
         }
@@ -163,18 +175,22 @@ class Placement implements Serializable {
     }
 
     BigDecimal getVariation() {
-        return variation;
+        return this.variation;
     }
 
-    void setVariation(BigDecimal variation) throws InputMismatchException {
-        if (variation.abs().compareTo(MAXVARIATION) > 0) {
+    /**
+     * @param variation
+     * @throws InputMismatchException
+     */
+    void setVariation(BigDecimal variation) {
+        if (variation.abs().compareTo(Placement.MAXVARIATION) > 0) {
             throw new InputMismatchException("variation hors bornes");
         }
         this.variation = variation;
     }
 
     Calendar getDateDebut() {
-        return dateDebut;
+        return (Calendar) this.dateDebut.clone();
     }
 
     void setDateDebut(Calendar dateDebut) {
@@ -182,18 +198,22 @@ class Placement implements Serializable {
     }
 
     int getDuree() {
-        return duree;
+        return this.duree;
     }
 
-    void setDuree(int duree) throws InputMismatchException {
-        if (duree <= 0 || duree > MAXDUREE) {
+    /**
+     * @param duree
+     * @throws InputMismatchException
+     */
+    void setDuree(int duree) {
+        if (duree <= 0 || duree > Placement.MAXDUREE) {
             throw new InputMismatchException("durée hors bornes");
         }
         this.duree = duree;
     }
 
     enumFrequenceVariation getFrequenceVariation() {
-        return frequenceVariation;
+        return this.frequenceVariation;
     }
 
     void setFrequenceVariation(enumFrequenceVariation frequenceVariation) {

@@ -2,6 +2,8 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
+import org.gipilab.simulateurdeplacements.R.string;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -23,14 +25,14 @@ class Mensualite {
 
 
     Mensualite() {
-        this.setIeme(0);
-        this.setCapitalInitial(BigDecimal.ZERO);
-        this.setCapitalCourant(BigDecimal.ZERO);
-        this.setInteretsObtenus(BigDecimal.ZERO);
-        this.setInteretsTotaux(BigDecimal.ZERO);
-        this.setValeurAcquise(BigDecimal.ZERO);
-        this.setVariation(BigDecimal.ZERO);
-        this.setDateMensualite(new Date());
+        ieme = 0;
+        capitalInitial = BigDecimal.ZERO;
+        capitalCourant = BigDecimal.ZERO;
+        interetsObtenus = BigDecimal.ZERO;
+        interetsTotaux = BigDecimal.ZERO;
+        valeurAcquise = BigDecimal.ZERO;
+        variation = BigDecimal.ZERO;
+        dateMensualite = new Date();
     }
 
     public String toLocalizedString(Context context) {
@@ -38,33 +40,33 @@ class Mensualite {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         formatter.setMaximumFractionDigits(2);
-        String output = context.getString(R.string.mensualite, getIeme(), dt.format(getDateMensualite()));
+        String output = context.getString(string.mensualite, this.ieme, dt.format(this.getDateMensualite()));
 
         output += "<br>";
 
-        if (this.getVariation().compareTo(BigDecimal.ZERO) < 0) {
-            output += context.getString(R.string.retraitDe, formatter.format(this.getVariation().abs()));
+        if (this.variation.compareTo(BigDecimal.ZERO) < 0) {
+            output += context.getString(string.retraitDe, formatter.format(this.variation.abs()));
             output += "<br>";
-        } else if (this.getVariation().compareTo(BigDecimal.ZERO) > 0) {
-            output += context.getString(R.string.versementDe, formatter.format(this.getVariation().abs()));
+        } else if (this.variation.compareTo(BigDecimal.ZERO) > 0) {
+            output += context.getString(string.versementDe, formatter.format(this.variation.abs()));
             output += "<br>";
         }
 
-        output += context.getString(R.string.capitalPlace, formatter.format(this.getCapitalCourant()));
+        output += context.getString(string.capitalPlace, formatter.format(this.capitalCourant));
         output += "<br>";
 
-        output += context.getString(R.string.interets, formatter.format(this.getInteretsObtenus()));
+        output += context.getString(string.interets, formatter.format(this.interetsObtenus));
         output += "<br>";
 
-        output += context.getString(R.string.interetsTotaux, formatter.format(this.getInteretsTotaux()));
+        output += context.getString(string.interetsTotaux, formatter.format(this.interetsTotaux));
         output += "<br>";
 
-        output += context.getString(R.string.valeurAcquise, formatter.format(this.getValeurAcquise()));
+        output += context.getString(string.valeurAcquise, formatter.format(this.valeurAcquise));
         return output;
     }
 
     public int getIeme() {
-        return ieme;
+        return this.ieme;
     }
 
     public void setIeme(int ieme) {
@@ -72,7 +74,7 @@ class Mensualite {
     }
 
     public Date getDateMensualite() {
-        return dateMensualite;
+        return (Date) this.dateMensualite.clone();
     }
 
     public void setDateMensualite(Date dateMensualite) {
@@ -80,7 +82,7 @@ class Mensualite {
     }
 
     public BigDecimal getCapitalInitial() {
-        return capitalInitial;
+        return this.capitalInitial;
     }
 
     public void setCapitalInitial(BigDecimal capitalInitial) {
@@ -88,7 +90,7 @@ class Mensualite {
     }
 
     public BigDecimal getCapitalCourant() {
-        return capitalCourant;
+        return this.capitalCourant;
     }
 
     public void setCapitalCourant(BigDecimal capitalCourant) {
@@ -96,7 +98,7 @@ class Mensualite {
     }
 
     public BigDecimal getInteretsObtenus() {
-        return interetsObtenus;
+        return this.interetsObtenus;
     }
 
     public void setInteretsObtenus(BigDecimal interetsObtenus) {
@@ -104,7 +106,7 @@ class Mensualite {
     }
 
     public BigDecimal getInteretsTotaux() {
-        return interetsTotaux;
+        return this.interetsTotaux;
     }
 
     public void setInteretsTotaux(BigDecimal interetsTotaux) {
@@ -112,7 +114,7 @@ class Mensualite {
     }
 
     public BigDecimal getValeurAcquise() {
-        return valeurAcquise;
+        return this.valeurAcquise;
     }
 
     public void setValeurAcquise(BigDecimal valeurAcquise) {
@@ -120,7 +122,7 @@ class Mensualite {
     }
 
     public BigDecimal getVariation() {
-        return variation;
+        return this.variation;
     }
 
     public void setVariation(BigDecimal variation) {

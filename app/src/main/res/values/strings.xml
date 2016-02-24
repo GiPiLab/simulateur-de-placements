@@ -2,7 +2,7 @@
     <string name="app_name">Simulateur de placements</string>
     <string name="labelCapital">Capital :</string>
     <string name="labelTaux">Taux (en %) :</string>
-    <string name="buttonCalculer">Calculer</string>
+    <string name="buttonCalculer">CALCULER</string>
     <string name="labelVariation">Variation (versement ou retrait) :</string>
     <string name="eurosPar">€ par</string>
     <string name="saisissezLeCapital">Saisissez le capital</string>
@@ -27,15 +27,14 @@
     <string name="capitalPlaceFinAnnee">Capital placé en fin d\'année = %1s</string>
     <string name="valeurAcquiseFinAnnee">Valeur acquise en fin d\'année = %1s</string>
     <string name="interetsObtenusSurAnnee">Intérêts obtenus sur l\'année = %1s</string>
-    <string name="dureeXmois">"Durée : %1d mois"</string>
+    <string name="dureeXmois">"Durée du placement : %1d mois"</string>
     <string name="dateDebutPlacement">Date de début du placement</string>
     <string name="dateFinPlacement">Date de fin du placement</string>
     <string name="editCapitalHint"><i>le capital placé</i></string>
     <string name="editTauxHint"><i>le taux annuel en %</i></string>
     <string name="editVariationHint"><i><![CDATA["somme versée (>0) ou retirée (<0)"]]></i></string>
-    <string name="labelSectionDureePlacement">Durée du placement :</string>
-    <string name="switchChoisirDateON">Régler date de fin</string>
-    <string name="switchChoisirDateOFF">Régler date de début</string>
+    <string name="toggleChoisirDateFin">RÉGLER LA DATE DE FIN DU PLACEMENT</string>
+
 
     <string-array name="periodiciteVariation">
         <item>mois</item>

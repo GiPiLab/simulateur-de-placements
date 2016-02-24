@@ -64,23 +64,22 @@
             android:id="@+id/buttonCalculer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignWithParentIfMissing="false"
             android:layout_below="@+id/layoutVariation"
             android:layout_centerHorizontal="true"
             android:onClick="buttonCalculerClick"
             android:text="@string/buttonCalculer" />
 
+
         <GridLayout
             android:id="@+id/gridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutTaux"
-            android:layout_marginTop="10dp"
-            android:columnCount="2"
-            android:rowCount="7">
+            android:columnCount="3"
+            android:rowCount="4">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/labelDureeDuPlacementSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,28 +87,38 @@
                 android:layout_columnSpan="2"
                 android:layout_row="0"
                 android:text="@string/labelSectionDureePlacement"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
             <DatePicker
                 android:id="@+id/datePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_marginBottom="-30dp"
-                android:layout_marginTop="-30dp"
-                android:layout_row="1"
-                android:layout_rowSpan="6"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:layout_rowSpan="4"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 android:spinnersShown="true" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonChoisirDateFin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_gravity="center"
+                android:layout_row="3"
+                android:checked="true"
+                android:textOff="@string/toggleChoisirDateFin"
+                android:textOn="@string/toggleChoisirDateFin" />
+
 
             <TextView
                 android:id="@+id/labelDateDebut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="end"
-                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_row="1"
                 android:text="@string/dateDebutPlacement" />
 
             <TextView
@@ -117,8 +126,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_gravity="end"
-                android:layout_row="3"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="1"
                 android:text="01/01/2000"
                 android:textStyle="bold" />
 
@@ -126,39 +135,32 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="end"
-                android:layout_row="4"
+                android:layout_column="0"
+                android:layout_row="2"
                 android:text="@string/dateFinPlacement" />
+
 
             <TextView
                 android:id="@+id/labelSelectedDateFin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_gravity="end"
-                android:layout_row="5"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="2"
                 android:text="01/01/2001"
                 android:textStyle="bold" />
 
-            <Switch
-                android:id="@+id/switchDateDeFin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="end"
-                android:layout_row="1"
-                android:checked="true"
-                android:textOff="@string/switchChoisirDateOFF"
-                android:textOn="@string/switchChoisirDateON" />
 
             <TextView
                 android:id="@+id/labelDuree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="center"
-                android:layout_row="6"
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_row="0"
                 android:text="duree"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 

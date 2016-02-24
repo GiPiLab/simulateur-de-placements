@@ -64,7 +64,6 @@
             android:id="@+id/buttonCalculer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignWithParentIfMissing="false"
@@ -77,34 +76,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutTaux"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/labelDureeDuPlacementSection"
+                android:id="@+id/labelDuree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/labelSectionDureePlacement"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <DatePicker
-                android:id="@+id/datePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:spinnersShown="true" />
-
-            <Switch
-                android:id="@+id/switchDateDeFin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:checked="true"
-                android:textOff="@string/switchChoisirDateOFF"
-                android:textOn="@string/switchChoisirDateON" />
-
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="duree"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -147,15 +129,33 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/labelDuree"
+            <ToggleButton
+                android:id="@+id/toggleButtonChoisirDateFin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:text="duree"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:checked="true"
+                android:textOff="@string/toggleChoisirDateFin"
+                android:textOn="@string/toggleChoisirDateFin" />
+
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:spinnersShown="true" />
+
+
+            <!--<TextView
+                android:id="@+id/labelDureeDuPlacementSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelSectionDureePlacement"
+                android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
 
         </LinearLayout>
 

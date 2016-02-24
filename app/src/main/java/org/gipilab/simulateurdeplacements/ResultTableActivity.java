@@ -7,11 +7,15 @@ import android.widget.ExpandableListView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.components.XAxis.XAxisPosition;
+import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
+import org.gipilab.simulateurdeplacements.R.id;
+import org.gipilab.simulateurdeplacements.R.layout;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ public class ResultTableActivity extends AppCompatActivity {
 
 
     private void displayChart(ArrayList<Mensualite> mens) {
-        LineChart chart = (LineChart) findViewById(R.id.lineChart);
+        LineChart chart = (LineChart) this.findViewById(id.lineChart);
 
         chart.setTouchEnabled(true);
         chart.setScaleEnabled(true);
@@ -32,30 +36,29 @@ public class ResultTableActivity extends AppCompatActivity {
         chart.getAxisRight().setEnabled(false);
 
         xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxis.setPosition(XAxisPosition.BOTTOM);
 
 
         ArrayList<Entry> valuesInteretsObtenus = new ArrayList<Entry>();
         ArrayList<Entry> valuesCapitalPlace = new ArrayList<Entry>();
         ArrayList<String> xLabels = new ArrayList<String>();
 
-        Entry entry;
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
 
         for (Mensualite aMens : mens) {
             xLabels.add(dateFormat.format(aMens.getDateMensualite()));
-            entry = new Entry(aMens.getInteretsObtenus().floatValue(), aMens.getIeme());
+            Entry entry = new Entry(aMens.getInteretsObtenus().floatValue(), aMens.getIeme());
             valuesInteretsObtenus.add(entry);
             entry = new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme());
             valuesCapitalPlace.add(entry);
         }
 
         LineDataSet dataSetInteretsObtenus = new LineDataSet(valuesInteretsObtenus, "Intérêts obtenus");
-        dataSetInteretsObtenus.setAxisDependency(YAxis.AxisDependency.LEFT);
+        dataSetInteretsObtenus.setAxisDependency(AxisDependency.LEFT);
         dataSetInteretsObtenus.setDrawValues(false);
 
         LineDataSet dataSetCapitalCourant = new LineDataSet(valuesCapitalPlace, "Capital placé");
-        dataSetCapitalCourant.setAxisDependency(YAxis.AxisDependency.LEFT);
+        dataSetCapitalCourant.setAxisDependency(AxisDependency.LEFT);
         dataSetCapitalCourant.setDrawValues(false);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -70,7 +73,7 @@ public class ResultTableActivity extends AppCompatActivity {
 
     private void displayTable(ArrayList<Mensualite> mens) {
         ArrayList<Annualite> annualites = Placement.mensualitesToAnnualites(mens);
-        ExpandableListView listv = (ExpandableListView) findViewById(R.id.listViewResult);
+        ExpandableListView listv = (ExpandableListView) this.findViewById(id.listViewResult);
         PlacementExpandableListAdapter adapter = new PlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
     }
@@ -81,12 +84,12 @@ public class ResultTableActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result_table);
+        this.setContentView(layout.activity_result_table);
 
-        Intent intent = getIntent();
+        Intent intent = this.getIntent();
         Placement p = (Placement) intent.getSerializableExtra("placement");
         ArrayList<Mensualite> mens = p.tableauPlacement();
-        displayTable(mens);
-        displayChart(mens);
+        this.displayTable(mens);
+        this.displayChart(mens);
     }
 }
