@@ -28,7 +28,7 @@ class Placement implements Serializable {
     private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
 
 
-    public static ArrayList<Annualite> mensualitesToAnnualites(ArrayList<Mensualite> lesMensualites) {
+    static ArrayList<Annualite> mensualitesToAnnualites(ArrayList<Mensualite> lesMensualites) {
         ArrayList<Annualite> lesAnnualites = new ArrayList<>();
 
         if (lesMensualites.isEmpty())
@@ -69,7 +69,7 @@ class Placement implements Serializable {
     }
 
 
-    public ArrayList<Mensualite> tableauPlacement() {
+    ArrayList<Mensualite> tableauPlacement() {
         ArrayList<Mensualite> lesMensualites = new ArrayList<>();
 
         Calendar cal;
@@ -129,74 +129,74 @@ class Placement implements Serializable {
         return lesMensualites;
     }
 
-    public BigDecimal getTauxAnnuel() {
+    BigDecimal getTauxAnnuel() {
         return tauxAnnuel;
     }
 
-    public void setTauxAnnuel(BigDecimal tauxAnnuel) throws InputMismatchException {
+    void setTauxAnnuel(BigDecimal tauxAnnuel) throws InputMismatchException {
         if (tauxAnnuel.compareTo(BigDecimal.ZERO) < 0 || tauxAnnuel.compareTo(MAXTAUX) > 0) {
             throw new InputMismatchException("taux hors bornes");
         }
         this.tauxAnnuel = tauxAnnuel;
     }
 
-    public BigDecimal getCapitalInitial() {
+    BigDecimal getCapitalInitial() {
         return capitalInitial;
     }
 
-    public void setCapitalInitial(BigDecimal capitalInitial) throws InputMismatchException {
+    void setCapitalInitial(BigDecimal capitalInitial) throws InputMismatchException {
         if (capitalInitial.compareTo(BigDecimal.ZERO) <= 0 || capitalInitial.compareTo(MAXCAPITAL) > 0) {
             throw new InputMismatchException("capital hors bornes");
         }
         this.capitalInitial = capitalInitial;
     }
 
-    public BigDecimal getInteretsObtenus() {
+    BigDecimal getInteretsObtenus() {
         return interetsObtenus;
     }
 
-    public void setInteretsObtenus(BigDecimal interetsObtenus) throws InputMismatchException {
+    void setInteretsObtenus(BigDecimal interetsObtenus) throws InputMismatchException {
         if (interetsObtenus.compareTo(BigDecimal.ZERO) < 0) {
             throw new InputMismatchException("interets negatifs");
         }
         this.interetsObtenus = interetsObtenus;
     }
 
-    public BigDecimal getVariation() {
+    BigDecimal getVariation() {
         return variation;
     }
 
-    public void setVariation(BigDecimal variation) throws InputMismatchException {
+    void setVariation(BigDecimal variation) throws InputMismatchException {
         if (variation.abs().compareTo(MAXVARIATION) > 0) {
             throw new InputMismatchException("variation hors bornes");
         }
         this.variation = variation;
     }
 
-    public Calendar getDateDebut() {
+    Calendar getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Calendar dateDebut) {
+    void setDateDebut(Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public int getDuree() {
+    int getDuree() {
         return duree;
     }
 
-    public void setDuree(int duree) throws InputMismatchException {
+    void setDuree(int duree) throws InputMismatchException {
         if (duree <= 0 || duree > MAXDUREE) {
             throw new InputMismatchException("durée hors bornes");
         }
         this.duree = duree;
     }
 
-    public enumFrequenceVariation getFrequenceVariation() {
+    enumFrequenceVariation getFrequenceVariation() {
         return frequenceVariation;
     }
 
-    public void setFrequenceVariation(enumFrequenceVariation frequenceVariation) {
+    void setFrequenceVariation(enumFrequenceVariation frequenceVariation) {
         this.frequenceVariation = frequenceVariation;
     }
 }

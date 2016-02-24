@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements DatePicker.OnDate
         initDateSelectionSystem();
     }
 
-    public boolean validateInputs() {
+    private boolean validateInputs() {
         EditText editCapital = (EditText) findViewById(R.id.editCapital);
         EditText editTaux = (EditText) findViewById(R.id.editTaux);
         EditText editVariation = (EditText) findViewById(R.id.editVariation);
@@ -151,10 +151,7 @@ public class MainActivity extends AppCompatActivity implements DatePicker.OnDate
         Spinner spinnerFrequence = (Spinner) findViewById(R.id.spinnerFrequenceVariation);
         placement.setDuree(calculeDureeEnMois(calendarDebut, calendarFin));
 
-        DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
-        Calendar cal = Calendar.getInstance();
-        cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-        placement.setDateDebut(cal);
+        placement.setDateDebut(calendarDebut);
 
         switch (spinnerFrequence.getSelectedItemPosition()) {
             case 0:

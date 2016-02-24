@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>
