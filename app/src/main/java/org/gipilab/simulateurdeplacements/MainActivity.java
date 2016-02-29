@@ -18,40 +18,48 @@ import android.widget.ToggleButton;
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
+import org.joda.time.LocalDate;
+import org.joda.time.Months;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormat;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.text.DateFormat;
-import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity implements OnDateChangedListener {
 
-    private Calendar calendarDebut, calendarFin;
-    private DateFormat dateFormat;
+    private LocalDate dateDebut, dateFin;
+    private DateTimeFormatter dateFormat;
     private int defaultDureeLabelColor;
 
-    private static final int calculeDureeEnMois(Calendar debut, Calendar fin) {
-        int diffYear = fin.get(Calendar.YEAR) - debut.get(Calendar.YEAR);
-        return diffYear * 12 + fin.get(Calendar.MONTH) - debut.get(Calendar.MONTH);
+    private static int calculeDureeEnMois(LocalDate debut, LocalDate fin) {
 
+        Months m = Months.monthsBetween(debut, fin);
+
+        /*int diffYear = fin.getYear() - debut.getYear();
+        return diffYear * 12 + fin.getMonthOfYear() - debut.getMonthOfYear();*/
+        return m.getMonths();
     }
 
+
     private void initDateSelectionSystem() {
-        this.calendarDebut = Calendar.getInstance();
-        this.calendarFin = Calendar.getInstance();
+        this.dateDebut = new LocalDate(LocalDate.now());
+        this.dateFin = dateDebut.plusYears(1);
 
-        this.calendarFin.set(this.calendarDebut.get(Calendar.YEAR), this.calendarDebut.get(Calendar.MONTH) + 12, this.calendarDebut.get(Calendar.DAY_OF_MONTH));
-
-        this.dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
+        this.dateFormat = DateTimeFormat.longDate();
         final DatePicker dp = (DatePicker) this.findViewById(id.datePicker);
-        dp.init(this.calendarFin.get(Calendar.YEAR), this.calendarFin.get(Calendar.MONTH), this.calendarFin.get(Calendar.DAY_OF_MONTH), this);
+        dp.init(this.dateFin.getYear(), this.dateFin.getMonthOfYear(), this.dateFin.getDayOfMonth(), this);
         TextView tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
-        tv.setText(this.dateFormat.format(this.calendarDebut.getTime()));
+        tv.setText(this.dateFormat.print(this.dateDebut));
         tv = (TextView) this.findViewById(id.labelSelectedDateFin);
-        tv.setText(this.dateFormat.format(this.calendarFin.getTime()));
+        tv.setText(this.dateFormat.print(this.dateFin));
         tv = (TextView) this.findViewById(id.labelDuree);
-        tv.setText(this.getString(string.dureeXmois, MainActivity.calculeDureeEnMois(this.calendarDebut, this.calendarFin)));
+        Period duration = new Period(dateDebut, dateFin);
+
+        tv.setText(this.getString(string.dureeXmois, PeriodFormat.getDefault().print(duration), MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin)));
         this.defaultDureeLabelColor = tv.getCurrentTextColor();
         ToggleButton dateButton = (ToggleButton) this.findViewById(id.toggleButtonChoisirDateFin);
 
@@ -61,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             public void onCheckedChanged(CompoundButton b, boolean isChecked) {
 
                 if (isChecked) {
-                    dp.updateDate(MainActivity.this.calendarFin.get(Calendar.YEAR), MainActivity.this.calendarFin.get(Calendar.MONTH), MainActivity.this.calendarFin.get(Calendar.DAY_OF_MONTH));
+                    dp.updateDate(MainActivity.this.dateFin.getYear(), MainActivity.this.dateFin.getMonthOfYear(), MainActivity.this.dateFin.getDayOfMonth());
                 } else {
-                    dp.updateDate(MainActivity.this.calendarDebut.get(Calendar.YEAR), MainActivity.this.calendarDebut.get(Calendar.MONTH), MainActivity.this.calendarDebut.get(Calendar.DAY_OF_MONTH));
+                    dp.updateDate(MainActivity.this.dateDebut.getYear(), MainActivity.this.dateDebut.getMonthOfYear(), MainActivity.this.dateDebut.getDayOfMonth());
                 }
             }
         });
@@ -120,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return false;
         }
 
-        int duree = MainActivity.calculeDureeEnMois(this.calendarDebut, this.calendarFin);
+        int duree = MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin);
         if (duree > Placement.MAXDUREE) {
             Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA, Placement.MAXDUREE), Toast.LENGTH_SHORT);
             toast.show();
@@ -157,9 +165,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         placement.setVariation(new BigDecimal(((EditText) this.findViewById(id.editVariation)).getText().toString()));
         placement.setTauxAnnuel(new BigDecimal(((EditText) this.findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
         Spinner spinnerFrequence = (Spinner) this.findViewById(id.spinnerFrequenceVariation);
-        placement.setDuree(MainActivity.calculeDureeEnMois(this.calendarDebut, this.calendarFin));
+        placement.setDuree(MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin));
 
-        placement.setDateDebut(this.calendarDebut);
+        placement.setDateDebut(this.dateDebut);
 
         switch (spinnerFrequence.getSelectedItemPosition()) {
             case 0:
@@ -184,22 +192,25 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         ToggleButton toggleDateFin = (ToggleButton) this.findViewById(id.toggleButtonChoisirDateFin);
         if (toggleDateFin.isChecked()) {
             tv = (TextView) this.findViewById(id.labelSelectedDateFin);
-            this.calendarFin.set(year, month, day);
-            tv.setText(this.dateFormat.format(this.calendarFin.getTime()));
+            this.dateFin = new LocalDate(year, month, day);
+            tv.setText(this.dateFormat.print(this.dateFin));
         } else {
             tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
-            this.calendarDebut.set(year, month, day);
-            tv.setText(this.dateFormat.format(this.calendarDebut.getTime()));
+            this.dateDebut = new LocalDate(year, month, day);
+            tv.setText(this.dateFormat.print(this.dateDebut));
         }
 
         TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
-        int duree = MainActivity.calculeDureeEnMois(this.calendarDebut, this.calendarFin);
+        int duree = MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin);
 
         if (duree <= 0 || duree > Placement.MAXDUREE) {
             labelDuree.setTextColor(Color.RED);
         } else {
             labelDuree.setTextColor(this.defaultDureeLabelColor);
         }
-        labelDuree.setText(this.getString(string.dureeXmois, duree));
+
+        Period duration = new Period(dateDebut, dateFin);
+
+        labelDuree.setText(this.getString(string.dureeXmois, PeriodFormat.getDefault().print(duration), duree));
     }
 }

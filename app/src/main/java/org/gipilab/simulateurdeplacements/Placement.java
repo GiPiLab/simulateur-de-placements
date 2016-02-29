@@ -1,11 +1,12 @@
 package org.gipilab.simulateurdeplacements;
 
 
+import org.joda.time.LocalDate;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.InputMismatchException;
 
 /**
@@ -22,7 +23,7 @@ class Placement implements Serializable {
     private BigDecimal capitalInitial = BigDecimal.ZERO;
     private BigDecimal interetsObtenus = BigDecimal.ZERO;
     private BigDecimal variation = BigDecimal.ZERO;
-    private Calendar dateDebut = Calendar.getInstance();
+    private LocalDate dateDebut = LocalDate.now();
 
     private int duree;
     private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
@@ -72,10 +73,11 @@ class Placement implements Serializable {
     ArrayList<Mensualite> tableauPlacement() {
         ArrayList<Mensualite> lesMensualites = new ArrayList<>();
 
-        Calendar cal;
+        LocalDate cal;
+
 
         if (this.getDateDebut() == null)
-            cal = Calendar.getInstance();
+            cal = new LocalDate(LocalDate.now());
         else cal = this.getDateDebut();
 
         BigDecimal tauxMensuel = this.tauxAnnuel.divide(BigDecimal.valueOf(12), MathContext.DECIMAL128);
@@ -86,7 +88,7 @@ class Placement implements Serializable {
         for (int i = 1; i <= this.duree; i++) {
 
             Mensualite mensualite = new Mensualite();
-            mensualite.setDateMensualite(cal.getTime());
+            mensualite.setDateMensualite(cal);
 
             if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
                 switch (this.frequenceVariation) {
@@ -121,7 +123,7 @@ class Placement implements Serializable {
                 lesMensualites.add(mensualite);
             } else break;
 
-            cal.add(Calendar.MONTH, 1);
+            cal = cal.plusMonths(1);
 
         }
         this.setInteretsObtenus(interetsTotaux);
@@ -189,11 +191,11 @@ class Placement implements Serializable {
         this.variation = variation;
     }
 
-    Calendar getDateDebut() {
-        return (Calendar) this.dateDebut.clone();
+    LocalDate getDateDebut() {
+        return this.dateDebut;
     }
 
-    void setDateDebut(Calendar dateDebut) {
+    void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 

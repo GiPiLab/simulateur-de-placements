@@ -3,11 +3,12 @@ package org.gipilab.simulateurdeplacements;
 import android.content.Context;
 
 import org.gipilab.simulateurdeplacements.R.string;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Date;
 
 /**
  * Created by thibault on 12/02/16.
@@ -15,7 +16,7 @@ import java.util.Date;
 class Mensualite {
 
     private int ieme;
-    private Date dateMensualite;
+    private LocalDate dateMensualite;
     private BigDecimal capitalInitial;
     private BigDecimal capitalCourant;
     private BigDecimal interetsObtenus;
@@ -32,15 +33,15 @@ class Mensualite {
         interetsTotaux = BigDecimal.ZERO;
         valeurAcquise = BigDecimal.ZERO;
         variation = BigDecimal.ZERO;
-        dateMensualite = new Date();
+        dateMensualite = new LocalDate();
     }
 
     public String toLocalizedString(Context context) {
-        DateFormat dt = DateFormat.getDateInstance(DateFormat.LONG);
+        DateTimeFormatter dt = DateTimeFormat.longDate();
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         formatter.setMaximumFractionDigits(2);
-        String output = context.getString(string.mensualite, this.ieme, dt.format(this.getDateMensualite()));
+        String output = context.getString(string.mensualite, this.ieme, dt.print(this.getDateMensualite()));
 
         output += "<br>";
 
@@ -73,11 +74,11 @@ class Mensualite {
         this.ieme = ieme;
     }
 
-    public Date getDateMensualite() {
-        return (Date) this.dateMensualite.clone();
+    public LocalDate getDateMensualite() {
+        return this.dateMensualite;
     }
 
-    public void setDateMensualite(Date dateMensualite) {
+    public void setDateMensualite(LocalDate dateMensualite) {
         this.dateMensualite = dateMensualite;
     }
 
