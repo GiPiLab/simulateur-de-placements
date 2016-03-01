@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         return m.getMonths();
     }
 
+    private String formatDuree() {
+        Period duration = new Period(dateDebut, dateFin);
+        return getString(string.dureeXmois, PeriodFormat.wordBased().print(duration), calculeDureeEnMois(this.dateDebut, this.dateFin));
+    }
 
     private void initDateSelectionSystem() {
         this.dateDebut = new LocalDate(LocalDate.now());
@@ -51,15 +55,14 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
         this.dateFormat = DateTimeFormat.longDate();
         final DatePicker dp = (DatePicker) this.findViewById(id.datePicker);
-        dp.init(this.dateFin.getYear(), this.dateFin.getMonthOfYear(), this.dateFin.getDayOfMonth(), this);
+        dp.init(this.dateFin.getYear(), this.dateFin.getMonthOfYear() - 1, this.dateFin.getDayOfMonth(), this);
         TextView tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
         tv.setText(this.dateFormat.print(this.dateDebut));
         tv = (TextView) this.findViewById(id.labelSelectedDateFin);
         tv.setText(this.dateFormat.print(this.dateFin));
         tv = (TextView) this.findViewById(id.labelDuree);
-        Period duration = new Period(dateDebut, dateFin);
 
-        tv.setText(this.getString(string.dureeXmois, PeriodFormat.getDefault().print(duration), MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin)));
+        tv.setText(formatDuree());
         this.defaultDureeLabelColor = tv.getCurrentTextColor();
         ToggleButton dateButton = (ToggleButton) this.findViewById(id.toggleButtonChoisirDateFin);
 
@@ -69,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             public void onCheckedChanged(CompoundButton b, boolean isChecked) {
 
                 if (isChecked) {
-                    dp.updateDate(MainActivity.this.dateFin.getYear(), MainActivity.this.dateFin.getMonthOfYear(), MainActivity.this.dateFin.getDayOfMonth());
+                    dp.updateDate(MainActivity.this.dateFin.getYear(), MainActivity.this.dateFin.getMonthOfYear() - 1, MainActivity.this.dateFin.getDayOfMonth());
                 } else {
-                    dp.updateDate(MainActivity.this.dateDebut.getYear(), MainActivity.this.dateDebut.getMonthOfYear(), MainActivity.this.dateDebut.getDayOfMonth());
+                    dp.updateDate(MainActivity.this.dateDebut.getYear(), MainActivity.this.dateDebut.getMonthOfYear() - 1, MainActivity.this.dateDebut.getDayOfMonth());
                 }
             }
         });
@@ -192,11 +195,11 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         ToggleButton toggleDateFin = (ToggleButton) this.findViewById(id.toggleButtonChoisirDateFin);
         if (toggleDateFin.isChecked()) {
             tv = (TextView) this.findViewById(id.labelSelectedDateFin);
-            this.dateFin = new LocalDate(year, month, day);
+            this.dateFin = new LocalDate(year, month + 1, day);
             tv.setText(this.dateFormat.print(this.dateFin));
         } else {
             tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
-            this.dateDebut = new LocalDate(year, month, day);
+            this.dateDebut = new LocalDate(year, month + 1, day);
             tv.setText(this.dateFormat.print(this.dateDebut));
         }
 
@@ -209,8 +212,6 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             labelDuree.setTextColor(this.defaultDureeLabelColor);
         }
 
-        Period duration = new Period(dateDebut, dateFin);
-
-        labelDuree.setText(this.getString(string.dureeXmois, PeriodFormat.getDefault().print(duration), duree));
+        labelDuree.setText(formatDuree());
     }
 }
