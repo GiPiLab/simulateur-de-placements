@@ -161,7 +161,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_row="0"
-                android:text="duree"
+                android:text="dureeEnMois"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </GridLayout>

@@ -2,6 +2,7 @@ package org.gipilab.simulateurdeplacements;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public class PlacementTest {
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);
         p.setVariation(BigDecimal.valueOf(100));
-        p.setDuree(25);
+        p.setDatesPlacement(new LocalDate(2015, 1, 1), new LocalDate(2017, 2, 1));
 
         ArrayList<Mensualite> tableau = p.tableauPlacement();
         ArrayList<Annualite> annualites = Placement.mensualitesToAnnualites(tableau);
@@ -65,7 +66,7 @@ public class PlacementTest {
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);
         p.setVariation(BigDecimal.valueOf(100));
-        p.setDuree(25);
+        p.setDatesPlacement(new LocalDate(2015, 1, 1), new LocalDate(2017, 2, 1));
 
         ArrayList<Mensualite> tableau = p.tableauPlacement();
 

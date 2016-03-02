@@ -1,7 +1,9 @@
 package org.gipilab.simulateurdeplacements;
 
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.joda.time.Months;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,10 +26,22 @@ class Placement implements Serializable {
     private BigDecimal interetsObtenus = BigDecimal.ZERO;
     private BigDecimal variation = BigDecimal.ZERO;
     private LocalDate dateDebut = LocalDate.now();
+    private LocalDate dateFin = dateDebut.plusYears(1);
 
-    private int duree;
+    private int dureeEnMois = 12;
     private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
 
+    static int calculeDureeEnMois(LocalDate dateDebut, LocalDate dateFin) {
+        int duree = Months.monthsBetween(dateDebut, dateFin).getMonths();
+        return duree;
+    }
+
+    static int calculeDureeEnQuinzaines(LocalDate dateDebut, LocalDate dateFin) {
+        int duree = Days.daysBetween(dateDebut, dateFin).getDays();
+
+
+        return duree;
+    }
 
     static ArrayList<Annualite> mensualitesToAnnualites(ArrayList<Mensualite> lesMensualites) {
         ArrayList<Annualite> lesAnnualites = new ArrayList<>();
@@ -85,7 +99,7 @@ class Placement implements Serializable {
         BigDecimal interetsTotaux = BigDecimal.ZERO;
         BigDecimal interetsDeAnnee = BigDecimal.ZERO;
 
-        for (int i = 1; i <= this.duree; i++) {
+        for (int i = 1; i <= this.dureeEnMois; i++) {
 
             Mensualite mensualite = new Mensualite();
             mensualite.setDateMensualite(cal);
@@ -195,23 +209,28 @@ class Placement implements Serializable {
         return this.dateDebut;
     }
 
-    void setDateDebut(LocalDate dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    int getDuree() {
-        return this.duree;
+    LocalDate getDateFin() {
+        return dateFin;
     }
 
     /**
-     * @param duree
      * @throws InputMismatchException
+     * @params dateDebut, dateFin
      */
-    void setDuree(int duree) {
-        if (duree <= 0 || duree > Placement.MAXDUREE) {
-            throw new InputMismatchException("durée hors bornes");
+    void setDatesPlacement(LocalDate dateDebut, LocalDate dateFin) {
+
+        int duree = calculeDureeEnMois(dateDebut, dateFin);
+
+        if (duree > MAXDUREE || duree <= 0) {
+            throw new InputMismatchException("duree hors bornes");
         }
-        this.duree = duree;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.dureeEnMois = duree;
+    }
+
+    int getDureeEnMois() {
+        return this.dureeEnMois;
     }
 
     enumFrequenceVariation getFrequenceVariation() {

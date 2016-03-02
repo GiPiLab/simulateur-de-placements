@@ -19,7 +19,6 @@ import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
 import org.joda.time.LocalDate;
-import org.joda.time.Months;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -35,18 +34,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     private DateTimeFormatter dateFormat;
     private int defaultDureeLabelColor;
 
-    private static int calculeDureeEnMois(LocalDate debut, LocalDate fin) {
-
-        Months m = Months.monthsBetween(debut, fin);
-
-        /*int diffYear = fin.getYear() - debut.getYear();
-        return diffYear * 12 + fin.getMonthOfYear() - debut.getMonthOfYear();*/
-        return m.getMonths();
-    }
-
     private String formatDuree() {
         Period duration = new Period(dateDebut, dateFin);
-        return getString(string.dureeXmois, PeriodFormat.wordBased().print(duration), calculeDureeEnMois(this.dateDebut, this.dateFin));
+        return getString(string.dureeXmois, PeriodFormat.wordBased().print(duration), Placement.calculeDureeEnMois(this.dateDebut, this.dateFin));
     }
 
     private void initDateSelectionSystem() {
@@ -131,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return false;
         }
 
-        int duree = MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin);
+        int duree = Placement.calculeDureeEnMois(this.dateDebut, this.dateFin);
         if (duree > Placement.MAXDUREE) {
             Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA, Placement.MAXDUREE), Toast.LENGTH_SHORT);
             toast.show();
@@ -168,9 +158,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         placement.setVariation(new BigDecimal(((EditText) this.findViewById(id.editVariation)).getText().toString()));
         placement.setTauxAnnuel(new BigDecimal(((EditText) this.findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
         Spinner spinnerFrequence = (Spinner) this.findViewById(id.spinnerFrequenceVariation);
-        placement.setDuree(MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin));
-
-        placement.setDateDebut(this.dateDebut);
+        placement.setDatesPlacement(dateDebut, dateFin);
 
         switch (spinnerFrequence.getSelectedItemPosition()) {
             case 0:
@@ -204,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
         TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
-        int duree = MainActivity.calculeDureeEnMois(this.dateDebut, this.dateFin);
+        int duree = Placement.calculeDureeEnMois(this.dateDebut, this.dateFin);
 
         if (duree <= 0 || duree > Placement.MAXDUREE) {
             labelDuree.setTextColor(Color.RED);
