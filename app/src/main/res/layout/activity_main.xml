@@ -129,15 +129,27 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <ToggleButton
-                android:id="@+id/toggleButtonChoisirDateFin"
+
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:checked="true"
-                android:textOff="@string/toggleChoisirDateFin"
-                android:textOn="@string/toggleChoisirDateFin" />
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
 
+                <RadioButton
+                    android:id="@+id/radioButtonDateDebut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/radioReglerDateDebut" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDateFin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/radioReglerDateFin" />
+            </RadioGroup>
 
             <DatePicker
                 android:id="@+id/datePicker"
@@ -147,6 +159,35 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 android:spinnersShown="true" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonModeJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/radioModeJour" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonModeQuinzaine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/radioModeQuinzaine" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonModeMois"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/radioModeMois" />
+            </RadioGroup>
 
 
             <!--<TextView

@@ -33,9 +33,13 @@
     <string name="editCapitalHint"><i>le capital placé</i></string>
     <string name="editTauxHint"><i>le taux annuel en %</i></string>
     <string name="editVariationHint"><i><![CDATA["somme versée (>0) ou retirée (<0)"]]></i></string>
-    <string name="toggleChoisirDateFin">RÉGLER LA DATE DE FIN DU PLACEMENT</string>
+    <string name="radioReglerDateDebut">Régler la date de début</string>
+    <string name="radioReglerDateFin">Régler la date de fin</string>
     <string name="chartLegendValeurAcquise">Valeur acquise</string>
     <string name="chartLegendCapitalPlace">Capital placé</string>
+    <string name="radioModeJour">Mode jour</string>
+    <string name="radioModeQuinzaine">Mode quinzaine</string>
+    <string name="radioModeMois">Mode mois</string>
 
 
     <string-array name="periodiciteVariation">

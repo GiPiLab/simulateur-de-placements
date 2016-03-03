@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutTaux"
             android:columnCount="3"
-            android:rowCount="4">
+            android:rowCount="5">
 
             <!--<TextView
                 android:id="@+id/labelDureeDuPlacementSection"
@@ -95,22 +95,66 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:layout_row="0"
-                android:layout_rowSpan="4"
+                android:layout_rowSpan="5"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 android:spinnersShown="true" />
 
-            <ToggleButton
-                android:id="@+id/toggleButtonChoisirDateFin"
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:layout_columnSpan="2"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_row="3"
-                android:checked="true"
-                android:textOff="@string/toggleChoisirDateFin"
-                android:textOn="@string/toggleChoisirDateFin" />
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radioButtonDateDebut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/radioReglerDateDebut" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDateFin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/radioReglerDateFin" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/radioGroupMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_gravity="center_horizontal"
+                android:layout_row="4"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonModeJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/radioModeJour" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonModeQuinzaine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/radioModeQuinzaine" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonModeMois"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/radioModeMois" />
+            </RadioGroup>
 
 
             <TextView

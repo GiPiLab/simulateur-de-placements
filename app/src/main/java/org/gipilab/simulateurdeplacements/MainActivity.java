@@ -10,10 +10,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
         tv.setText(formatDuree());
         this.defaultDureeLabelColor = tv.getCurrentTextColor();
-        ToggleButton dateButton = (ToggleButton) this.findViewById(id.toggleButtonChoisirDateFin);
+        RadioButton dateButtonFin = (RadioButton) this.findViewById(id.radioButtonDateFin);
 
-        dateButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        dateButtonFin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton b, boolean isChecked) {
@@ -183,8 +183,8 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
 
         TextView tv;
-        ToggleButton toggleDateFin = (ToggleButton) this.findViewById(id.toggleButtonChoisirDateFin);
-        if (toggleDateFin.isChecked()) {
+        RadioButton buttonDateFin = (RadioButton) this.findViewById(id.radioButtonDateFin);
+        if (buttonDateFin.isChecked()) {
             tv = (TextView) this.findViewById(id.labelSelectedDateFin);
             this.dateFin = new LocalDate(year, month + 1, day);
             tv.setText(this.dateFormat.print(this.dateFin));
