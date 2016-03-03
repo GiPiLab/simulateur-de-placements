@@ -31,7 +31,7 @@ class PlacementExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return _annualites.get(i).getMensualites().size();
+        return _annualites.get(i).getEcheances().size();
     }
 
     @Override
@@ -40,8 +40,8 @@ class PlacementExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Mensualite getChild(int i, int i1) {
-        return _annualites.get(i).getMensualites().get(i1);
+    public Echeance getChild(int i, int i1) {
+        return _annualites.get(i).getEcheances().get(i1);
     }
 
     @Override

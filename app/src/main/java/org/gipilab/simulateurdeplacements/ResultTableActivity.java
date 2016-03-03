@@ -25,7 +25,9 @@ import java.util.ArrayList;
 public class ResultTableActivity extends AppCompatActivity {
 
 
-    private void displayChart(ArrayList<Mensualite> mens) {
+    Placement p;
+
+    private void displayChart(ArrayList<Echeance> mens) {
         LineChart chart = (LineChart) this.findViewById(id.lineChart);
 
         chart.setTouchEnabled(true);
@@ -43,8 +45,8 @@ public class ResultTableActivity extends AppCompatActivity {
 
         DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
 
-        for (Mensualite aMens : mens) {
-            xLabels.add(dateFormat.print(aMens.getDateMensualite()));
+        for (Echeance aMens : mens) {
+            xLabels.add(dateFormat.print(aMens.getDateEcheance()));
             valuesValeurAcquise.add(new Entry(aMens.getValeurAcquise().floatValue(), aMens.getIeme()));
             valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme()));
         }
@@ -63,7 +65,6 @@ public class ResultTableActivity extends AppCompatActivity {
         dataSetCapitalPlace.setCircleColor(Color.RED);
         dataSetCapitalPlace.setDrawCircles(false);
 
-
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(dataSetValeurAcquise);
         dataSets.add(dataSetCapitalPlace);
@@ -74,8 +75,8 @@ public class ResultTableActivity extends AppCompatActivity {
 
     }
 
-    private void displayTable(ArrayList<Mensualite> mens) {
-        ArrayList<Annualite> annualites = Placement.mensualitesToAnnualites(mens);
+    private void displayTable(ArrayList<Echeance> mens) {
+        ArrayList<Annualite> annualites = p.echeancesToAnnualites(mens);
         ExpandableListView listv = (ExpandableListView) this.findViewById(id.listViewResult);
         PlacementExpandableListAdapter adapter = new PlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
@@ -90,8 +91,8 @@ public class ResultTableActivity extends AppCompatActivity {
         this.setContentView(layout.activity_result_table);
 
         Intent intent = this.getIntent();
-        Placement p = (Placement) intent.getSerializableExtra("placement");
-        ArrayList<Mensualite> mens = p.tableauPlacement();
+        p = (Placement) intent.getSerializableExtra("placement");
+        ArrayList<Echeance> mens = p.tableauPlacement();
         this.displayTable(mens);
         this.displayChart(mens);
     }

@@ -15,7 +15,7 @@
     <string name="dureeDoitEtrePositive">La durée doit être positive</string>
     <string name="dureeDoitEtreInferieureA">La durée doit être inférieure ou égale à %1d</string>
     <string name="variationDoitEtreInferieureAuCapital">La variation doit être inférieure au capital</string>
-    <string name="mensualite">"Mensualité %1$d - %2$s"</string>
+    <string name="echeance">"Echéance %1$d - %2$s"</string>
     <string name="retraitDe"><![CDATA["<i>retrait de %1s</i>"]]></string>
     <string name="versementDe"><![CDATA["<i>versement de %1s</i>"]]></string>
     <string name="capitalPlace"><![CDATA["capital placé : %1s"]]></string>
@@ -27,7 +27,7 @@
     <string name="capitalPlaceFinAnnee">Capital placé en fin d\'année = %1s</string>
     <string name="valeurAcquiseFinAnnee">Valeur acquise en fin d\'année = %1s</string>
     <string name="interetsObtenusSurAnnee">Intérêts obtenus sur l\'année = %1s</string>
-    <string name="dureeXmois">"Durée du placement : %1$s soit %2$d mois"</string>
+    <string name="dureeXmois">"Durée du placement : %1$s"</string>
     <string name="dateDebutPlacement">Date de début du placement</string>
     <string name="dateFinPlacement">Date de fin du placement</string>
     <string name="editCapitalHint"><i>le capital placé</i></string>

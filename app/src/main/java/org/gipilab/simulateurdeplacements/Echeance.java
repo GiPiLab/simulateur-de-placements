@@ -13,10 +13,10 @@ import java.text.NumberFormat;
 /**
  * Created by thibault on 12/02/16.
  */
-class Mensualite {
+class Echeance {
 
     private int ieme;
-    private LocalDate dateMensualite;
+    private LocalDate dateEcheance;
     private BigDecimal capitalInitial;
     private BigDecimal capitalCourant;
     private BigDecimal interetsObtenus;
@@ -25,7 +25,7 @@ class Mensualite {
     private BigDecimal variation;
 
 
-    Mensualite() {
+    Echeance() {
         ieme = 0;
         capitalInitial = BigDecimal.ZERO;
         capitalCourant = BigDecimal.ZERO;
@@ -33,7 +33,7 @@ class Mensualite {
         interetsTotaux = BigDecimal.ZERO;
         valeurAcquise = BigDecimal.ZERO;
         variation = BigDecimal.ZERO;
-        dateMensualite = new LocalDate();
+        dateEcheance = new LocalDate();
     }
 
     public String toLocalizedString(Context context) {
@@ -41,7 +41,7 @@ class Mensualite {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         formatter.setMaximumFractionDigits(2);
-        String output = context.getString(string.mensualite, this.ieme, dt.print(this.getDateMensualite()));
+        String output = context.getString(string.echeance, this.ieme, dt.print(this.getDateEcheance()));
 
         output += "<br>";
 
@@ -74,12 +74,12 @@ class Mensualite {
         this.ieme = ieme;
     }
 
-    public LocalDate getDateMensualite() {
-        return this.dateMensualite;
+    public LocalDate getDateEcheance() {
+        return this.dateEcheance;
     }
 
-    public void setDateMensualite(LocalDate dateMensualite) {
-        this.dateMensualite = dateMensualite;
+    public void setDateEcheance(LocalDate dateEcheance) {
+        this.dateEcheance = dateEcheance;
     }
 
     public BigDecimal getCapitalInitial() {

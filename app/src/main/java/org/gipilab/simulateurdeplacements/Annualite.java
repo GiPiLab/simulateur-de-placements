@@ -14,7 +14,7 @@ import java.util.ArrayList;
 final class Annualite {
 
     private int ieme;
-    private ArrayList<Mensualite> mensualites;
+    private ArrayList<Echeance> echeances;
     private BigDecimal capitalPlaceDebutAnnee;
     private BigDecimal capitalPlaceFinAnnee;
     private BigDecimal valeurAcquiseFinAnnee;
@@ -24,7 +24,7 @@ final class Annualite {
 
     Annualite() {
         ieme = 1;
-        mensualites = new ArrayList<Mensualite>(12);
+        echeances = new ArrayList<Echeance>();
         capitalPlaceDebutAnnee = BigDecimal.ZERO;
         capitalPlaceFinAnnee = BigDecimal.ZERO;
         valeurAcquiseFinAnnee = BigDecimal.ZERO;
@@ -59,12 +59,12 @@ final class Annualite {
         this.ieme = ieme;
     }
 
-    public ArrayList<Mensualite> getMensualites() {
-        return this.mensualites;
+    public ArrayList<Echeance> getEcheances() {
+        return this.echeances;
     }
 
-    public void setMensualites(ArrayList<Mensualite> mensualites) {
-        this.mensualites = mensualites;
+    public void setEcheances(ArrayList<Echeance> echeances) {
+        this.echeances = echeances;
     }
 
     public BigDecimal getCapitalPlaceDebutAnnee() {

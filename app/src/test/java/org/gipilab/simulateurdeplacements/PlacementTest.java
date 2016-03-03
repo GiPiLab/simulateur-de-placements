@@ -15,15 +15,15 @@ public class PlacementTest {
 
     @Test
     public void testMensualitesToAnnualites() throws Exception {
-        Placement p = new Placement();
+        PlacementMois p = new PlacementMois();
         p.setCapitalInitial(BigDecimal.valueOf(10000));
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);
         p.setVariation(BigDecimal.valueOf(100));
         p.setDatesPlacement(new LocalDate(2015, 1, 1), new LocalDate(2017, 2, 1));
 
-        ArrayList<Mensualite> tableau = p.tableauPlacement();
-        ArrayList<Annualite> annualites = Placement.mensualitesToAnnualites(tableau);
+        ArrayList<Echeance> tableau = p.tableauPlacement();
+        ArrayList<Annualite> annualites = p.echeancesToAnnualites(tableau);
         Assert.assertEquals(3, annualites.size());
         Annualite a = annualites.get(0);
         Assert.assertEquals(1, a.getIeme());
@@ -32,7 +32,7 @@ public class PlacementTest {
         Assert.assertEquals(new BigDecimal("12366.00"), a.getValeurAcquiseFinAnnee());
         Assert.assertEquals(new BigDecimal("1266.00"), a.getInteretsFinAnnee());
         Assert.assertEquals(new BigDecimal("1266.00"), a.getInteretsTotaux());
-        Assert.assertEquals(12, a.getMensualites().size());
+        Assert.assertEquals(12, a.getEcheances().size());
 
         a = annualites.get(1);
         Assert.assertEquals(2, a.getIeme());
@@ -41,7 +41,7 @@ public class PlacementTest {
         Assert.assertEquals(new BigDecimal("15127.9200"), a.getValeurAcquiseFinAnnee());
         Assert.assertEquals(new BigDecimal("1561.9200"), a.getInteretsFinAnnee());
         Assert.assertEquals(new BigDecimal("2827.9200"), a.getInteretsTotaux());
-        Assert.assertEquals(12, a.getMensualites().size());
+        Assert.assertEquals(12, a.getEcheances().size());
 
         a = annualites.get(2);
         Assert.assertEquals(3, a.getIeme());
@@ -50,29 +50,23 @@ public class PlacementTest {
         Assert.assertEquals(new BigDecimal("15380.199200"), a.getValeurAcquiseFinAnnee());
         Assert.assertEquals(new BigDecimal("152.279200"), a.getInteretsFinAnnee());
         Assert.assertEquals(new BigDecimal("2980.199200"), a.getInteretsTotaux());
-        Assert.assertEquals(1, a.getMensualites().size());
-
-
-
-
-
-
+        Assert.assertEquals(1, a.getEcheances().size());
     }
 
     @Test
-    public void testTableauPlacement() throws Exception {
-        Placement p = new Placement();
+    public void testTableauPlacementMois() throws Exception {
+        PlacementMois p = new PlacementMois();
         p.setCapitalInitial(BigDecimal.valueOf(10000));
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);
         p.setVariation(BigDecimal.valueOf(100));
         p.setDatesPlacement(new LocalDate(2015, 1, 1), new LocalDate(2017, 2, 1));
 
-        ArrayList<Mensualite> tableau = p.tableauPlacement();
+        ArrayList<Echeance> tableau = p.tableauPlacement();
 
         Assert.assertEquals(25, tableau.size());
 
-        Mensualite mens = tableau.get(0);
+        Echeance mens = tableau.get(0);
         Assert.assertEquals(BigDecimal.valueOf(10000), mens.getCapitalCourant());
         Assert.assertEquals(BigDecimal.valueOf(10000), mens.getCapitalInitial());
         Assert.assertEquals(1, mens.getIeme());

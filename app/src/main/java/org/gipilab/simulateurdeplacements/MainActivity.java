@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
     private String formatDuree() {
         Period duration = new Period(dateDebut, dateFin);
-        return getString(string.dureeXmois, PeriodFormat.wordBased().print(duration), Placement.calculeDureeEnMois(this.dateDebut, this.dateFin));
+        return getString(string.dureeXmois, PeriodFormat.wordBased().print(duration));
     }
 
     private void initDateSelectionSystem() {
@@ -121,7 +121,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return false;
         }
 
-        int duree = Placement.calculeDureeEnMois(this.dateDebut, this.dateFin);
+        //TODO : selectionner mode
+        PlacementMois p = new PlacementMois();
+        int duree = p.calculeDuree(this.dateDebut, this.dateFin);
         if (duree > Placement.MAXDUREE) {
             Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA, Placement.MAXDUREE), Toast.LENGTH_SHORT);
             toast.show();
@@ -153,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return;
         }
 
-        Placement placement = new Placement();
+        //TODO : selectionner mode
+        PlacementMois placement = new PlacementMois();
         placement.setCapitalInitial(new BigDecimal(((EditText) this.findViewById(id.editCapital)).getText().toString()));
         placement.setVariation(new BigDecimal(((EditText) this.findViewById(id.editVariation)).getText().toString()));
         placement.setTauxAnnuel(new BigDecimal(((EditText) this.findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
@@ -192,7 +195,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
         TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
-        int duree = Placement.calculeDureeEnMois(this.dateDebut, this.dateFin);
+        //TODO : selectionner mode
+        PlacementMois p = new PlacementMois();
+        int duree = p.calculeDuree(this.dateDebut, this.dateFin);
 
         if (duree <= 0 || duree > Placement.MAXDUREE) {
             labelDuree.setTextColor(Color.RED);
