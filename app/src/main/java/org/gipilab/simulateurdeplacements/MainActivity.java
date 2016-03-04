@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         if (duree < 0 || duree > Placement.MAXECHEANCES || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
             labelDuree.setTextColor(Color.RED);
         } else {
-            labelDuree.setTextColor(this.defaultDureeLabelColor);
+            labelDuree.setTextColor(Color.BLACK);
         }
 
         labelDuree.setText(formatDuree());

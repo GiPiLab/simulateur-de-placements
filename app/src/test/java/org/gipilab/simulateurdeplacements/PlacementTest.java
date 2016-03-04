@@ -60,11 +60,11 @@ public class PlacementTest {
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);
         p.setVariation(BigDecimal.valueOf(100));
-        p.setDatesPlacement(new LocalDate(2015, 1, 1), new LocalDate(2017, 2, 1));
+        p.setDatesPlacement(new LocalDate(2015, 1, 1), new LocalDate(2017, 2, 4));
 
         ArrayList<Echeance> tableau = p.tableauPlacement();
 
-        Assert.assertEquals(25, tableau.size());
+        Assert.assertEquals(26, tableau.size());
 
         Echeance mens = tableau.get(0);
         Assert.assertEquals(BigDecimal.valueOf(10000), mens.getCapitalCourant());
@@ -98,11 +98,20 @@ public class PlacementTest {
         Assert.assertEquals(new BigDecimal("152.279200"), mens.getInteretsObtenus());
         Assert.assertEquals(new BigDecimal("2980.199200"), mens.getInteretsTotaux());
 
+        //Le mois incomplet restant
+        mens = tableau.get(25);
+        Assert.assertEquals(new BigDecimal("15227.9200"), mens.getCapitalCourant());
+        Assert.assertEquals(BigDecimal.valueOf(10000), mens.getCapitalInitial());
+        Assert.assertEquals(26, mens.getIeme());
+        Assert.assertEquals(new BigDecimal("0"), mens.getVariation());
+        Assert.assertEquals(new BigDecimal("15.01931835616438356164383561643836"), mens.getInteretsObtenus());
+        Assert.assertEquals(new BigDecimal("2995.21851835616438356164383561643836"), mens.getInteretsTotaux());
+
         //Test avec variation trimestrielle
         p.setFrequenceVariation(enumFrequenceVariation.TRIMESTRIELLE);
         tableau = p.tableauPlacement();
 
-        Assert.assertEquals(25, tableau.size());
+        Assert.assertEquals(26, tableau.size());
 
         mens = tableau.get(0);
         Assert.assertEquals(BigDecimal.valueOf(10000), mens.getCapitalCourant());
