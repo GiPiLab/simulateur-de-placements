@@ -15,17 +15,17 @@ abstract class Placement implements Serializable {
 
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
-    public static final int MAXDUREE = 1000;
+    public static final int MAXECHEANCES = 1000;
     public static final BigDecimal MAXVARIATION = Placement.MAXCAPITAL;
 
     protected BigDecimal tauxAnnuel = BigDecimal.ZERO;
     protected BigDecimal capitalInitial = BigDecimal.ZERO;
     protected BigDecimal interetsObtenus = BigDecimal.ZERO;
     protected BigDecimal variation = BigDecimal.ZERO;
-    protected LocalDate dateDebut = LocalDate.now();
-    protected LocalDate dateFin = dateDebut.plusYears(1);
+    protected LocalDate dateDebut;
+    protected LocalDate dateFin;
 
-    protected int duree = 12;
+    protected int duree;
     protected enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
 
     abstract int calculeDuree(LocalDate dateDebut, LocalDate dateFin);
@@ -108,7 +108,7 @@ abstract class Placement implements Serializable {
 
         int duree = calculeDuree(dateDebut, dateFin);
 
-        if (duree > MAXDUREE || duree <= 0) {
+        if (duree > MAXECHEANCES || duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
             throw new InputMismatchException("duree hors bornes");
         }
         this.dateDebut = dateDebut;

@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         this.dateFormat = DateTimeFormat.longDate();
         final DatePicker dp = (DatePicker) this.findViewById(id.datePicker);
         dp.init(this.dateFin.getYear(), this.dateFin.getMonthOfYear() - 1, this.dateFin.getDayOfMonth(), this);
+        dp.setMaxDate(dateDebut.plusYears(200).toDate().getTime());
         TextView tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
         tv.setText(this.dateFormat.print(this.dateDebut));
         tv = (TextView) this.findViewById(id.labelSelectedDateFin);
@@ -122,15 +124,15 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
         //TODO : selectionner mode
-        PlacementMois p = new PlacementMois();
+        PlacementSansQuinzaine p = new PlacementSansQuinzaine();
         int duree = p.calculeDuree(this.dateDebut, this.dateFin);
-        if (duree > Placement.MAXDUREE) {
-            Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA, Placement.MAXDUREE), Toast.LENGTH_SHORT);
+        if (duree > Placement.MAXECHEANCES) {
+            Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA, Placement.MAXECHEANCES), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
 
-        if (duree <= 0) {
+        if (duree < 0 || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
             Toast toast = Toast.makeText(this, string.dureeDoitEtrePositive, Toast.LENGTH_SHORT);
             toast.show();
             return false;
@@ -156,7 +158,22 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
         //TODO : selectionner mode
-        PlacementMois placement = new PlacementMois();
+        Placement placement;
+
+        RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
+        switch (groupMode.getCheckedRadioButtonId()) {
+            case id.radioButtonModeQuinzaine:
+                placement = new PlacementQuinzaine();
+                break;
+
+            case id.radioButtonModeNormal:
+                placement = new PlacementSansQuinzaine();
+                break;
+            default:
+                throw new IllegalArgumentException("Erreur mode");
+        }
+
+
         placement.setCapitalInitial(new BigDecimal(((EditText) this.findViewById(id.editCapital)).getText().toString()));
         placement.setVariation(new BigDecimal(((EditText) this.findViewById(id.editVariation)).getText().toString()));
         placement.setTauxAnnuel(new BigDecimal(((EditText) this.findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
@@ -196,10 +213,10 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
         TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
         //TODO : selectionner mode
-        PlacementMois p = new PlacementMois();
+        PlacementSansQuinzaine p = new PlacementSansQuinzaine();
         int duree = p.calculeDuree(this.dateDebut, this.dateFin);
 
-        if (duree <= 0 || duree > Placement.MAXDUREE) {
+        if (duree < 0 || duree > Placement.MAXECHEANCES || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
             labelDuree.setTextColor(Color.RED);
         } else {
             labelDuree.setTextColor(this.defaultDureeLabelColor);

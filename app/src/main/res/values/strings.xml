@@ -15,7 +15,7 @@
     <string name="dureeDoitEtrePositive">La durée doit être positive</string>
     <string name="dureeDoitEtreInferieureA">La durée doit être inférieure ou égale à %1d</string>
     <string name="variationDoitEtreInferieureAuCapital">La variation doit être inférieure au capital</string>
-    <string name="echeance">"Echéance %1$d - %2$s"</string>
+    <string name="echeance">"Echéance %1$d du %2$s au %3$s"</string>
     <string name="retraitDe"><![CDATA["<i>retrait de %1s</i>"]]></string>
     <string name="versementDe"><![CDATA["<i>versement de %1s</i>"]]></string>
     <string name="capitalPlace"><![CDATA["capital placé : %1s"]]></string>
@@ -37,9 +37,8 @@
     <string name="radioReglerDateFin">Régler la date de fin</string>
     <string name="chartLegendValeurAcquise">Valeur acquise</string>
     <string name="chartLegendCapitalPlace">Capital placé</string>
-    <string name="radioModeJour">Mode jour</string>
     <string name="radioModeQuinzaine">Mode quinzaine</string>
-    <string name="radioModeMois">Mode mois</string>
+    <string name="radioModeSansQuinzaine">Mode sans quinzaine</string>
 
 
     <string-array name="periodiciteVariation">

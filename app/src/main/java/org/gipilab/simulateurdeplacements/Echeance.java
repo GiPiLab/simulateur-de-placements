@@ -16,7 +16,8 @@ import java.text.NumberFormat;
 class Echeance {
 
     private int ieme;
-    private LocalDate dateEcheance;
+    private LocalDate dateDebutEcheance;
+    private LocalDate dateFinEcheance;
     private BigDecimal capitalInitial;
     private BigDecimal capitalCourant;
     private BigDecimal interetsObtenus;
@@ -33,7 +34,8 @@ class Echeance {
         interetsTotaux = BigDecimal.ZERO;
         valeurAcquise = BigDecimal.ZERO;
         variation = BigDecimal.ZERO;
-        dateEcheance = new LocalDate();
+        dateDebutEcheance = new LocalDate();
+        dateFinEcheance = new LocalDate();
     }
 
     public String toLocalizedString(Context context) {
@@ -41,7 +43,7 @@ class Echeance {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         formatter.setMaximumFractionDigits(2);
-        String output = context.getString(string.echeance, this.ieme, dt.print(this.getDateEcheance()));
+        String output = context.getString(string.echeance, this.ieme, dt.print(this.getDateDebutEcheance()), dt.print(this.getDateFinEcheance()));
 
         output += "<br>";
 
@@ -74,12 +76,20 @@ class Echeance {
         this.ieme = ieme;
     }
 
-    public LocalDate getDateEcheance() {
-        return this.dateEcheance;
+    public LocalDate getDateDebutEcheance() {
+        return this.dateDebutEcheance;
     }
 
-    public void setDateEcheance(LocalDate dateEcheance) {
-        this.dateEcheance = dateEcheance;
+    public void setDateDebutEcheance(LocalDate dateDebutEcheance) {
+        this.dateDebutEcheance = dateDebutEcheance;
+    }
+
+    public LocalDate getDateFinEcheance() {
+        return this.dateFinEcheance;
+    }
+
+    public void setDateFinEcheance(LocalDate dateFinEcheance) {
+        this.dateFinEcheance = dateFinEcheance;
     }
 
     public BigDecimal getCapitalInitial() {

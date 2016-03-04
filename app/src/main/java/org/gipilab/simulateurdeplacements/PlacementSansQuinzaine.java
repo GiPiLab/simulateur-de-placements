@@ -1,5 +1,6 @@
 package org.gipilab.simulateurdeplacements;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by thibault on 03/03/16.
  */
-public class PlacementMois extends Placement {
+public class PlacementSansQuinzaine extends Placement {
 
 
     @Override
@@ -67,7 +68,6 @@ public class PlacementMois extends Placement {
 
         LocalDate cal;
 
-
         if (this.getDateDebut() == null)
             cal = new LocalDate(LocalDate.now());
         else cal = this.getDateDebut();
@@ -77,10 +77,13 @@ public class PlacementMois extends Placement {
         BigDecimal interetsTotaux = BigDecimal.ZERO;
         BigDecimal interetsDeAnnee = BigDecimal.ZERO;
 
-        for (int i = 1; i <= this.duree; i++) {
+
+        int i;
+        for (i = 1; i <= this.duree; i++) {
 
             Echeance mensualite = new Echeance();
-            mensualite.setDateEcheance(cal);
+            mensualite.setDateDebutEcheance(cal);
+            mensualite.setDateFinEcheance(cal.plusMonths(1).minusDays(1));
 
             if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
                 switch (this.frequenceVariation) {
@@ -118,10 +121,28 @@ public class PlacementMois extends Placement {
             cal = cal.plusMonths(1);
 
         }
+
+        //Ajoute les jours manquants
+        int daysLeft = Days.daysBetween(cal, dateFin).getDays();
+        if (daysLeft > 0) {
+            BigDecimal tauxJournalier = tauxAnnuel.divide(BigDecimal.valueOf(365), MathContext.DECIMAL128);
+            Echeance lastEcheance = new Echeance();
+            lastEcheance.setIeme(i);
+            lastEcheance.setDateDebutEcheance(cal);
+            lastEcheance.setDateFinEcheance(dateFin);
+            lastEcheance.setCapitalInitial(this.capitalInitial);
+            lastEcheance.setCapitalCourant(capitalPlace);
+            lastEcheance.setInteretsObtenus(capitalPlace.multiply(tauxJournalier, MathContext.DECIMAL128)
+                    .multiply(BigDecimal.valueOf(daysLeft), MathContext.DECIMAL128));
+            lastEcheance.setInteretsTotaux(interetsTotaux.add(lastEcheance.getInteretsObtenus()));
+            interetsTotaux = lastEcheance.getInteretsTotaux();
+            interetsDeAnnee = interetsDeAnnee.add(lastEcheance.getInteretsObtenus());
+            lastEcheance.setValeurAcquise(capitalPlace.add(interetsDeAnnee));
+            lesMensualites.add(lastEcheance);
+        }
+
         this.setInteretsObtenus(interetsTotaux);
 
         return lesMensualites;
     }
-
-
 }

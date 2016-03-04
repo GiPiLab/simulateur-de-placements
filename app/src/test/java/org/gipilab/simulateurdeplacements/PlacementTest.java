@@ -15,7 +15,7 @@ public class PlacementTest {
 
     @Test
     public void testMensualitesToAnnualites() throws Exception {
-        PlacementMois p = new PlacementMois();
+        PlacementSansQuinzaine p = new PlacementSansQuinzaine();
         p.setCapitalInitial(BigDecimal.valueOf(10000));
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);
@@ -55,7 +55,7 @@ public class PlacementTest {
 
     @Test
     public void testTableauPlacementMois() throws Exception {
-        PlacementMois p = new PlacementMois();
+        PlacementSansQuinzaine p = new PlacementSansQuinzaine();
         p.setCapitalInitial(BigDecimal.valueOf(10000));
         p.setTauxAnnuel(new BigDecimal("0.12"));
         p.setFrequenceVariation(enumFrequenceVariation.MENSUELLE);

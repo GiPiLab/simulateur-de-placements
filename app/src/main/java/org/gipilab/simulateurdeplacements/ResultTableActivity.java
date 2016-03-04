@@ -46,7 +46,7 @@ public class ResultTableActivity extends AppCompatActivity {
         DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
 
         for (Echeance aMens : mens) {
-            xLabels.add(dateFormat.print(aMens.getDateEcheance()));
+            xLabels.add(dateFormat.print(aMens.getDateDebutEcheance()));
             valuesValeurAcquise.add(new Entry(aMens.getValeurAcquise().floatValue(), aMens.getIeme()));
             valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme()));
         }
