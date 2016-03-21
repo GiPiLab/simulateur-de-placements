@@ -13,7 +13,7 @@
     <string name="capitalDoitEtrePositif">Le capital doit être positif</string>
     <string name="tauxDoitEtrePositifOuNul">Le taux doit être positif ou nul</string>
     <string name="dureeDoitEtrePositive">La durée doit être positive</string>
-    <string name="dureeDoitEtreInferieureA">La durée doit être inférieure ou égale à %1d</string>
+    <string name="dureeDoitEtreInferieureA">La durée trop longue</string>
     <string name="variationDoitEtreInferieureAuCapital">La variation doit être inférieure au capital</string>
     <string name="echeance">"Echéance %1$d du %2$s au %3$s"</string>
     <string name="retraitDe"><![CDATA["<i>retrait de %1s</i>"]]></string>
@@ -39,6 +39,7 @@
     <string name="chartLegendCapitalPlace">Capital placé</string>
     <string name="radioModeQuinzaine">Mode livret d\'épargne</string>
     <string name="radioModeSansQuinzaine">Mode sans quinzaine</string>
+    <string name="echeanceVide">Aucun intérêt généré à cause de la règle des quinzaines</string>
 
 
     <string-array name="periodiciteVariation">

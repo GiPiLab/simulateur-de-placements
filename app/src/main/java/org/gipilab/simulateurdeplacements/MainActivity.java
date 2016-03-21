@@ -123,11 +123,23 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return false;
         }
 
-        //TODO : selectionner mode
-        PlacementSansQuinzaine p = new PlacementSansQuinzaine();
+        Placement p;
+        RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
+        switch (groupMode.getCheckedRadioButtonId()) {
+            case id.radioButtonModeQuinzaine:
+                p = new PlacementQuinzaine();
+                break;
+
+            case id.radioButtonModeNormal:
+                p = new PlacementSansQuinzaine();
+                break;
+            default:
+                throw new IllegalArgumentException("Erreur mode");
+        }
+
         int duree = p.calculeDuree(this.dateDebut, this.dateFin);
         if (duree > Placement.MAXECHEANCES) {
-            Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA, Placement.MAXECHEANCES), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
@@ -157,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return;
         }
 
-        //TODO : selectionner mode
         Placement placement;
 
         RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
@@ -212,11 +223,25 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
         TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
-        //TODO : selectionner mode
-        PlacementSansQuinzaine p = new PlacementSansQuinzaine();
-        int duree = p.calculeDuree(this.dateDebut, this.dateFin);
 
-        if (duree < 0 || duree > Placement.MAXECHEANCES || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
+
+        /*
+        Placement p;
+        RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
+        switch (groupMode.getCheckedRadioButtonId()) {
+            case id.radioButtonModeQuinzaine:
+                p = new PlacementQuinzaine();
+                break;
+
+            case id.radioButtonModeNormal:
+                p = new PlacementSansQuinzaine();
+                break;
+            default:
+                throw new IllegalArgumentException("Erreur mode");
+        }*/
+
+
+        if (this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
             labelDuree.setTextColor(Color.RED);
         } else {
             labelDuree.setTextColor(Color.BLACK);

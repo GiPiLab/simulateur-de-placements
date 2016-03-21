@@ -38,7 +38,7 @@ public class PlacementSansQuinzaine extends Placement {
             annualite.getEcheances().add(mens);
             annualite.setInteretsFinAnnee(annualite.getInteretsFinAnnee().add(mens.getInteretsObtenus()));
 
-            if (i > 1 && i % 12 == 0) {
+            if (mens.getDateDebutEcheance().getMonthOfYear() == 12) {
                 annualite.setValeurAcquiseFinAnnee(mens.getValeurAcquise());
                 annualite.setCapitalPlaceFinAnnee(mens.getCapitalCourant());
                 annualite.setInteretsTotaux(mens.getInteretsTotaux());
@@ -73,17 +73,20 @@ public class PlacementSansQuinzaine extends Placement {
         else cal = this.getDateDebut();
 
         BigDecimal tauxMensuel = this.tauxAnnuel.divide(BigDecimal.valueOf(12), MathContext.DECIMAL128);
+        BigDecimal tauxJournalier = this.tauxAnnuel.divide(BigDecimal.valueOf(365), MathContext.DECIMAL128);
         BigDecimal capitalPlace = this.capitalInitial;
         BigDecimal interetsTotaux = BigDecimal.ZERO;
         BigDecimal interetsDeAnnee = BigDecimal.ZERO;
 
+        //Premiere echeance
+        Echeance premiereEcheance = new Echeance();
 
         int i;
         for (i = 1; i <= this.duree; i++) {
 
             Echeance mensualite = new Echeance();
             mensualite.setDateDebutEcheance(cal);
-            mensualite.setDateFinEcheance(cal.plusMonths(1).minusDays(1));
+            mensualite.setDateFinEcheance(cal.dayOfMonth().withMaximumValue());
 
             if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
                 switch (this.frequenceVariation) {
@@ -103,13 +106,18 @@ public class PlacementSansQuinzaine extends Placement {
             mensualite.setIeme(i);
             mensualite.setCapitalInitial(this.capitalInitial);
             mensualite.setCapitalCourant(capitalPlace);
-            mensualite.setInteretsObtenus(capitalPlace.multiply(tauxMensuel, MathContext.DECIMAL128));
+
+            int nbJours = mensualite.getDateFinEcheance().getDayOfMonth() - mensualite.getDateDebutEcheance().getDayOfMonth();
+            mensualite.setInteretsObtenus(capitalPlace.multiply(tauxJournalier, MathContext.DECIMAL128).multiply(BigDecimal.valueOf(nbJours)));
+
             mensualite.setInteretsTotaux(interetsTotaux.add(mensualite.getInteretsObtenus()));
             interetsTotaux = mensualite.getInteretsTotaux();
             interetsDeAnnee = interetsDeAnnee.add(mensualite.getInteretsObtenus());
             mensualite.setValeurAcquise(capitalPlace.add(interetsDeAnnee));
 
-            if (i % 12 == 0) {
+
+            //Capitalisation
+            if (mensualite.getDateDebutEcheance().getMonthOfYear() == 12) {
                 capitalPlace = capitalPlace.add(interetsDeAnnee);
                 interetsDeAnnee = BigDecimal.ZERO;
             }
@@ -118,16 +126,36 @@ public class PlacementSansQuinzaine extends Placement {
                 lesMensualites.add(mensualite);
             } else break;
 
-            cal = cal.plusMonths(1);
+            cal = cal.plusMonths(1).withDayOfMonth(1);
 
         }
 
         //Ajoute les jours manquants
         int daysLeft = Days.daysBetween(cal, dateFin).getDays();
         if (daysLeft > 0) {
-            BigDecimal tauxJournalier = tauxAnnuel.divide(BigDecimal.valueOf(365), MathContext.DECIMAL128);
+
+
             Echeance lastEcheance = new Echeance();
             lastEcheance.setIeme(i);
+
+            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
+                switch (this.frequenceVariation) {
+                    case MENSUELLE:
+                        lastEcheance.setVariation(this.variation);
+                        capitalPlace = capitalPlace.add(this.variation);
+                        break;
+
+                    case TRIMESTRIELLE:
+                        if ((i - 1) % 3 == 0) {
+                            lastEcheance.setVariation(this.variation);
+                            capitalPlace = capitalPlace.add(this.variation);
+                        }
+                        break;
+                }
+            }
+
+
+
             lastEcheance.setDateDebutEcheance(cal);
             lastEcheance.setDateFinEcheance(dateFin);
             lastEcheance.setCapitalInitial(this.capitalInitial);

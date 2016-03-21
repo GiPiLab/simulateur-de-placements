@@ -39,6 +39,13 @@ class Echeance {
     }
 
     public String toLocalizedString(Context context) {
+
+        if (ieme == 0) {
+            return context.getString(string.echeanceVide);
+        }
+
+
+
         DateTimeFormatter dt = DateTimeFormat.longDate();
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 

@@ -15,9 +15,8 @@ abstract class Placement implements Serializable {
 
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
-    public static final int MAXECHEANCES = 1000;
     public static final BigDecimal MAXVARIATION = Placement.MAXCAPITAL;
-
+    public static int MAXECHEANCES = 1000;
     protected BigDecimal tauxAnnuel = BigDecimal.ZERO;
     protected BigDecimal capitalInitial = BigDecimal.ZERO;
     protected BigDecimal interetsObtenus = BigDecimal.ZERO;
