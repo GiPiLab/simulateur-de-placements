@@ -16,18 +16,20 @@ abstract class Placement implements Serializable {
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
     public static final BigDecimal MAXVARIATION = Placement.MAXCAPITAL;
-    public static int MAXECHEANCES = 1000;
     protected BigDecimal tauxAnnuel = BigDecimal.ZERO;
     protected BigDecimal capitalInitial = BigDecimal.ZERO;
     protected BigDecimal interetsObtenus = BigDecimal.ZERO;
     protected BigDecimal variation = BigDecimal.ZERO;
     protected LocalDate dateDebut;
     protected LocalDate dateFin;
-
     protected int duree;
     protected enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
 
-    abstract int calculeDuree(LocalDate dateDebut, LocalDate dateFin);
+    abstract int getMAXECHEANCES();
+
+    abstract int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
+
+    abstract int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
 
     abstract ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances);
 
@@ -105,9 +107,9 @@ abstract class Placement implements Serializable {
      */
     void setDatesPlacement(LocalDate dateDebut, LocalDate dateFin) {
 
-        int duree = calculeDuree(dateDebut, dateFin);
+        int duree = calculeDureeEnEcheances(dateDebut, dateFin);
 
-        if (duree > MAXECHEANCES || duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
+        if (duree > getMAXECHEANCES() || duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
             throw new InputMismatchException("duree hors bornes");
         }
         this.dateDebut = dateDebut;

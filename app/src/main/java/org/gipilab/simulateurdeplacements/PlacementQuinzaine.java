@@ -1,6 +1,7 @@
 package org.gipilab.simulateurdeplacements;
 
 import org.joda.time.LocalDate;
+import org.joda.time.Months;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -13,10 +14,13 @@ import java.util.InputMismatchException;
 public class PlacementQuinzaine extends Placement {
 
 
-    public static int MAXECHEANCES = 2000;
+    @Override
+    int getMAXECHEANCES() {
+        return 2400; //100 ans
+    }
 
     private LocalDate aligneDateDebutSurQuinzaine(LocalDate dateDebut) {
-        LocalDate dateDebutAlignee = dateDebut;
+        LocalDate dateDebutAlignee;
 
         if (dateDebut.getDayOfMonth() <= 15) {
             dateDebutAlignee = dateDebut.withDayOfMonth(16);
@@ -27,7 +31,7 @@ public class PlacementQuinzaine extends Placement {
     }
 
     private LocalDate aligneDateFinSurQuinzaine(LocalDate dateFin) {
-        LocalDate dateFinAlignee = dateFin;
+        LocalDate dateFinAlignee;
         if (dateFin.getDayOfMonth() > 16) {
             dateFinAlignee = dateFin.withDayOfMonth(16);
         } else {
@@ -49,9 +53,9 @@ public class PlacementQuinzaine extends Placement {
         this.dateDebut = aligneDateDebutSurQuinzaine(dateDebut);
         this.dateFin = aligneDateFinSurQuinzaine(dateFin);
 
-        int duree = calculeDuree(this.dateDebut, this.dateFin);
+        int duree = calculeDureeEnEcheances(this.dateDebut, this.dateFin);
 
-        if (duree > MAXECHEANCES || duree < 0) {
+        if (duree > getMAXECHEANCES() || duree < 0) {
             throw new InputMismatchException("duree hors bornes :" + duree);
         }
         this.duree = duree;
@@ -67,9 +71,9 @@ public class PlacementQuinzaine extends Placement {
      * Calcule de la durée en quinzaines
      * @param dateDebut la date de début
      * @param dateFin la date de fin
-     * @return le nombre de quinzaines
+     * @return le nombre de quinzaines exacte
      */
-    int calculeDuree(LocalDate dateDebut, LocalDate dateFin) {
+    int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
 
 
         LocalDate dateDebutAlignee, dateFinAlignee;
@@ -104,6 +108,19 @@ public class PlacementQuinzaine extends Placement {
         }
 
         return nbQuinzaines;
+    }
+
+    /**
+     * Retourne rapidement une valeur approchée du nombre de quinzaines sans tenir compte de l'alignement
+     * Utile pour l'affichage des labels de durée en rouge ou noir dans l'interface lors de changements de date
+     *
+     * @param dateDebut
+     * @param dateFin
+     * @return le nombre de quinzaines APPROCHE
+     */
+    @Override
+    int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
+        return Months.monthsBetween(dateDebut, dateFin).getMonths() * 2;
     }
 
 

@@ -44,8 +44,6 @@ class Echeance {
             return context.getString(string.echeanceVide);
         }
 
-
-
         DateTimeFormatter dt = DateTimeFormat.longDate();
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 

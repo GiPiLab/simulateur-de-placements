@@ -13,20 +13,20 @@
     <string name="capitalDoitEtrePositif">Le capital doit être positif</string>
     <string name="tauxDoitEtrePositifOuNul">Le taux doit être positif ou nul</string>
     <string name="dureeDoitEtrePositive">La durée doit être positive</string>
-    <string name="dureeDoitEtreInferieureA">La durée trop longue</string>
+    <string name="dureeTropLongue">Durée trop longue</string>
     <string name="variationDoitEtreInferieureAuCapital">La variation doit être inférieure au capital</string>
     <string name="echeance">"Echéance %1$d du %2$s au %3$s"</string>
     <string name="retraitDe"><![CDATA["<i>retrait de %1s</i>"]]></string>
     <string name="versementDe"><![CDATA["<i>versement de %1s</i>"]]></string>
     <string name="capitalPlace"><![CDATA["capital placé : %1s"]]></string>
     <string name="interets"><![CDATA["intérêts : %1s"]]></string>
-    <string name="interetsTotaux"><![CDATA["intérêts totaux : %1s"]]></string>
+    <string name="interetsTotaux"><![CDATA["Intérêts totaux : %1s"]]></string>
     <string name="valeurAcquise"><![CDATA["<b>valeur acquise : %1s"]]></string>
-    <string name="anneeIeme"><![CDATA["<b>Année %1$d</b>"]]></string>
-    <string name="capitalPlaceDebutAnnee">Capital placé en début d\'année = %1s</string>
-    <string name="capitalPlaceFinAnnee">Capital placé en fin d\'année = %1s</string>
-    <string name="valeurAcquiseFinAnnee">Valeur acquise en fin d\'année = %1s</string>
-    <string name="interetsObtenusSurAnnee">Intérêts obtenus sur l\'année = %1s</string>
+    <string name="anneeIeme"><![CDATA["<b>Période %1$d</b>"]]></string>
+    <string name="capitalPlaceDebutAnnee">Capital placé en début de période = %1s</string>
+    <string name="capitalPlaceFinAnnee">Capital placé en fin de période = %1s</string>
+    <string name="valeurAcquiseFinAnnee">Valeur acquise en fin de période = %1s</string>
+    <string name="interetsObtenusSurAnnee">Intérêts obtenus sur la période = %1s</string>
     <string name="dureeXmois">"Durée du placement : %1$s"</string>
     <string name="dateDebutPlacement">Date de début du placement</string>
     <string name="dateFinPlacement">Date de fin du placement</string>

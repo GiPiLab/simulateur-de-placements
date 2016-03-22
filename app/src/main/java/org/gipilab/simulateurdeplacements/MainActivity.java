@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
     private LocalDate dateDebut, dateFin;
     private DateTimeFormatter dateFormat;
-    private int defaultDureeLabelColor;
 
     private String formatDuree() {
         Period duration = new Period(dateDebut, dateFin);
@@ -52,10 +51,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         tv.setText(this.dateFormat.print(this.dateDebut));
         tv = (TextView) this.findViewById(id.labelSelectedDateFin);
         tv.setText(this.dateFormat.print(this.dateFin));
-        tv = (TextView) this.findViewById(id.labelDuree);
 
-        tv.setText(formatDuree());
-        this.defaultDureeLabelColor = tv.getCurrentTextColor();
+        updateLabelDuree(dateDebut, dateFin);
+
         RadioButton dateButtonFin = (RadioButton) this.findViewById(id.radioButtonDateFin);
 
         dateButtonFin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -68,6 +66,14 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
                 } else {
                     dp.updateDate(MainActivity.this.dateDebut.getYear(), MainActivity.this.dateDebut.getMonthOfYear() - 1, MainActivity.this.dateDebut.getDayOfMonth());
                 }
+            }
+        });
+
+        RadioGroup modeLivret = (RadioGroup) this.findViewById(id.radioGroupMode);
+        modeLivret.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                updateLabelDuree(dateDebut, dateFin);
             }
         });
     }
@@ -137,9 +143,9 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
                 throw new IllegalArgumentException("Erreur mode");
         }
 
-        int duree = p.calculeDuree(this.dateDebut, this.dateFin);
-        if (duree > Placement.MAXECHEANCES) {
-            Toast toast = Toast.makeText(this, this.getString(string.dureeDoitEtreInferieureA), Toast.LENGTH_SHORT);
+        int duree = p.approximeDureeEnEcheances(this.dateDebut, this.dateFin);
+        if (duree > p.getMAXECHEANCES()) {
+            Toast toast = Toast.makeText(this, this.getString(string.dureeTropLongue), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
@@ -163,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
         return true;
     }
+
 
     public void buttonCalculerClick(@SuppressWarnings("UnusedParameters") View v) {
         if (!this.validateInputs()) {
@@ -207,6 +214,35 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         this.startActivity(intent);
     }
 
+
+    void updateLabelDuree(LocalDate dateDebut, LocalDate dateFin) {
+        TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
+
+        Placement p;
+        RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
+        switch (groupMode.getCheckedRadioButtonId()) {
+            case id.radioButtonModeQuinzaine:
+                p = new PlacementQuinzaine();
+                break;
+
+            case id.radioButtonModeNormal:
+                p = new PlacementSansQuinzaine();
+                break;
+            default:
+                throw new IllegalArgumentException("Erreur mode");
+        }
+
+        int dureeApprochee = p.approximeDureeEnEcheances(dateDebut, dateFin);
+
+        if (dureeApprochee > p.getMAXECHEANCES() || dureeApprochee < 0 || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
+            labelDuree.setTextColor(Color.RED);
+        } else {
+            labelDuree.setTextColor(Color.BLACK);
+        }
+        labelDuree.setText(formatDuree());
+    }
+
+
     @Override
     public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
 
@@ -221,32 +257,6 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             this.dateDebut = new LocalDate(year, month + 1, day);
             tv.setText(this.dateFormat.print(this.dateDebut));
         }
-
-        TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
-
-
-        /*
-        Placement p;
-        RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
-        switch (groupMode.getCheckedRadioButtonId()) {
-            case id.radioButtonModeQuinzaine:
-                p = new PlacementQuinzaine();
-                break;
-
-            case id.radioButtonModeNormal:
-                p = new PlacementSansQuinzaine();
-                break;
-            default:
-                throw new IllegalArgumentException("Erreur mode");
-        }*/
-
-
-        if (this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
-            labelDuree.setTextColor(Color.RED);
-        } else {
-            labelDuree.setTextColor(Color.BLACK);
-        }
-
-        labelDuree.setText(formatDuree());
+        updateLabelDuree(this.dateDebut, this.dateFin);
     }
 }

@@ -1,5 +1,7 @@
 package org.gipilab.simulateurdeplacements;
 
+import android.util.Log;
+
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -15,8 +17,29 @@ public class PlacementSansQuinzaine extends Placement {
 
 
     @Override
-    int calculeDuree(LocalDate dateDebut, LocalDate dateFin) {
+    int getMAXECHEANCES() {
+        return 1200;
+    }
+
+    @Override
+    int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
+        return this.calculeDureeEnEcheances(dateDebut, dateFin);
+    }
+
+    @Override
+    int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
         int duree = Months.monthsBetween(dateDebut, dateFin).getMonths();
+
+        LocalDate tmpDate = dateDebut.plusMonths(duree);
+        int residuel = Days.daysBetween(tmpDate, dateFin).getDays() + dateDebut.getDayOfMonth() - 1;
+
+        Log.d("Duree", "Duree = " + duree + " residuel =" + residuel);
+
+
+        if (residuel >= 30) {
+            duree++;
+        }
+
         return duree;
     }
 
@@ -72,14 +95,10 @@ public class PlacementSansQuinzaine extends Placement {
             cal = new LocalDate(LocalDate.now());
         else cal = this.getDateDebut();
 
-        BigDecimal tauxMensuel = this.tauxAnnuel.divide(BigDecimal.valueOf(12), MathContext.DECIMAL128);
         BigDecimal tauxJournalier = this.tauxAnnuel.divide(BigDecimal.valueOf(365), MathContext.DECIMAL128);
         BigDecimal capitalPlace = this.capitalInitial;
         BigDecimal interetsTotaux = BigDecimal.ZERO;
         BigDecimal interetsDeAnnee = BigDecimal.ZERO;
-
-        //Premiere echeance
-        Echeance premiereEcheance = new Echeance();
 
         int i;
         for (i = 1; i <= this.duree; i++) {
@@ -131,9 +150,12 @@ public class PlacementSansQuinzaine extends Placement {
         }
 
         //Ajoute les jours manquants
+
         int daysLeft = Days.daysBetween(cal, dateFin).getDays();
+
         if (daysLeft > 0) {
 
+            Log.d("duree", "Jours restant " + daysLeft);
 
             Echeance lastEcheance = new Echeance();
             lastEcheance.setIeme(i);
@@ -154,8 +176,6 @@ public class PlacementSansQuinzaine extends Placement {
                 }
             }
 
-
-
             lastEcheance.setDateDebutEcheance(cal);
             lastEcheance.setDateFinEcheance(dateFin);
             lastEcheance.setCapitalInitial(this.capitalInitial);
@@ -174,3 +194,4 @@ public class PlacementSansQuinzaine extends Placement {
         return lesMensualites;
     }
 }
+
