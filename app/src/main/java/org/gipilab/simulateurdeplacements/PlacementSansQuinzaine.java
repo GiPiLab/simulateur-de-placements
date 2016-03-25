@@ -1,13 +1,16 @@
 package org.gipilab.simulateurdeplacements;
 
-import android.util.Log;
+import android.content.Context;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormat;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +24,16 @@ public class PlacementSansQuinzaine extends Placement {
         return 1200;
     }
 
+    /**
+     * Approche la durée de manière rapide
+     *
+     * @param dateDebut
+     * @param dateFin
+     * @return la durée approchée en mois sans le mois résiduel éventuel
+     */
     @Override
     int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
-        return this.calculeDureeEnEcheances(dateDebut, dateFin);
+        return Months.monthsBetween(dateDebut, dateFin).getMonths();
     }
 
     @Override
@@ -32,9 +42,6 @@ public class PlacementSansQuinzaine extends Placement {
 
         LocalDate tmpDate = dateDebut.plusMonths(duree);
         int residuel = Days.daysBetween(tmpDate, dateFin).getDays() + dateDebut.getDayOfMonth() - 1;
-
-        Log.d("Duree", "Duree = " + duree + " residuel =" + residuel);
-
 
         if (residuel >= 30) {
             duree++;
@@ -107,7 +114,7 @@ public class PlacementSansQuinzaine extends Placement {
             mensualite.setDateDebutEcheance(cal);
             mensualite.setDateFinEcheance(cal.dayOfMonth().withMaximumValue());
 
-            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
+            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0 && capitalPlace.add(this.variation).compareTo(BigDecimal.ZERO) >= 0) {
                 switch (this.frequenceVariation) {
                     case MENSUELLE:
                         mensualite.setVariation(this.variation);
@@ -155,12 +162,10 @@ public class PlacementSansQuinzaine extends Placement {
 
         if (daysLeft > 0) {
 
-            Log.d("duree", "Jours restant " + daysLeft);
-
             Echeance lastEcheance = new Echeance();
             lastEcheance.setIeme(i);
 
-            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0) {
+            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0 && capitalPlace.add(this.variation).compareTo(BigDecimal.ZERO) >= 0) {
                 switch (this.frequenceVariation) {
                     case MENSUELLE:
                         lastEcheance.setVariation(this.variation);
@@ -190,8 +195,34 @@ public class PlacementSansQuinzaine extends Placement {
         }
 
         this.setInteretsObtenus(interetsTotaux);
+        this.setValeurAcquise(lesMensualites.get(lesMensualites.size() - 1).getValeurAcquise());
 
         return lesMensualites;
     }
+
+
+    @Override
+    String toLocalizedString(Context context) {
+
+        NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
+        NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+        moneyFormatter.setMaximumFractionDigits(2);
+        percentFormatter.setMaximumFractionDigits(2);
+        Period duration = new Period(dateDebut, dateFin);
+
+        String s = context.getString(R.string.descriptionPlacementSansLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
+                , PeriodFormat.wordBased().print(duration));
+
+        if (getVariation().compareTo(BigDecimal.ZERO) != 0) {
+            s += context.getString(R.string.avecVariationDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
+        }
+
+        s += context.getString(R.string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
+        s += context.getString(R.string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
+
+        return s;
+    }
+
+
 }
 

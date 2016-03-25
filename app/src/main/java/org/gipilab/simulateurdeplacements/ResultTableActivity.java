@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -95,5 +96,8 @@ public class ResultTableActivity extends AppCompatActivity {
         ArrayList<Echeance> mens = p.tableauPlacement();
         this.displayTable(mens);
         this.displayChart(mens);
+
+        TextView tvResult = (TextView) findViewById(id.textViewResult);
+        tvResult.setText(p.toLocalizedString(this));
     }
 }

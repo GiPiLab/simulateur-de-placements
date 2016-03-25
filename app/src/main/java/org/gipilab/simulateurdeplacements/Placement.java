@@ -1,6 +1,8 @@
 package org.gipilab.simulateurdeplacements;
 
 
+import android.content.Context;
+
 import org.joda.time.LocalDate;
 
 import java.io.Serializable;
@@ -24,6 +26,7 @@ abstract class Placement implements Serializable {
     protected LocalDate dateFin;
     protected int duree;
     protected enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
+    protected BigDecimal valeurAcquise = BigDecimal.ZERO;
 
     abstract int getMAXECHEANCES();
 
@@ -33,9 +36,13 @@ abstract class Placement implements Serializable {
 
     abstract ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances);
 
-
     abstract ArrayList<Echeance> tableauPlacement();
 
+    abstract String toLocalizedString(Context context);
+
+    BigDecimal getTauxAnnuel() {
+        return this.tauxAnnuel;
+    }
 
     /**
      * @param tauxAnnuel
@@ -127,5 +134,14 @@ abstract class Placement implements Serializable {
 
     void setFrequenceVariation(enumFrequenceVariation frequenceVariation) {
         this.frequenceVariation = frequenceVariation;
+    }
+
+
+    BigDecimal getValeurAcquise() {
+        return valeurAcquise;
+    }
+
+    void setValeurAcquise(BigDecimal valeurAcquise) {
+        this.valeurAcquise = valeurAcquise;
     }
 }
