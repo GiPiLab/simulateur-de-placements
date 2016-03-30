@@ -3,6 +3,7 @@ package org.gipilab.simulateurdeplacements;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -14,7 +15,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
@@ -93,39 +93,39 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         BigDecimal capital;
 
         if (editCapital.getText().length() == 0) {
-            Toast toast = Toast.makeText(this, string.saisissezLeCapital, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.saisissezLeCapital, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
         capital = new BigDecimal(editCapital.getText().toString());
 
         if (capital.compareTo(BigDecimal.ZERO) <= 0) {
-            Toast toast = Toast.makeText(this, string.capitalDoitEtrePositif, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.capitalDoitEtrePositif, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
         if (capital.compareTo(Placement.MAXCAPITAL) > 0) {
-            Toast toast = Toast.makeText(this, getString(string.capitalDoitEtreInferieurA, Placement.MAXCAPITAL.toString()), Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.capitalDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
 
         if (editTaux.getText().length() == 0) {
-            Toast toast = Toast.makeText(this, string.saisissezLeTaux, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.saisissezLeTaux, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
         BigDecimal taux = new BigDecimal(editTaux.getText().toString());
 
         if (taux.compareTo(BigDecimal.ZERO) < 0) {
-            Toast toast = Toast.makeText(this, string.tauxDoitEtrePositifOuNul, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.tauxDoitEtrePositifOuNul, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
 
         if (taux.compareTo(Placement.MAXTAUX) > 0) {
-            Toast toast = Toast.makeText(this, getString(string.tauxDoitEtreInferieurA, Placement.MAXTAUX.toString()), Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.tauxDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
 
@@ -145,26 +145,26 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
         int duree = p.approximeDureeEnEcheances(dateDebut, dateFin);
         if (duree > p.getMAXECHEANCES()) {
-            Toast toast = Toast.makeText(this, getString(string.dureeTropLongue), Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.dureeTropLongue, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
 
         if (duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
-            Toast toast = Toast.makeText(this, string.dureeDoitEtrePositive, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.dureeDoitEtrePositive, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
 
         if (editVariation.getText().length() == 0) {
-            Toast toast = Toast.makeText(this, string.saisissezLaVariationPeriodique, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.saisissezLaVariationPeriodique, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
         BigDecimal variation = new BigDecimal(editVariation.getText().toString());
         if (variation.compareTo(BigDecimal.ZERO) < 0 && variation.abs().compareTo(capital) > 0 && variation.compareTo(Placement.MAXVARIATION) >= 0) {
-            Toast toast = Toast.makeText(this, string.variationDoitEtreInferieureAuCapital, Toast.LENGTH_SHORT);
-            toast.show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), string.variationDoitEtreInferieureAuCapital, Snackbar.LENGTH_SHORT);
+            snackbar.show();
             return false;
         }
         return true;
