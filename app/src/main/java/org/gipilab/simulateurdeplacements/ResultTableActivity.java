@@ -9,15 +9,13 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.XAxis.XAxisPosition;
-import com.github.mikephil.charting.components.YAxis.AxisDependency;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import org.gipilab.simulateurdeplacements.R.id;
-import org.gipilab.simulateurdeplacements.R.layout;
+import org.gipilab.simulateurdeplacements.R.string;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -29,7 +27,7 @@ public class ResultTableActivity extends AppCompatActivity {
     Placement p;
 
     private void displayChart(ArrayList<Echeance> mens) {
-        LineChart chart = (LineChart) this.findViewById(id.lineChart);
+        LineChart chart = (LineChart) findViewById(R.id.lineChart);
 
         chart.setTouchEnabled(true);
 
@@ -38,7 +36,7 @@ public class ResultTableActivity extends AppCompatActivity {
         chart.getAxisRight().setEnabled(false);
 
         xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxisPosition.BOTTOM);
+        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         ArrayList<Entry> valuesValeurAcquise = new ArrayList<Entry>();
         ArrayList<Entry> valuesCapitalPlace = new ArrayList<Entry>();
@@ -48,19 +46,19 @@ public class ResultTableActivity extends AppCompatActivity {
 
         for (Echeance aMens : mens) {
             xLabels.add(dateFormat.print(aMens.getDateDebutEcheance()));
-            valuesValeurAcquise.add(new Entry(aMens.getValeurAcquise().floatValue(), aMens.getIeme()));
-            valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme()));
+            valuesValeurAcquise.add(new Entry(aMens.getValeurAcquise().floatValue(), aMens.getIeme() - 1));
+            valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme() - 1));
         }
 
-        LineDataSet dataSetValeurAcquise = new LineDataSet(valuesValeurAcquise, getString(R.string.chartLegendValeurAcquise));
-        dataSetValeurAcquise.setAxisDependency(AxisDependency.LEFT);
+        LineDataSet dataSetValeurAcquise = new LineDataSet(valuesValeurAcquise, this.getString(string.chartLegendValeurAcquise));
+        dataSetValeurAcquise.setAxisDependency(YAxis.AxisDependency.LEFT);
         dataSetValeurAcquise.setDrawValues(false);
         dataSetValeurAcquise.setColor(Color.BLUE, 128);
         dataSetValeurAcquise.setCircleColor(Color.BLUE);
         dataSetValeurAcquise.setDrawCircles(false);
 
-        LineDataSet dataSetCapitalPlace = new LineDataSet(valuesCapitalPlace, getString(R.string.chartLegendCapitalPlace));
-        dataSetCapitalPlace.setAxisDependency(AxisDependency.LEFT);
+        LineDataSet dataSetCapitalPlace = new LineDataSet(valuesCapitalPlace, this.getString(string.chartLegendCapitalPlace));
+        dataSetCapitalPlace.setAxisDependency(YAxis.AxisDependency.LEFT);
         dataSetCapitalPlace.setDrawValues(false);
         dataSetCapitalPlace.setColor(Color.RED, 128);
         dataSetCapitalPlace.setCircleColor(Color.RED);
@@ -77,8 +75,8 @@ public class ResultTableActivity extends AppCompatActivity {
     }
 
     private void displayTable(ArrayList<Echeance> mens) {
-        ArrayList<Annualite> annualites = p.echeancesToAnnualites(mens);
-        ExpandableListView listv = (ExpandableListView) this.findViewById(id.listViewResult);
+        ArrayList<Annualite> annualites = this.p.echeancesToAnnualites(mens);
+        ExpandableListView listv = (ExpandableListView) findViewById(R.id.listViewResult);
         PlacementExpandableListAdapter adapter = new PlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
     }
@@ -89,15 +87,15 @@ public class ResultTableActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(layout.activity_result_table);
+        this.setContentView(R.layout.activity_result_table);
 
         Intent intent = this.getIntent();
-        p = (Placement) intent.getSerializableExtra("placement");
-        ArrayList<Echeance> mens = p.tableauPlacement();
+        this.p = (Placement) intent.getSerializableExtra("placement");
+        ArrayList<Echeance> mens = this.p.tableauPlacement();
         this.displayTable(mens);
         this.displayChart(mens);
 
-        TextView tvResult = (TextView) findViewById(id.textViewResult);
-        tvResult.setText(p.toLocalizedString(this));
+        TextView tvResult = (TextView) this.findViewById(R.id.textViewResult);
+        tvResult.setText(this.p.toLocalizedString(this));
     }
 }
