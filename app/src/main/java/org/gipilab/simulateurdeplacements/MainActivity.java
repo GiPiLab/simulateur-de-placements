@@ -40,17 +40,17 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     }
 
     private void initDateSelectionSystem() {
-        this.dateDebut = new LocalDate(LocalDate.now());
-        this.dateFin = dateDebut.plusYears(1);
+        dateDebut = new LocalDate(LocalDate.now());
+        dateFin = dateDebut.plusYears(1);
 
-        this.dateFormat = DateTimeFormat.longDate();
-        final DatePicker dp = (DatePicker) this.findViewById(id.datePicker);
-        dp.init(this.dateFin.getYear(), this.dateFin.getMonthOfYear() - 1, this.dateFin.getDayOfMonth(), this);
+        dateFormat = DateTimeFormat.longDate();
+        final DatePicker dp = (DatePicker) findViewById(id.datePicker);
+        dp.init(dateFin.getYear(), dateFin.getMonthOfYear() - 1, dateFin.getDayOfMonth(), this);
         dp.setMaxDate(dateDebut.plusYears(200).toDate().getTime());
-        TextView tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
-        tv.setText(this.dateFormat.print(this.dateDebut));
-        tv = (TextView) this.findViewById(id.labelSelectedDateFin);
-        tv.setText(this.dateFormat.print(this.dateFin));
+        TextView tv = (TextView) findViewById(id.labelSelectedDateDebut);
+        tv.setText(dateFormat.print(dateDebut));
+        tv = (TextView) findViewById(id.labelSelectedDateFin);
+        tv.setText(dateFormat.print(dateFin));
 
         updateLabelDuree(dateDebut, dateFin);
 
@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             public void onCheckedChanged(CompoundButton b, boolean isChecked) {
 
                 if (isChecked) {
-                    dp.updateDate(MainActivity.this.dateFin.getYear(), MainActivity.this.dateFin.getMonthOfYear() - 1, MainActivity.this.dateFin.getDayOfMonth());
+                    dp.updateDate(dateFin.getYear(), dateFin.getMonthOfYear() - 1, dateFin.getDayOfMonth());
                 } else {
-                    dp.updateDate(MainActivity.this.dateDebut.getYear(), MainActivity.this.dateDebut.getMonthOfYear() - 1, MainActivity.this.dateDebut.getDayOfMonth());
+                    dp.updateDate(dateDebut.getYear(), dateDebut.getMonthOfYear() - 1, dateDebut.getDayOfMonth());
                 }
             }
         });
 
-        RadioGroup modeLivret = (RadioGroup) this.findViewById(id.radioGroupMode);
+        RadioGroup modeLivret = (RadioGroup) findViewById(id.radioGroupMode);
         modeLivret.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -81,14 +81,14 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(layout.activity_main);
-        this.initDateSelectionSystem();
+        setContentView(layout.activity_main);
+        initDateSelectionSystem();
     }
 
     private boolean validateInputs() {
-        EditText editCapital = (EditText) this.findViewById(id.editCapital);
-        EditText editTaux = (EditText) this.findViewById(id.editTaux);
-        EditText editVariation = (EditText) this.findViewById(id.editVariation);
+        EditText editCapital = (EditText) findViewById(id.editCapital);
+        EditText editTaux = (EditText) findViewById(id.editTaux);
+        EditText editVariation = (EditText) findViewById(id.editVariation);
 
         BigDecimal capital;
 
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
             return false;
         }
         if (capital.compareTo(Placement.MAXCAPITAL) > 0) {
-            Toast toast = Toast.makeText(this, this.getString(string.capitalDoitEtreInferieurA, Placement.MAXCAPITAL.toString()), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(string.capitalDoitEtreInferieurA, Placement.MAXCAPITAL.toString()), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
         if (taux.compareTo(Placement.MAXTAUX) > 0) {
-            Toast toast = Toast.makeText(this, this.getString(string.tauxDoitEtreInferieurA, Placement.MAXTAUX.toString()), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(string.tauxDoitEtreInferieurA, Placement.MAXTAUX.toString()), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
@@ -143,14 +143,14 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
                 throw new IllegalArgumentException("Erreur mode");
         }
 
-        int duree = p.approximeDureeEnEcheances(this.dateDebut, this.dateFin);
+        int duree = p.approximeDureeEnEcheances(dateDebut, dateFin);
         if (duree > p.getMAXECHEANCES()) {
-            Toast toast = Toast.makeText(this, this.getString(string.dureeTropLongue), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(string.dureeTropLongue), Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
 
-        if (duree < 0 || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
+        if (duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
             Toast toast = Toast.makeText(this, string.dureeDoitEtrePositive, Toast.LENGTH_SHORT);
             toast.show();
             return false;
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
 
     public void buttonCalculerClick(@SuppressWarnings("UnusedParameters") View v) {
-        if (!this.validateInputs()) {
+        if (!validateInputs()) {
             return;
         }
 
@@ -192,10 +192,10 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
         }
 
 
-        placement.setCapitalInitial(new BigDecimal(((EditText) this.findViewById(id.editCapital)).getText().toString()));
-        placement.setVariation(new BigDecimal(((EditText) this.findViewById(id.editVariation)).getText().toString()));
-        placement.setTauxAnnuel(new BigDecimal(((EditText) this.findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
-        Spinner spinnerFrequence = (Spinner) this.findViewById(id.spinnerFrequenceVariation);
+        placement.setCapitalInitial(new BigDecimal(((EditText) findViewById(id.editCapital)).getText().toString()));
+        placement.setVariation(new BigDecimal(((EditText) findViewById(id.editVariation)).getText().toString()));
+        placement.setTauxAnnuel(new BigDecimal(((EditText) findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
+        Spinner spinnerFrequence = (Spinner) findViewById(id.spinnerFrequenceVariation);
         placement.setDatesPlacement(dateDebut, dateFin);
 
         switch (spinnerFrequence.getSelectedItemPosition()) {
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
 
     void updateLabelDuree(LocalDate dateDebut, LocalDate dateFin) {
-        TextView labelDuree = (TextView) this.findViewById(id.labelDuree);
+        TextView labelDuree = (TextView) findViewById(id.labelDuree);
 
         Placement p;
         RadioGroup groupMode = (RadioGroup) findViewById(id.radioGroupMode);
@@ -247,16 +247,16 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
 
         TextView tv;
-        RadioButton buttonDateFin = (RadioButton) this.findViewById(id.radioButtonDateFin);
+        RadioButton buttonDateFin = (RadioButton) findViewById(id.radioButtonDateFin);
         if (buttonDateFin.isChecked()) {
-            tv = (TextView) this.findViewById(id.labelSelectedDateFin);
-            this.dateFin = new LocalDate(year, month + 1, day);
-            tv.setText(this.dateFormat.print(this.dateFin));
+            tv = (TextView) findViewById(id.labelSelectedDateFin);
+            dateFin = new LocalDate(year, month + 1, day);
+            tv.setText(dateFormat.print(dateFin));
         } else {
-            tv = (TextView) this.findViewById(id.labelSelectedDateDebut);
-            this.dateDebut = new LocalDate(year, month + 1, day);
-            tv.setText(this.dateFormat.print(this.dateDebut));
+            tv = (TextView) findViewById(id.labelSelectedDateDebut);
+            dateDebut = new LocalDate(year, month + 1, day);
+            tv.setText(dateFormat.print(dateDebut));
         }
-        updateLabelDuree(this.dateDebut, this.dateFin);
+        updateLabelDuree(dateDebut, dateFin);
     }
 }
