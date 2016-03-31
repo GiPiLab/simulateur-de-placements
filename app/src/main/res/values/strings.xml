@@ -45,7 +45,9 @@
     <string name="periodiciteVariationTrimestre">trimestre</string>
     <string name="descriptionPlacementLivret">Placement sur livret de %1$s à %2$s pendant %3$s</string>
     <string name="descriptionPlacementSansLivret">Placement de %1$s à %2$s pendant %3$s</string>
-    <string name="avecVariationDe">" avec variation de %1$s par %2$s"</string>
+    <string name="avecRetraitDe">" avec retrait de %1$s par %2$s"</string>
+    <string name="avecVersementDe">" avec versement de %1$s par %2$s"</string>
+
     <string name="descriptionInteretsObtenus">"\nIntérêts obtenus = %1$s"</string>
     <string name="descriptionValeurAcquise">"\nValeur acquise en fin de période = %1$s"</string>
 

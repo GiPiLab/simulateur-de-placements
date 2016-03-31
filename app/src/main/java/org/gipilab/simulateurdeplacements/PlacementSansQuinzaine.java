@@ -213,9 +213,13 @@ public class PlacementSansQuinzaine extends Placement {
         String s = context.getString(R.string.descriptionPlacementSansLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
                 , PeriodFormat.wordBased().print(duration));
 
-        if (getVariation().compareTo(BigDecimal.ZERO) != 0) {
-            s += context.getString(R.string.avecVariationDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
+
+        if (getVariation().compareTo(BigDecimal.ZERO) < 0) {
+            s += context.getString(R.string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
+        } else if (getVariation().compareTo(BigDecimal.ZERO) > 0) {
+            s += context.getString(R.string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
         }
+
 
         s += context.getString(R.string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
         s += context.getString(R.string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
