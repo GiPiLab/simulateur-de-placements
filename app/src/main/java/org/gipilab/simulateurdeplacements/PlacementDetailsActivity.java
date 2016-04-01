@@ -21,7 +21,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
-public class ResultTableActivity extends AppCompatActivity {
+public class PlacementDetailsActivity extends AppCompatActivity {
 
 
     Placement p;
@@ -77,7 +77,7 @@ public class ResultTableActivity extends AppCompatActivity {
     private void displayTable(ArrayList<Echeance> mens) {
         ArrayList<Annualite> annualites = this.p.echeancesToAnnualites(mens);
         ExpandableListView listv = (ExpandableListView) findViewById(R.id.listViewResult);
-        PlacementExpandableListAdapter adapter = new PlacementExpandableListAdapter(this, annualites);
+        TableauPlacementExpandableListAdapter adapter = new TableauPlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
     }
 

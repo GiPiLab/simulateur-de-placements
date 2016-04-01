@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
                 throw new IllegalArgumentException("frequence variation");
         }
 
-        Intent intent = new Intent(this, ResultTableActivity.class);
+        Intent intent = new Intent(this, PlacementDetailsActivity.class);
         intent.putExtra("placement", placement);
         this.startActivity(intent);
     }
