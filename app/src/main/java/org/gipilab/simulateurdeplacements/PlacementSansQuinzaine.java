@@ -19,6 +19,11 @@ import java.util.ArrayList;
 public class PlacementSansQuinzaine extends Placement {
 
 
+    PlacementSansQuinzaine() {
+        modeCalculPlacement = enumModeCalculPlacement.SANSQUINZAINE;
+    }
+
+
     @Override
     int getMAXECHEANCES() {
         return 1200;

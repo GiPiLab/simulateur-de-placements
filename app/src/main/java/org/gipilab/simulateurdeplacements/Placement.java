@@ -3,17 +3,23 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
+import com.orm.SugarRecord;
+
 import org.joda.time.LocalDate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
  * Created by thibault on 14/01/16.
+ * Was abstract but reverted to concrete class in order to work with orm
  */
-abstract class Placement implements Serializable {
+
+
+class Placement extends SugarRecord implements Serializable {
 
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
@@ -27,18 +33,53 @@ abstract class Placement implements Serializable {
     protected int duree;
     protected enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
     protected BigDecimal valeurAcquise = BigDecimal.ZERO;
+    protected enumModeCalculPlacement modeCalculPlacement;
 
-    abstract int getMAXECHEANCES();
+    public Placement() {
 
-    abstract int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
+    }
 
-    abstract int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
+    static List<Placement> getAll() {
+        return listAll(Placement.class);
+    }
 
-    abstract ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances);
+    static List<Placement> getAllPlacementQuinzaine() {
+        return null;
+        //  return new Select().from(Placement.class).where("modeCalculPlacement=", enumModeCalculPlacement.QUINZAINE).execute();
+    }
 
-    abstract ArrayList<Echeance> tableauPlacement();
+    static List<Placement> getAllPlacementSansQuinzaine() {
+        return null;
+        //return new Select().from(Placement.class).where("modeCalculPlacement=", enumModeCalculPlacement.SANSQUINZAINE).execute();
+    }
 
-    abstract String toLocalizedString(Context context);
+    enumModeCalculPlacement getModeCalculPlacement() {
+        return modeCalculPlacement;
+    }
+
+    int getMAXECHEANCES() {
+        return -1;
+    }
+
+    int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
+        return -1;
+    }
+
+    int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
+        return -1;
+    }
+
+    ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances) {
+        return null;
+    }
+
+    ArrayList<Echeance> tableauPlacement() {
+        return null;
+    }
+
+    String toLocalizedString(Context context) {
+        return null;
+    }
 
     BigDecimal getTauxAnnuel() {
         return this.tauxAnnuel;
@@ -135,7 +176,6 @@ abstract class Placement implements Serializable {
     void setFrequenceVariation(enumFrequenceVariation frequenceVariation) {
         this.frequenceVariation = frequenceVariation;
     }
-
 
     BigDecimal getValeurAcquise() {
         return valeurAcquise;

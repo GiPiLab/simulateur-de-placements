@@ -81,9 +81,6 @@ public class PlacementDetailsActivity extends AppCompatActivity {
         listv.setAdapter(adapter);
     }
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

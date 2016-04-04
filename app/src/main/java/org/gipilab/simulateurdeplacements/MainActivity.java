@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -81,8 +82,10 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(layout.activity_main);
         initDateSelectionSystem();
+        Log.d("DATABASE", "Nb placements = " + Placement.getAll().size());
     }
 
     private boolean validateInputs() {

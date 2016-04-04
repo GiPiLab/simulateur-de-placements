@@ -19,6 +19,11 @@ import java.util.InputMismatchException;
 public class PlacementQuinzaine extends Placement {
 
 
+    PlacementQuinzaine() {
+        modeCalculPlacement = enumModeCalculPlacement.QUINZAINE;
+    }
+
+
 
     @Override
     int getMAXECHEANCES() {
