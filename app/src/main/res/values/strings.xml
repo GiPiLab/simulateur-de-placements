@@ -50,6 +50,7 @@
 
     <string name="descriptionInteretsObtenus">"\nIntérêts obtenus = %1$s"</string>
     <string name="descriptionValeurAcquise">"\nValeur acquise en fin de période = %1$s"</string>
+    <string name="btnEnregistrerPlacement">Enregistrer</string>
 
 
     <string-array name="periodiciteVariation">

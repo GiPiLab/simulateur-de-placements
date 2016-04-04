@@ -11,75 +11,51 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 
 /**
  * Created by thibault on 14/01/16.
- * Was abstract but reverted to concrete class in order to work with orm
  */
 
 
-class Placement extends SugarRecord implements Serializable {
+abstract class Placement extends SugarRecord implements Serializable {
 
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
     public static final BigDecimal MAXVARIATION = Placement.MAXCAPITAL;
-    protected BigDecimal tauxAnnuel = BigDecimal.ZERO;
-    protected BigDecimal capitalInitial = BigDecimal.ZERO;
-    protected BigDecimal interetsObtenus = BigDecimal.ZERO;
-    protected BigDecimal variation = BigDecimal.ZERO;
-    protected LocalDate dateDebut;
-    protected LocalDate dateFin;
-    protected int duree;
-    protected enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
-    protected BigDecimal valeurAcquise = BigDecimal.ZERO;
-    protected enumModeCalculPlacement modeCalculPlacement;
+    private BigDecimal tauxAnnuel = BigDecimal.ZERO;
+    private BigDecimal capitalInitial = BigDecimal.ZERO;
+    private BigDecimal interetsObtenus = BigDecimal.ZERO;
+    private BigDecimal variation = BigDecimal.ZERO;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
+    private int duree;
+    private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
+    private BigDecimal valeurAcquise = BigDecimal.ZERO;
+    private enumModeCalculPlacement modeCalculPlacement;
 
     public Placement() {
 
-    }
-
-    static List<Placement> getAll() {
-        return listAll(Placement.class);
-    }
-
-    static List<Placement> getAllPlacementQuinzaine() {
-        return null;
-        //  return new Select().from(Placement.class).where("modeCalculPlacement=", enumModeCalculPlacement.QUINZAINE).execute();
-    }
-
-    static List<Placement> getAllPlacementSansQuinzaine() {
-        return null;
-        //return new Select().from(Placement.class).where("modeCalculPlacement=", enumModeCalculPlacement.SANSQUINZAINE).execute();
     }
 
     enumModeCalculPlacement getModeCalculPlacement() {
         return modeCalculPlacement;
     }
 
-    int getMAXECHEANCES() {
-        return -1;
+    void setModeCalculPlacement(enumModeCalculPlacement mode) {
+        this.modeCalculPlacement = mode;
     }
 
-    int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
-        return -1;
-    }
+    abstract int getMAXECHEANCES();
 
-    int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
-        return -1;
-    }
+    abstract int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
 
-    ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances) {
-        return null;
-    }
+    abstract int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
 
-    ArrayList<Echeance> tableauPlacement() {
-        return null;
-    }
+    abstract ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances);
 
-    String toLocalizedString(Context context) {
-        return null;
-    }
+    abstract ArrayList<Echeance> tableauPlacement();
+
+    abstract String toLocalizedString(Context context);
 
     BigDecimal getTauxAnnuel() {
         return this.tauxAnnuel;
@@ -145,8 +121,16 @@ class Placement extends SugarRecord implements Serializable {
         return this.dateDebut;
     }
 
+    void setDateDebut(LocalDate date) {
+        this.dateDebut = date;
+    }
+
     LocalDate getDateFin() {
         return dateFin;
+    }
+
+    void setDateFin(LocalDate date) {
+        this.dateFin = date;
     }
 
     /**
@@ -167,6 +151,10 @@ class Placement extends SugarRecord implements Serializable {
 
     int getDuree() {
         return this.duree;
+    }
+
+    void setDuree(int duree) {
+        this.duree = duree;
     }
 
     enumFrequenceVariation getFrequenceVariation() {

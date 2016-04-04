@@ -12,6 +12,7 @@ import java.math.MathContext;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
  * Created by thibault on 03/03/16.
@@ -19,10 +20,14 @@ import java.util.InputMismatchException;
 public class PlacementQuinzaine extends Placement {
 
 
-    PlacementQuinzaine() {
-        modeCalculPlacement = enumModeCalculPlacement.QUINZAINE;
+    public PlacementQuinzaine() {
+        setModeCalculPlacement(enumModeCalculPlacement.QUINZAINE);
     }
 
+
+    static List<PlacementQuinzaine> getAll() {
+        return listAll(PlacementQuinzaine.class);
+    }
 
 
     @Override
@@ -64,15 +69,15 @@ public class PlacementQuinzaine extends Placement {
         //  this.dateDebut = aligneDateDebutSurQuinzaine(dateDebut);
         //  this.dateFin = aligneDateFinSurQuinzaine(dateFin);
 
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+        setDateDebut(dateDebut);
+        setDateFin(dateFin);
 
-        int duree = calculeDureeEnEcheances(this.dateDebut, this.dateFin);
+        int duree = calculeDureeEnEcheances(getDateDebut(), getDateFin());
 
         if (duree > getMAXECHEANCES() || duree < 0) {
             throw new InputMismatchException("duree hors bornes :" + duree);
         }
-        this.duree = duree;
+        setDuree(duree);
     }
 
 
@@ -216,58 +221,59 @@ public class PlacementQuinzaine extends Placement {
         ArrayList<Echeance> lesMensualites = new ArrayList<>();
 
         LocalDate cal;
-        if (!estAligneeSurQuinzaine(dateDebut)) {
-            cal = aligneDateDebutSurQuinzaine(dateDebut);
+        if (!estAligneeSurQuinzaine(getDateDebut())) {
+            cal = aligneDateDebutSurQuinzaine(getDateDebut());
         } else {
-            cal = dateDebut;
+            cal = getDateDebut();
         }
 
-        BigDecimal tauxQuinzaine = this.tauxAnnuel.divide(BigDecimal.valueOf(24), MathContext.DECIMAL128);
+        BigDecimal tauxQuinzaine = getTauxAnnuel().divide(BigDecimal.valueOf(24), MathContext.DECIMAL128);
 
-        BigDecimal capitalPlace = this.capitalInitial;
+        BigDecimal capitalPlace = getCapitalInitial();
         BigDecimal interetsTotaux = BigDecimal.ZERO;
         BigDecimal interetsDeAnnee = BigDecimal.ZERO;
 
         //Si on a aucun interêt à cause des quinzaines
-        if (this.duree == 0) {
+        if (getDuree() == 0) {
             Echeance mensualiteVide = new Echeance();
             mensualiteVide.setIeme(0);
-            mensualiteVide.setCapitalInitial(this.capitalInitial);
+            mensualiteVide.setCapitalInitial(getCapitalInitial());
             mensualiteVide.setInteretsObtenus(BigDecimal.ZERO);
-            mensualiteVide.setValeurAcquise(this.capitalInitial);
+            mensualiteVide.setValeurAcquise(getCapitalInitial());
             mensualiteVide.setInteretsTotaux(BigDecimal.ZERO);
-            mensualiteVide.setCapitalCourant(this.capitalInitial);
+            mensualiteVide.setCapitalCourant(getCapitalInitial());
             lesMensualites.add(mensualiteVide);
             return lesMensualites;
         }
 
 
         int i;
-        for (i = 1; i <= this.duree; i++) {
+        int dur = getDuree();
+        for (i = 1; i <= dur; i++) {
 
             Echeance quinzaine = new Echeance();
             quinzaine.setDateDebutEcheance(cal);
             quinzaine.setDateFinEcheance(versQuinzaineSuivante(cal).minusDays(1));
 
-            if (i > 1 && this.variation.compareTo(BigDecimal.ZERO) != 0 && capitalPlace.add(this.variation).compareTo(BigDecimal.ZERO) >= 0) {
-                switch (this.frequenceVariation) {
+            if (i > 1 && getVariation().compareTo(BigDecimal.ZERO) != 0 && capitalPlace.add(getVariation()).compareTo(BigDecimal.ZERO) >= 0) {
+                switch (getFrequenceVariation()) {
                     case MENSUELLE:
                         if ((i - 1) % 2 == 0) {
-                            quinzaine.setVariation(this.variation);
-                            capitalPlace = capitalPlace.add(this.variation);
+                            quinzaine.setVariation(getVariation());
+                            capitalPlace = capitalPlace.add(getVariation());
                         }
                         break;
 
                     case TRIMESTRIELLE:
                         if ((i - 1) % 6 == 0) {
-                            quinzaine.setVariation(this.variation);
-                            capitalPlace = capitalPlace.add(this.variation);
+                            quinzaine.setVariation(getVariation());
+                            capitalPlace = capitalPlace.add(getVariation());
                         }
                         break;
                 }
             }
             quinzaine.setIeme(i);
-            quinzaine.setCapitalInitial(this.capitalInitial);
+            quinzaine.setCapitalInitial(getCapitalInitial());
             quinzaine.setCapitalCourant(capitalPlace);
 
             quinzaine.setInteretsObtenus(capitalPlace.multiply(tauxQuinzaine, MathContext.DECIMAL128));
@@ -304,7 +310,7 @@ public class PlacementQuinzaine extends Placement {
         NumberFormat percentFormatter = NumberFormat.getPercentInstance();
         moneyFormatter.setMaximumFractionDigits(2);
         percentFormatter.setMaximumFractionDigits(2);
-        Period duration = new Period(dateDebut, dateFin);
+        Period duration = new Period(getDateDebut(), getDateFin());
 
         String s = context.getString(R.string.descriptionPlacementLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
                 , PeriodFormat.wordBased().print(duration));

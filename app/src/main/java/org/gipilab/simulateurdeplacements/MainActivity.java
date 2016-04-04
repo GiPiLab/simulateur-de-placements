@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
 
         setContentView(layout.activity_main);
         initDateSelectionSystem();
-        Log.d("DATABASE", "Nb placements = " + Placement.getAll().size());
+        Log.d("DATABASE", "Nb placements = " + PlacementQuinzaine.getAll().size());
     }
 
     private boolean validateInputs() {
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements OnDateChangedList
     }
 
 
-    public void buttonCalculerClick(@SuppressWarnings("UnusedParameters") View v) {
+    public void buttonCalculerClick(View v) {
         if (!validateInputs()) {
             return;
         }
