@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.gipilab.simulateurdeplacements">
 
-    <!--suppress CheckTagEmptyBody, CheckTagEmptyBody -->
+    <!-- suppress CheckTagEmptyBody, CheckTagEmptyBody -->
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -10,7 +10,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="DATABASE"
             android:value="simulateurplacements.db" />
@@ -24,17 +23,19 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="org.gipilab.simulateurdeplacements.Placement" />
 
-
+        <activity android:name=".AffichePlacementActivity" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize">
-
-        <intent-filter>
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
-        <activity android:name=".PlacementDetailsActivity" />
     </application>
 
 </manifest>

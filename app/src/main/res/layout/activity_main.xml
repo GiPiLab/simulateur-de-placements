@@ -1,256 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/coordinator"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
 
-
-    <android.support.v4.widget.NestedScrollView
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-        <TextView
-            android:id="@+id/labelVariation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/gridLayout"
-            android:labelFor="@+id/layoutVariation"
-            android:text="@string/labelVariation"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <LinearLayout
-            android:id="@+id/layoutVariation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/labelVariation"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editVariation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:ems="10"
-                android:hint="@string/editVariationHint"
-                android:inputType="numberSigned|numberDecimal"
-                android:text="0" />
-
-            <TextView
-                android:id="@+id/textViewEurosPar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/eurosPar" />
-
-            <Spinner
-                android:id="@+id/spinnerFrequenceVariation"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:entries="@array/periodiciteVariation" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonCalculer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_below="@+id/layoutVariation"
-            android:onClick="buttonCalculerClick"
-            android:text="@string/buttonCalculer" />
-
-        <LinearLayout
-            android:id="@+id/gridLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layoutTaux"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/labelDuree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:text="duree"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/labelDateDebut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dateDebutPlacement" />
-
-                <TextView
-                    android:id="@+id/labelSelectedDateDebut"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="01/01/2000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dateFinPlacement" />
-
-                <TextView
-                    android:id="@+id/labelSelectedDateFin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="01/01/2001"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButtonDateDebut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:text="@string/radioReglerDateDebut" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDateFin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/radioReglerDateFin" />
-            </RadioGroup>
-
-            <DatePicker
-                android:id="@+id/datePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:spinnersShown="true" />
-
-            <RadioGroup
-                android:id="@+id/radioGroupMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButtonModeQuinzaine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/radioModeQuinzaine" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonModeNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/radioModeSansQuinzaine" />
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutCapital"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/labelCapital"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/editCapital"
-                android:text="@string/labelCapital"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/editCapital"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/editCapitalHint"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutTaux"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layoutCapital"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/labelTaux"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/editTaux"
-                android:text="@string/labelTaux"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/editTaux"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/editTauxHint"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
-    </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
-
-
-    <!-- <android.support.design.widget.FloatingActionButton
-         android:id="@+id/fabCalculer"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         app:layout_anchor="@id/relativeLayout"
-         android:clickable="true"
-         android:src="@drawable/ic_done"
-         app:layout_anchorGravity="bottom|right|end"
-         />-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

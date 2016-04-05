@@ -22,7 +22,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
-public class PlacementDetailsActivity extends AppCompatActivity {
+public class AffichePlacementActivity extends AppCompatActivity {
 
 
     Placement p;
@@ -89,7 +89,7 @@ public class PlacementDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_result_table);
+        this.setContentView(R.layout.activity_affiche_placement);
 
         Intent intent = this.getIntent();
         this.p = (Placement) intent.getSerializableExtra("placement");

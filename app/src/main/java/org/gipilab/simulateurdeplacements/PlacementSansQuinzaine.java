@@ -2,6 +2,8 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
+import com.orm.SugarRecord;
+
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -26,7 +28,7 @@ public class PlacementSansQuinzaine extends Placement {
 
 
     static List<PlacementSansQuinzaine> getAll() {
-        return listAll(PlacementSansQuinzaine.class);
+        return SugarRecord.listAll(PlacementSansQuinzaine.class);
     }
 
 
