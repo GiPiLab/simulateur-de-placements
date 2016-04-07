@@ -1,9 +1,8 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, ListePlacementsFragment.OnFragmentInteractionListener {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                         .setAction("Action", null).show();
             }
         });
-
+*/
     }
 
 
@@ -90,6 +89,11 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         Intent intent = new Intent(this, AffichePlacementActivity.class);
         intent.putExtra("placement", placement);
         startActivity(intent);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
 
@@ -144,25 +148,24 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
             switch (position) {
                 case 0:
                     return NouveauPlacementFragment.newInstance();
+                case 1:
+                    return ListePlacementsFragment.newInstance("titi", "toto");
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 1;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.ongletNouveauPlacement);
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return getString(R.string.ongletPlacementsEnregistres);
             }
             return null;
         }

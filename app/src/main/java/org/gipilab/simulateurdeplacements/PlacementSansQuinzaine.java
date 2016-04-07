@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thibault on 03/03/16.
@@ -27,8 +26,8 @@ public class PlacementSansQuinzaine extends Placement {
     }
 
 
-    static List<PlacementSansQuinzaine> getAll() {
-        return SugarRecord.listAll(PlacementSansQuinzaine.class);
+    static ArrayList<Placement> getAll() {
+        return (ArrayList) SugarRecord.listAll(PlacementSansQuinzaine.class);
     }
 
 

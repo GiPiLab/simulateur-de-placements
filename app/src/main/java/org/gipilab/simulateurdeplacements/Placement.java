@@ -26,8 +26,13 @@ abstract class Placement extends SugarRecord implements Serializable {
     private BigDecimal capitalInitial = BigDecimal.ZERO;
     private BigDecimal interetsObtenus = BigDecimal.ZERO;
     private BigDecimal variation = BigDecimal.ZERO;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
+
+    private long timestampDebut;
+    private long timestampFin;
+
+    /*private LocalDate dateDebut;
+    private LocalDate dateFin;*/
+
     private int duree;
     private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
     private BigDecimal valeurAcquise = BigDecimal.ZERO;
@@ -118,19 +123,19 @@ abstract class Placement extends SugarRecord implements Serializable {
     }
 
     LocalDate getDateDebut() {
-        return this.dateDebut;
+        return new LocalDate(this.timestampDebut);
     }
 
     void setDateDebut(LocalDate date) {
-        this.dateDebut = date;
+        this.timestampDebut = date.toDate().getTime();
     }
 
     LocalDate getDateFin() {
-        return dateFin;
+        return new LocalDate(this.timestampFin);
     }
 
     void setDateFin(LocalDate date) {
-        this.dateFin = date;
+        timestampFin = date.toDate().getTime();
     }
 
     /**
@@ -144,8 +149,8 @@ abstract class Placement extends SugarRecord implements Serializable {
         if (duree > getMAXECHEANCES() || duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
             throw new InputMismatchException("duree hors bornes");
         }
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+        setDateDebut(dateDebut);
+        setDateFin(dateFin);
         this.duree = duree;
     }
 

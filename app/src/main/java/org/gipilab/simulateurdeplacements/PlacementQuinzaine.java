@@ -12,7 +12,6 @@ import java.math.MathContext;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 
 /**
  * Created by thibault on 03/03/16.
@@ -25,8 +24,8 @@ public class PlacementQuinzaine extends Placement {
     }
 
 
-    static List<PlacementQuinzaine> getAll() {
-        return listAll(PlacementQuinzaine.class);
+    static ArrayList<Placement> getAll() {
+        return (ArrayList) listAll(PlacementQuinzaine.class);
     }
 
 

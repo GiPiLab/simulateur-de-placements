@@ -128,8 +128,6 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
                 if (mListener != null) {
                     mListener.onPlacementValidated(placement);
                 }
-
-
             }
         });
     }
