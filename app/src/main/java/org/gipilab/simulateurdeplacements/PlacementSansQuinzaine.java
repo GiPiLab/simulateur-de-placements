@@ -8,6 +8,8 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.PeriodFormat;
 
 import java.math.BigDecimal;
@@ -215,16 +217,18 @@ public class PlacementSansQuinzaine extends Placement {
 
 
     @Override
-    String toLocalizedString(Context context) {
+    String toLocalizedStringForDetailedView(Context context) {
 
         NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
         NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+        DateTimeFormatter dateFormatter = DateTimeFormat.longDate();
+
         moneyFormatter.setMaximumFractionDigits(2);
         percentFormatter.setMaximumFractionDigits(2);
         Period duration = new Period(getDateDebut(), getDateFin());
 
         String s = context.getString(R.string.descriptionPlacementSansLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
-                , PeriodFormat.wordBased().print(duration));
+                , PeriodFormat.wordBased().print(duration), dateFormatter.print(getDateDebut()), dateFormatter.print(getDateFin()));
 
 
         if (getVariation().compareTo(BigDecimal.ZERO) < 0) {
@@ -236,6 +240,34 @@ public class PlacementSansQuinzaine extends Placement {
 
         s += context.getString(R.string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
         s += context.getString(R.string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
+
+        return s;
+    }
+
+    @Override
+    String toLocalizedStringForListePlacementsView(Context context) {
+        NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
+        NumberFormat percentFormatter = NumberFormat.getPercentInstance();
+        DateTimeFormatter dateFormatter = DateTimeFormat.longDate();
+
+        moneyFormatter.setMaximumFractionDigits(2);
+        percentFormatter.setMaximumFractionDigits(2);
+        Period duration = new Period(getDateDebut(), getDateFin());
+
+        String s = context.getString(R.string.descriptionPlacementSansLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
+                , PeriodFormat.wordBased().print(duration), dateFormatter.print(getDateDebut()), dateFormatter.print(getDateFin()));
+
+
+        if (getVariation().compareTo(BigDecimal.ZERO) < 0) {
+            s += context.getString(R.string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
+        } else if (getVariation().compareTo(BigDecimal.ZERO) > 0) {
+            s += context.getString(R.string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
+        }
+
+
+        s += context.getString(R.string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
+        s += context.getString(R.string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
+
 
         return s;
     }

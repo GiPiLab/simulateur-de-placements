@@ -70,6 +70,13 @@ public class ListePlacementsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_liste_placements, container, false);
 
+        updateListView(v);
+
+        return v;
+    }
+
+
+    public void updateListView(View v) {
         ListView listViewQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsSansQuinzaine);
         ArrayList<Placement> listPlacementsQuinzaine = PlacementQuinzaine.getAll();
@@ -77,11 +84,7 @@ public class ListePlacementsFragment extends Fragment {
 
         listViewQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsQuinzaine));
         listViewSansQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsSansQuinzaine));
-
-
-        return v;
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

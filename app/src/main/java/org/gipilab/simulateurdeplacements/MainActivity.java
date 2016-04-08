@@ -10,13 +10,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, ListePlacementsFragment.OnFragmentInteractionListener {
+    static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -88,67 +86,52 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
     public void onPlacementValidated(Placement placement) {
         Intent intent = new Intent(this, AffichePlacementActivity.class);
         intent.putExtra("placement", placement);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_PLACEMENT_SAVED);
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+        //TODO : actions sur le fragment d'affichage de la liste des placements
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+        if (requestCode == REQUEST_CODE_PLACEMENT_SAVED) {
+            if (resultCode == RESULT_OK) {
+                //TODO : mettre à jour le fragment de liste
 
-        public PlaceholderFragment() {
+                Log.d("PLACEMENT", "Liste placements maj");
+                ListePlacementsFragment frag = (ListePlacementsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.FRAGMENT_LISTE_PLACEMENTS_ID);
+                frag.updateListView(frag.getView());
+
+
+            }
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_nouveau_placement, container, false);
-            return rootView;
-        }
     }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends SmartFragmentStatePagerAdapter {
 
+        public static final int FRAGMENT_NOUVEAU_PLACEMENT_ID = 0;
+        public static final int FRAGMENT_LISTE_PLACEMENTS_ID = 1;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
 
             switch (position) {
-                case 0:
+                case FRAGMENT_NOUVEAU_PLACEMENT_ID:
                     return NouveauPlacementFragment.newInstance();
-                case 1:
+                case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return ListePlacementsFragment.newInstance("titi", "toto");
             }
             return null;
@@ -162,9 +145,9 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
+                case FRAGMENT_NOUVEAU_PLACEMENT_ID:
                     return getString(R.string.ongletNouveauPlacement);
-                case 1:
+                case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return getString(R.string.ongletPlacementsEnregistres);
             }
             return null;

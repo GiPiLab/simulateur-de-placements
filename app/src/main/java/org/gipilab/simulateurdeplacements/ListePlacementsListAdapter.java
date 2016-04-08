@@ -1,7 +1,6 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,8 @@ public class ListePlacementsListAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.liste_placements_item, viewGroup, false);
         }
         TextView tv = (TextView) view.findViewById(R.id.textViewItem);
-        tv.setText(Html.fromHtml(getItem(i).toLocalizedString(_context)));
+        //tv.setText(Html.fromHtml(getItem(i).toLocalizedStringForListePlacementsView(_context)));
+        tv.setText(getItem(i).toLocalizedStringForListePlacementsView(_context));
         return view;
     }
 }

@@ -30,6 +30,8 @@ abstract class Placement extends SugarRecord implements Serializable {
     private long timestampDebut;
     private long timestampFin;
 
+
+
     /*private LocalDate dateDebut;
     private LocalDate dateFin;*/
 
@@ -60,7 +62,9 @@ abstract class Placement extends SugarRecord implements Serializable {
 
     abstract ArrayList<Echeance> tableauPlacement();
 
-    abstract String toLocalizedString(Context context);
+    abstract String toLocalizedStringForDetailedView(Context context);
+
+    abstract String toLocalizedStringForListePlacementsView(Context context);
 
     BigDecimal getTauxAnnuel() {
         return this.tauxAnnuel;

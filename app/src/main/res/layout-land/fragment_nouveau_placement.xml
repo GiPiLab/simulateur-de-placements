@@ -67,7 +67,6 @@
             android:layout_alignWithParentIfMissing="false"
             android:layout_below="@+id/layoutVariation"
             android:layout_centerHorizontal="true"
-            android:onClick="buttonCalculerClick"
             android:text="@string/buttonCalculer" />
 
 

@@ -220,6 +220,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
             return false;
         }
         if (capital.compareTo(Placement.MAXCAPITAL) > 0) {
+            //FIXME : message %1s
             Snackbar snackbar = Snackbar.make(getView(), R.string.capitalDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
@@ -239,6 +240,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
         }
 
         if (taux.compareTo(Placement.MAXTAUX) > 0) {
+            //FIXME : message %1s
             Snackbar snackbar = Snackbar.make(getView(), R.string.tauxDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;

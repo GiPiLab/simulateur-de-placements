@@ -77,6 +77,8 @@ public class AffichePlacementActivity extends AppCompatActivity {
 
     public void btnSaveClicked(View v) {
         p.save();
+        setResult(RESULT_OK);
+//        finish();
     }
 
     private void displayTable(ArrayList<Echeance> mens) {
@@ -98,6 +100,6 @@ public class AffichePlacementActivity extends AppCompatActivity {
         this.displayChart(mens);
 
         TextView tvResult = (TextView) this.findViewById(R.id.textViewResult);
-        tvResult.setText(this.p.toLocalizedString(this));
+        tvResult.setText(this.p.toLocalizedStringForDetailedView(this));
     }
 }
