@@ -1,10 +1,14 @@
 package org.gipilab.simulateurdeplacements;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -25,7 +29,8 @@ import java.util.ArrayList;
 public class AffichePlacementActivity extends AppCompatActivity {
 
 
-    Placement p;
+    private Placement placement;
+    private boolean enregistrable;
 
     private void displayChart(ArrayList<Echeance> mens) {
         LineChart chart = (LineChart) findViewById(R.id.lineChart);
@@ -76,13 +81,16 @@ public class AffichePlacementActivity extends AppCompatActivity {
     }
 
     public void btnSaveClicked(View v) {
-        p.save();
+        placement.save();
         setResult(RESULT_OK);
-//        finish();
+        Snackbar snackbar = Snackbar.make(v, string.placementEnregistre, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+        v.setEnabled(false);
     }
 
     private void displayTable(ArrayList<Echeance> mens) {
-        ArrayList<Annualite> annualites = this.p.echeancesToAnnualites(mens);
+        //TODO : deplacer dans le thread de calcul
+        ArrayList<Annualite> annualites = this.placement.echeancesToAnnualites(mens);
         ExpandableListView listv = (ExpandableListView) findViewById(R.id.listViewResult);
         TableauPlacementExpandableListAdapter adapter = new TableauPlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
@@ -94,12 +102,54 @@ public class AffichePlacementActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_affiche_placement);
 
         Intent intent = this.getIntent();
-        this.p = (Placement) intent.getSerializableExtra("placement");
-        ArrayList<Echeance> mens = this.p.tableauPlacement();
-        this.displayTable(mens);
-        this.displayChart(mens);
+        placement = (Placement) intent.getSerializableExtra("placement");
+        enregistrable = intent.getBooleanExtra("enregistrable", true);
+        if (enregistrable == false) {
+            Button btnSave = (Button) findViewById(R.id.buttonSavePlacement);
+            btnSave.setEnabled(false);
+        }
 
-        TextView tvResult = (TextView) this.findViewById(R.id.textViewResult);
-        tvResult.setText(this.p.toLocalizedStringForDetailedView(this));
+        //TODO : afficher le progress dialog avant
+        new DisplayPlacementTask(this).execute(placement);
     }
+
+    private class DisplayPlacementTask extends AsyncTask<Placement, Void, ArrayList<Echeance>> {
+        private ProgressDialog progressDialog;
+        private AffichePlacementActivity activity;
+
+        public DisplayPlacementTask(AffichePlacementActivity activity) {
+            this.activity = activity;
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setMessage(getString(string.patienterCalculsEnCours));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Echeance> echeances) {
+            displayTable(echeances);
+            displayChart(echeances);
+            TextView tvResult = (TextView) findViewById(R.id.textViewResult);
+            tvResult.setText(placement.toLocalizedStringForDetailedView(activity));
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
+        protected ArrayList<Echeance> doInBackground(Placement... placements) {
+            progressDialog.show();
+            ArrayList<Echeance> echeances = placements[0].tableauPlacement();
+            return echeances;
+        }
+    }
+
+
 }

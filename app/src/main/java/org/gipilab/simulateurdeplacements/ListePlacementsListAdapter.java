@@ -22,6 +22,15 @@ public class ListePlacementsListAdapter extends BaseAdapter {
         _lesPlacements = lesPlacements;
     }
 
+    public boolean deleteItem(int i) {
+        if (i >= getCount()) {
+            throw new IndexOutOfBoundsException();
+        }
+        boolean res = _lesPlacements.get(i).delete();
+        _lesPlacements.remove(i);
+        notifyDataSetChanged();
+        return res;
+    }
 
     @Override
     public int getCount() {
@@ -35,7 +44,7 @@ public class ListePlacementsListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return _lesPlacements.get(i).getId();
     }
 
     @Override

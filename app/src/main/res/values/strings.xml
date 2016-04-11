@@ -62,6 +62,13 @@
 
     <string name="ongletNouveauPlacement">Nouveau placement</string>
     <string name="ongletPlacementsEnregistres">Placements enregistrés</string>
+    <string name="placementEnregistre">Placement enregistré</string>
+    <string name="placements_sans_quinzaine">Placements sans quinzaine</string>
+    <string name="placements_sur_livrets">Placements sur livrets</string>
+    <string name="supprimerPlacement">Supprimer le placement</string>
+    <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce placement ?</string>
+    <string name="supprimer_le_placement">Supprimer le placement</string>
+    <string name="patienterCalculsEnCours">Patientez calculs en cours...</string>
 
 
 </resources>

@@ -1,7 +1,6 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -83,15 +81,20 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
     }
 
     @Override
-    public void onPlacementValidated(Placement placement) {
+    public void onPlacementRequestValidatedFromNouveauPlacementFragment(Placement placement) {
         Intent intent = new Intent(this, AffichePlacementActivity.class);
         intent.putExtra("placement", placement);
         startActivityForResult(intent, REQUEST_CODE_PLACEMENT_SAVED);
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        //TODO : actions sur le fragment d'affichage de la liste des placements
+    public void onPlacementClickedFromListePlacementsFragment(Placement placement) {
+
+        Intent intent = new Intent(this, AffichePlacementActivity.class);
+        intent.putExtra("placement", placement);
+        intent.putExtra("enregistrable", false);
+        startActivity(intent);
+
 
     }
 
@@ -101,16 +104,10 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
         if (requestCode == REQUEST_CODE_PLACEMENT_SAVED) {
             if (resultCode == RESULT_OK) {
-                //TODO : mettre à jour le fragment de liste
-
-                Log.d("PLACEMENT", "Liste placements maj");
                 ListePlacementsFragment frag = (ListePlacementsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.FRAGMENT_LISTE_PLACEMENTS_ID);
                 frag.updateListView(frag.getView());
-
-
             }
         }
-
     }
 
     /**
@@ -132,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                 case FRAGMENT_NOUVEAU_PLACEMENT_ID:
                     return NouveauPlacementFragment.newInstance();
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
-                    return ListePlacementsFragment.newInstance("titi", "toto");
+                    return ListePlacementsFragment.newInstance();
             }
             return null;
         }

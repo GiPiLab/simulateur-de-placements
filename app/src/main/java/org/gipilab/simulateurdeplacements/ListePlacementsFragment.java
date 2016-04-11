@@ -1,12 +1,14 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,14 +23,6 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ListePlacementsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,27 +34,25 @@ public class ListePlacementsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ListePlacementsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ListePlacementsFragment newInstance(String param1, String param2) {
+    public static ListePlacementsFragment newInstance() {
         ListePlacementsFragment fragment = new ListePlacementsFragment();
         Bundle args = new Bundle();
+        /*
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(args);*/
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
     }
 
 
@@ -69,28 +61,89 @@ public class ListePlacementsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_liste_placements, container, false);
-
         updateListView(v);
+        setListViewListeners(v);
 
         return v;
     }
 
+    private void setListViewListeners(View v) {
+        ListView listViewQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsSansQuinzaine);
+
+        //Click handlers
+        listViewQuinzaine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mListener != null) {
+                    mListener.onPlacementClickedFromListePlacementsFragment((Placement) adapterView.getItemAtPosition(i));
+                }
+            }
+        });
+        listViewSansQuinzaine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mListener != null) {
+                    mListener.onPlacementClickedFromListePlacementsFragment((Placement) adapterView.getItemAtPosition(i));
+                }
+            }
+        });
+
+        //Long click handlers
+        listViewQuinzaine.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(getString(R.string.supprimerPlacement))
+                        .setMessage(getString(R.string.confirmerSupprimerPlacement))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
+                                adapter.deleteItem(i);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            }
+        });
+        listViewSansQuinzaine.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(getString(R.string.supprimerPlacement))
+                        .setMessage(getString(R.string.confirmerSupprimerPlacement))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
+                                adapter.deleteItem(i);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            }
+        });
+    }
 
     public void updateListView(View v) {
         ListView listViewQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsSansQuinzaine);
-        ArrayList<Placement> listPlacementsQuinzaine = PlacementQuinzaine.getAll();
-        ArrayList<Placement> listPlacementsSansQuinzaine = PlacementSansQuinzaine.getAll();
+        ArrayList<Placement> listPlacementsQuinzaine = (ArrayList) PlacementQuinzaine.listAll(PlacementQuinzaine.class);
+        ArrayList<Placement> listPlacementsSansQuinzaine = (ArrayList) PlacementSansQuinzaine.listAll(PlacementSansQuinzaine.class);
 
         listViewQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsQuinzaine));
         listViewSansQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsSansQuinzaine));
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -122,6 +175,6 @@ public class ListePlacementsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onPlacementClickedFromListePlacementsFragment(Placement placement);
     }
 }

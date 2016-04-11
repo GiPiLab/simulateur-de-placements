@@ -126,7 +126,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
                 }
 
                 if (mListener != null) {
-                    mListener.onPlacementValidated(placement);
+                    mListener.onPlacementRequestValidatedFromNouveauPlacementFragment(placement);
                 }
             }
         });
@@ -343,7 +343,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onPlacementValidated(Placement placement);
+        void onPlacementRequestValidatedFromNouveauPlacementFragment(Placement placement);
     }
 
 }

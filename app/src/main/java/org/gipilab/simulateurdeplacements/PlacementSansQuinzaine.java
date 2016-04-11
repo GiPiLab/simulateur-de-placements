@@ -2,8 +2,6 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
-import com.orm.SugarRecord;
-
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -26,12 +24,6 @@ public class PlacementSansQuinzaine extends Placement {
     public PlacementSansQuinzaine() {
         setModeCalculPlacement(enumModeCalculPlacement.SANSQUINZAINE);
     }
-
-
-    static ArrayList<Placement> getAll() {
-        return (ArrayList) SugarRecord.listAll(PlacementSansQuinzaine.class);
-    }
-
 
     @Override
     int getMAXECHEANCES() {

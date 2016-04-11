@@ -25,12 +25,6 @@ public class PlacementQuinzaine extends Placement {
         setModeCalculPlacement(enumModeCalculPlacement.QUINZAINE);
     }
 
-
-    static ArrayList<Placement> getAll() {
-        return (ArrayList) listAll(PlacementQuinzaine.class);
-    }
-
-
     @Override
     int getMAXECHEANCES() {
         return 2400; //100 ans
