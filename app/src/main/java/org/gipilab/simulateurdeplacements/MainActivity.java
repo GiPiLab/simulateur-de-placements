@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(menu.menu_main2, menu);
+        getMenuInflater().inflate(R.menu.menu_main2, menu);
         return true;
     }
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
