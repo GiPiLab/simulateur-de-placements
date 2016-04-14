@@ -1,15 +1,25 @@
 package org.gipilab.simulateurdeplacements;
 
+import android.R.drawable;
+import android.R.string;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+
+import com.orm.SugarRecord;
+
+import org.gipilab.simulateurdeplacements.R.id;
+import org.gipilab.simulateurdeplacements.R.layout;
 
 import java.util.ArrayList;
 
@@ -17,7 +27,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListePlacementsFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ListePlacementsFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,22 +47,12 @@ public class ListePlacementsFragment extends Fragment {
      * @return A new instance of fragment ListePlacementsFragment.
      */
     public static ListePlacementsFragment newInstance() {
-        ListePlacementsFragment fragment = new ListePlacementsFragment();
-        Bundle args = new Bundle();
+        //Bundle args = new Bundle();
         /*
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);*/
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        return new ListePlacementsFragment();
     }
 
 
@@ -60,7 +60,7 @@ public class ListePlacementsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_liste_placements, container, false);
+        View v = inflater.inflate(layout.fragment_liste_placements, container, false);
         updateListView(v);
         setListViewListeners(v);
 
@@ -68,11 +68,11 @@ public class ListePlacementsFragment extends Fragment {
     }
 
     private void setListViewListeners(View v) {
-        ListView listViewQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsQuinzaine);
-        ListView listViewSansQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsSansQuinzaine);
+        ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
 
         //Click handlers
-        listViewQuinzaine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewQuinzaine.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mListener != null) {
@@ -80,7 +80,7 @@ public class ListePlacementsFragment extends Fragment {
                 }
             }
         });
-        listViewSansQuinzaine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewSansQuinzaine.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mListener != null) {
@@ -90,46 +90,46 @@ public class ListePlacementsFragment extends Fragment {
         });
 
         //Long click handlers
-        listViewQuinzaine.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listViewQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-                new AlertDialog.Builder(getContext())
+                new Builder(getContext())
                         .setTitle(getString(R.string.supprimerPlacement))
                         .setMessage(getString(R.string.confirmerSupprimerPlacement))
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(string.yes, new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
                                 adapter.deleteItem(i);
                             }
                         })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(string.no, new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(drawable.ic_dialog_alert)
                         .show();
                 return true;
             }
         });
-        listViewSansQuinzaine.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listViewSansQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-                new AlertDialog.Builder(getContext())
+                new Builder(getContext())
                         .setTitle(getString(R.string.supprimerPlacement))
                         .setMessage(getString(R.string.confirmerSupprimerPlacement))
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(string.yes, new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
                                 adapter.deleteItem(i);
                             }
                         })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(string.no, new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(drawable.ic_dialog_alert)
                         .show();
                 return true;
             }
@@ -137,10 +137,10 @@ public class ListePlacementsFragment extends Fragment {
     }
 
     public void updateListView(View v) {
-        ListView listViewQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsQuinzaine);
-        ListView listViewSansQuinzaine = (ListView) v.findViewById(R.id.listViewPlacementsSansQuinzaine);
-        ArrayList<Placement> listPlacementsQuinzaine = (ArrayList) PlacementQuinzaine.listAll(PlacementQuinzaine.class);
-        ArrayList<Placement> listPlacementsSansQuinzaine = (ArrayList) PlacementSansQuinzaine.listAll(PlacementSansQuinzaine.class);
+        ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
+        ArrayList<Placement> listPlacementsQuinzaine = (ArrayList) SugarRecord.listAll(PlacementQuinzaine.class);
+        ArrayList<Placement> listPlacementsSansQuinzaine = (ArrayList) SugarRecord.listAll(PlacementSansQuinzaine.class);
 
         listViewQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsQuinzaine));
         listViewSansQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsSansQuinzaine));
@@ -152,7 +152,7 @@ public class ListePlacementsFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
+            throw new RuntimeException(context
                     + " must implement OnFragmentInteractionListener");
         }
     }

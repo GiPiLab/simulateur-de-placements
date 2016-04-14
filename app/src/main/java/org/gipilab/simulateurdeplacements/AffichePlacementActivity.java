@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -14,12 +16,15 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.components.XAxis.XAxisPosition;
+import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import org.gipilab.simulateurdeplacements.R.id;
+import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -30,10 +35,14 @@ public class AffichePlacementActivity extends AppCompatActivity {
 
 
     private Placement placement;
-    private boolean enregistrable;
 
     private void displayChart(ArrayList<Echeance> mens) {
-        LineChart chart = (LineChart) findViewById(R.id.lineChart);
+        LineChart chart = (LineChart) findViewById(id.lineChart);
+
+        if (chart == null) {
+            Log.e("GIPIERROR", "NULL chart");
+            return;
+        }
 
         chart.setTouchEnabled(true);
 
@@ -42,7 +51,7 @@ public class AffichePlacementActivity extends AppCompatActivity {
         chart.getAxisRight().setEnabled(false);
 
         xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxis.setPosition(XAxisPosition.BOTTOM);
 
         ArrayList<Entry> valuesValeurAcquise = new ArrayList<Entry>();
         ArrayList<Entry> valuesCapitalPlace = new ArrayList<Entry>();
@@ -56,15 +65,15 @@ public class AffichePlacementActivity extends AppCompatActivity {
             valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme() - 1));
         }
 
-        LineDataSet dataSetValeurAcquise = new LineDataSet(valuesValeurAcquise, this.getString(string.chartLegendValeurAcquise));
-        dataSetValeurAcquise.setAxisDependency(YAxis.AxisDependency.LEFT);
+        LineDataSet dataSetValeurAcquise = new LineDataSet(valuesValeurAcquise, getString(string.chartLegendValeurAcquise));
+        dataSetValeurAcquise.setAxisDependency(AxisDependency.LEFT);
         dataSetValeurAcquise.setDrawValues(false);
         dataSetValeurAcquise.setColor(Color.BLUE, 128);
         dataSetValeurAcquise.setCircleColor(Color.BLUE);
         dataSetValeurAcquise.setDrawCircles(false);
 
-        LineDataSet dataSetCapitalPlace = new LineDataSet(valuesCapitalPlace, this.getString(string.chartLegendCapitalPlace));
-        dataSetCapitalPlace.setAxisDependency(YAxis.AxisDependency.LEFT);
+        LineDataSet dataSetCapitalPlace = new LineDataSet(valuesCapitalPlace, getString(string.chartLegendCapitalPlace));
+        dataSetCapitalPlace.setAxisDependency(AxisDependency.LEFT);
         dataSetCapitalPlace.setDrawValues(false);
         dataSetCapitalPlace.setColor(Color.RED, 128);
         dataSetCapitalPlace.setCircleColor(Color.RED);
@@ -88,10 +97,13 @@ public class AffichePlacementActivity extends AppCompatActivity {
         v.setEnabled(false);
     }
 
-    private void displayTable(ArrayList<Echeance> mens) {
-        //TODO : deplacer dans le thread de calcul
-        ArrayList<Annualite> annualites = this.placement.echeancesToAnnualites(mens);
-        ExpandableListView listv = (ExpandableListView) findViewById(R.id.listViewResult);
+    private void displayTable(ArrayList<Annualite> annualites) {
+
+        ExpandableListView listv = (ExpandableListView) findViewById(id.listViewResult);
+        if (listv == null) {
+            Log.e("GIPIERROR", "Null listview");
+            return;
+        }
         TableauPlacementExpandableListAdapter adapter = new TableauPlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
     }
@@ -99,25 +111,29 @@ public class AffichePlacementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_affiche_placement);
+        setContentView(layout.activity_affiche_placement);
 
-        Intent intent = this.getIntent();
+        Intent intent = getIntent();
         placement = (Placement) intent.getSerializableExtra("placement");
-        enregistrable = intent.getBooleanExtra("enregistrable", true);
-        if (enregistrable == false) {
-            Button btnSave = (Button) findViewById(R.id.buttonSavePlacement);
-            btnSave.setEnabled(false);
+        boolean enregistrable = intent.getBooleanExtra("enregistrable", true);
+        if (!enregistrable) {
+            Button btnSave = (Button) findViewById(id.buttonSavePlacement);
+            if (btnSave != null) {
+                btnSave.setEnabled(false);
+            } else {
+                Log.e("GIPIERROR", "Null button");
+            }
         }
 
         //TODO : afficher le progress dialog avant
         new DisplayPlacementTask(this).execute(placement);
     }
 
-    private class DisplayPlacementTask extends AsyncTask<Placement, Void, ArrayList<Echeance>> {
-        private ProgressDialog progressDialog;
-        private AffichePlacementActivity activity;
+    private class DisplayPlacementTask extends AsyncTask<Placement, Void, Pair<ArrayList<Echeance>, ArrayList<Annualite>>> {
+        private final ProgressDialog progressDialog;
+        private final AffichePlacementActivity activity;
 
-        public DisplayPlacementTask(AffichePlacementActivity activity) {
+        private DisplayPlacementTask(AffichePlacementActivity activity) {
             this.activity = activity;
             progressDialog = new ProgressDialog(activity);
             progressDialog.setMessage(getString(string.patienterCalculsEnCours));
@@ -128,11 +144,15 @@ public class AffichePlacementActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Echeance> echeances) {
-            displayTable(echeances);
-            displayChart(echeances);
-            TextView tvResult = (TextView) findViewById(R.id.textViewResult);
-            tvResult.setText(placement.toLocalizedStringForDetailedView(activity));
+        protected void onPostExecute(Pair<ArrayList<Echeance>, ArrayList<Annualite>> echeancesEtAnnualites) {
+            displayTable(echeancesEtAnnualites.second);
+            displayChart(echeancesEtAnnualites.first);
+            TextView tvResult = (TextView) findViewById(id.textViewResult);
+            if (tvResult != null) {
+                tvResult.setText(placement.toLocalizedStringForDetailedView(activity));
+            } else {
+                Log.e("GIPIERROR", "Null textview");
+            }
             if (progressDialog.isShowing())
                 progressDialog.dismiss();
 
@@ -144,10 +164,11 @@ public class AffichePlacementActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<Echeance> doInBackground(Placement... placements) {
+        protected Pair<ArrayList<Echeance>, ArrayList<Annualite>> doInBackground(Placement... placements) {
             progressDialog.show();
             ArrayList<Echeance> echeances = placements[0].tableauPlacement();
-            return echeances;
+            ArrayList<Annualite> annualites = placements[0].echeancesToAnnualites(echeances);
+            return new Pair<>(echeances, annualites);
         }
     }
 

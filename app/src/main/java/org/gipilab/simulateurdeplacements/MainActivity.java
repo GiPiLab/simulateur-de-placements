@@ -9,11 +9,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, ListePlacementsFragment.OnFragmentInteractionListener {
-    static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
+import org.gipilab.simulateurdeplacements.ListePlacementsFragment.OnFragmentInteractionListener;
+import org.gipilab.simulateurdeplacements.R.id;
+import org.gipilab.simulateurdeplacements.R.layout;
+import org.gipilab.simulateurdeplacements.R.string;
+
+public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
+    private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -31,20 +37,28 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager = (ViewPager) findViewById(id.container);
+        if (mViewPager != null)
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        else {
+            Log.e("GIPIERROR", "Null viewpager");
+        }
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(id.tabs);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(mViewPager);
+        } else {
+            Log.e("GIPIERROR", "Invalid tab layout");
+        }
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main2, menu);
+        getMenuInflater().inflate(menu.menu_main2, menu);
         return true;
     }
 
@@ -73,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == id.action_settings) {
             return true;
         }
 
@@ -143,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case FRAGMENT_NOUVEAU_PLACEMENT_ID:
-                    return getString(R.string.ongletNouveauPlacement);
+                    return getString(string.ongletNouveauPlacement);
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
-                    return getString(R.string.ongletPlacementsEnregistres);
+                    return getString(string.ongletPlacementsEnregistres);
             }
             return null;
         }

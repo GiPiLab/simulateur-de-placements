@@ -21,7 +21,7 @@ abstract class Placement extends SugarRecord implements Serializable {
 
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
-    public static final BigDecimal MAXVARIATION = Placement.MAXCAPITAL;
+    public static final BigDecimal MAXVARIATION = MAXCAPITAL;
     private BigDecimal tauxAnnuel = BigDecimal.ZERO;
     private BigDecimal capitalInitial = BigDecimal.ZERO;
     private BigDecimal interetsObtenus = BigDecimal.ZERO;
@@ -40,7 +40,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     private BigDecimal valeurAcquise = BigDecimal.ZERO;
     private enumModeCalculPlacement modeCalculPlacement;
 
-    public Placement() {
+    Placement() {
 
     }
 
@@ -49,7 +49,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     }
 
     void setModeCalculPlacement(enumModeCalculPlacement mode) {
-        this.modeCalculPlacement = mode;
+        modeCalculPlacement = mode;
     }
 
     abstract int getMAXECHEANCES();
@@ -67,7 +67,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     abstract String toLocalizedStringForListePlacementsView(Context context);
 
     BigDecimal getTauxAnnuel() {
-        return this.tauxAnnuel;
+        return tauxAnnuel;
     }
 
     /**
@@ -75,14 +75,14 @@ abstract class Placement extends SugarRecord implements Serializable {
      * @throws InputMismatchException
      */
     void setTauxAnnuel(BigDecimal tauxAnnuel) {
-        if (tauxAnnuel.compareTo(BigDecimal.ZERO) < 0 || tauxAnnuel.compareTo(Placement.MAXTAUX) > 0) {
+        if (tauxAnnuel.compareTo(BigDecimal.ZERO) < 0 || tauxAnnuel.compareTo(MAXTAUX) > 0) {
             throw new InputMismatchException("taux hors bornes");
         }
         this.tauxAnnuel = tauxAnnuel;
     }
 
     BigDecimal getCapitalInitial() {
-        return this.capitalInitial;
+        return capitalInitial;
     }
 
     /**
@@ -90,14 +90,14 @@ abstract class Placement extends SugarRecord implements Serializable {
      * @throws InputMismatchException
      */
     void setCapitalInitial(BigDecimal capitalInitial) {
-        if (capitalInitial.compareTo(BigDecimal.ZERO) <= 0 || capitalInitial.compareTo(Placement.MAXCAPITAL) > 0) {
+        if (capitalInitial.compareTo(BigDecimal.ZERO) <= 0 || capitalInitial.compareTo(MAXCAPITAL) > 0) {
             throw new InputMismatchException("capital hors bornes");
         }
         this.capitalInitial = capitalInitial;
     }
 
     BigDecimal getInteretsObtenus() {
-        return this.interetsObtenus;
+        return interetsObtenus;
     }
 
     /**
@@ -112,7 +112,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     }
 
     BigDecimal getVariation() {
-        return this.variation;
+        return variation;
     }
 
     /**
@@ -120,22 +120,22 @@ abstract class Placement extends SugarRecord implements Serializable {
      * @throws InputMismatchException
      */
     void setVariation(BigDecimal variation) {
-        if (variation.abs().compareTo(Placement.MAXVARIATION) > 0) {
+        if (variation.abs().compareTo(MAXVARIATION) > 0) {
             throw new InputMismatchException("variation hors bornes");
         }
         this.variation = variation;
     }
 
     LocalDate getDateDebut() {
-        return new LocalDate(this.timestampDebut);
+        return new LocalDate(timestampDebut);
     }
 
     void setDateDebut(LocalDate date) {
-        this.timestampDebut = date.toDate().getTime();
+        timestampDebut = date.toDate().getTime();
     }
 
     LocalDate getDateFin() {
-        return new LocalDate(this.timestampFin);
+        return new LocalDate(timestampFin);
     }
 
     void setDateFin(LocalDate date) {
@@ -159,7 +159,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     }
 
     int getDuree() {
-        return this.duree;
+        return duree;
     }
 
     void setDuree(int duree) {
@@ -167,7 +167,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     }
 
     enumFrequenceVariation getFrequenceVariation() {
-        return this.frequenceVariation;
+        return frequenceVariation;
     }
 
     void setFrequenceVariation(enumFrequenceVariation frequenceVariation) {

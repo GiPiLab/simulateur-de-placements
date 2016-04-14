@@ -5,18 +5,25 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.gipilab.simulateurdeplacements.R.id;
+import org.gipilab.simulateurdeplacements.R.layout;
+import org.gipilab.simulateurdeplacements.R.string;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
@@ -30,12 +37,12 @@ import java.math.MathContext;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NouveauPlacementFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link NouveauPlacementFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NouveauPlacementFragment extends Fragment implements DatePicker.OnDateChangedListener {
+public class NouveauPlacementFragment extends Fragment implements OnDateChangedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     //private static final String ARG_PARAM1 = "param1";
@@ -61,21 +68,11 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
      */
 
     public static NouveauPlacementFragment newInstance() {
-        NouveauPlacementFragment fragment = new NouveauPlacementFragment();
-    /*    Bundle args = new Bundle();
+        /*    Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);*/
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        return new NouveauPlacementFragment();
     }
 
     @Override
@@ -84,8 +81,8 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
 
         initDateSelectionSystem();
 
-        Button btnCalculer = (Button) view.findViewById(R.id.buttonCalculer);
-        btnCalculer.setOnClickListener(new View.OnClickListener() {
+        Button btnCalculer = (Button) view.findViewById(id.buttonCalculer);
+        btnCalculer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -93,25 +90,28 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
                     return;
                 }
 
+                RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
+                if (groupMode == null) {
+                    Log.e("GIPIERROR", "Invalid group mode");
+                    return;
+                }
                 Placement placement;
-
-                RadioGroup groupMode = (RadioGroup) getView().findViewById(R.id.radioGroupMode);
                 switch (groupMode.getCheckedRadioButtonId()) {
-                    case R.id.radioButtonModeQuinzaine:
+                    case id.radioButtonModeQuinzaine:
                         placement = new PlacementQuinzaine();
                         break;
 
-                    case R.id.radioButtonModeNormal:
+                    case id.radioButtonModeNormal:
                         placement = new PlacementSansQuinzaine();
                         break;
                     default:
                         throw new IllegalArgumentException("Erreur mode");
                 }
 
-                placement.setCapitalInitial(new BigDecimal(((EditText) getView().findViewById(R.id.editCapital)).getText().toString()));
-                placement.setVariation(new BigDecimal(((EditText) getView().findViewById(R.id.editVariation)).getText().toString()));
-                placement.setTauxAnnuel(new BigDecimal(((EditText) getView().findViewById(R.id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
-                Spinner spinnerFrequence = (Spinner) getView().findViewById(R.id.spinnerFrequenceVariation);
+                placement.setCapitalInitial(new BigDecimal(((EditText) getView().findViewById(id.editCapital)).getText().toString()));
+                placement.setVariation(new BigDecimal(((EditText) getView().findViewById(id.editVariation)).getText().toString()));
+                placement.setTauxAnnuel(new BigDecimal(((EditText) getView().findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
+                Spinner spinnerFrequence = (Spinner) getView().findViewById(id.spinnerFrequenceVariation);
                 placement.setDatesPlacement(dateDebut, dateFin);
 
                 switch (spinnerFrequence.getSelectedItemPosition()) {
@@ -135,8 +135,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_nouveau_placement, container, false);
-        return v;
+        return inflater.inflate(layout.fragment_nouveau_placement, container, false);
     }
 
     @Override
@@ -145,7 +144,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
+            throw new RuntimeException(context
                     + " must implement OnFragmentInteractionListener");
         }
     }
@@ -158,7 +157,7 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
 
     private String formatDuree() {
         Period duration = new Period(dateDebut, dateFin);
-        return getString(R.string.dureeXmois, PeriodFormat.wordBased().print(duration));
+        return getString(string.dureeXmois, PeriodFormat.wordBased().print(duration));
     }
 
     private void initDateSelectionSystem() {
@@ -166,17 +165,22 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
         dateFin = dateDebut.plusYears(1);
 
         dateFormat = DateTimeFormat.longDate();
-        final DatePicker dp = (DatePicker) getView().findViewById(R.id.datePicker);
+        final DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
+        if (dp == null) {
+            Log.e("GIPIERROR", "Invalid group mode");
+            return;
+        }
+
         dp.init(dateFin.getYear(), dateFin.getMonthOfYear() - 1, dateFin.getDayOfMonth(), this);
         dp.setMaxDate(dateDebut.plusYears(200).toDate().getTime());
-        TextView tv = (TextView) getView().findViewById(R.id.labelSelectedDateDebut);
+        TextView tv = (TextView) getView().findViewById(id.labelSelectedDateDebut);
         tv.setText(dateFormat.print(dateDebut));
-        tv = (TextView) getView().findViewById(R.id.labelSelectedDateFin);
-        tv.setText(dateFormat.print(dateFin));
+        TextView labelDateFin = (TextView) getView().findViewById(id.labelSelectedDateFin);
+        labelDateFin.setText(dateFormat.print(dateFin));
 
         updateLabelDuree(dateDebut, dateFin);
 
-        RadioButton dateButtonFin = (RadioButton) getView().findViewById(R.id.radioButtonDateFin);
+        RadioButton dateButtonFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
 
         dateButtonFin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -191,8 +195,8 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
             }
         });
 
-        RadioGroup modeLivret = (RadioGroup) getView().findViewById(R.id.radioGroupMode);
-        modeLivret.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        RadioGroup modeLivret = (RadioGroup) getView().findViewById(id.radioGroupMode);
+        modeLivret.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 updateLabelDuree(dateDebut, dateFin);
@@ -201,59 +205,69 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
     }
 
     private boolean validateInputs() {
-        EditText editCapital = (EditText) getView().findViewById(R.id.editCapital);
-        EditText editTaux = (EditText) getView().findViewById(R.id.editTaux);
-        EditText editVariation = (EditText) getView().findViewById(R.id.editVariation);
-
-        BigDecimal capital;
+        EditText editCapital = (EditText) getView().findViewById(id.editCapital);
+        if (editCapital == null) {
+            Log.e("GIPIERROR", "Invalid editCapital");
+            return false;
+        }
+        EditText editTaux = (EditText) getView().findViewById(id.editTaux);
+        if (editTaux == null) {
+            Log.e("GIPIERROR", "Invalid editTaux");
+            return false;
+        }
+        EditText editVariation = (EditText) getView().findViewById(id.editVariation);
+        if (editVariation == null) {
+            Log.e("GIPIERROR", "Invalid editVariation");
+            return false;
+        }
 
         if (editCapital.getText().length() == 0) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.saisissezLeCapital, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.saisissezLeCapital, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
-        capital = new BigDecimal(editCapital.getText().toString());
+        BigDecimal capital = new BigDecimal(editCapital.getText().toString());
 
         if (capital.compareTo(BigDecimal.ZERO) <= 0) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.capitalDoitEtrePositif, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.capitalDoitEtrePositif, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
         if (capital.compareTo(Placement.MAXCAPITAL) > 0) {
             //FIXME : message %1s
-            Snackbar snackbar = Snackbar.make(getView(), R.string.capitalDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.capitalDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
         if (editTaux.getText().length() == 0) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.saisissezLeTaux, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.saisissezLeTaux, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
         BigDecimal taux = new BigDecimal(editTaux.getText().toString());
 
         if (taux.compareTo(BigDecimal.ZERO) < 0) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.tauxDoitEtrePositifOuNul, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.tauxDoitEtrePositifOuNul, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
         if (taux.compareTo(Placement.MAXTAUX) > 0) {
             //FIXME : message %1s
-            Snackbar snackbar = Snackbar.make(getView(), R.string.tauxDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.tauxDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
         Placement p;
-        RadioGroup groupMode = (RadioGroup) getView().findViewById(R.id.radioGroupMode);
+        RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
         switch (groupMode.getCheckedRadioButtonId()) {
-            case R.id.radioButtonModeQuinzaine:
+            case id.radioButtonModeQuinzaine:
                 p = new PlacementQuinzaine();
                 break;
 
-            case R.id.radioButtonModeNormal:
+            case id.radioButtonModeNormal:
                 p = new PlacementSansQuinzaine();
                 break;
             default:
@@ -262,42 +276,46 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
 
         int duree = p.approximeDureeEnEcheances(dateDebut, dateFin);
         if (duree > p.getMAXECHEANCES()) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.dureeTropLongue, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.dureeTropLongue, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
         if (duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.dureeDoitEtrePositive, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.dureeDoitEtrePositive, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
         if (editVariation.getText().length() == 0) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.saisissezLaVariationPeriodique, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.saisissezLaVariationPeriodique, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
         BigDecimal variation = new BigDecimal(editVariation.getText().toString());
         if (variation.compareTo(BigDecimal.ZERO) < 0 && variation.abs().compareTo(capital) > 0 && variation.compareTo(Placement.MAXVARIATION) >= 0) {
-            Snackbar snackbar = Snackbar.make(getView(), R.string.variationDoitEtreInferieureAuCapital, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), string.variationDoitEtreInferieureAuCapital, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
         return true;
     }
 
-    void updateLabelDuree(LocalDate dateDebut, LocalDate dateFin) {
-        TextView labelDuree = (TextView) getView().findViewById(R.id.labelDuree);
+    private void updateLabelDuree(LocalDate dateDebut, LocalDate dateFin) {
+        TextView labelDuree = (TextView) getView().findViewById(id.labelDuree);
+        if (labelDuree == null) {
+            Log.e("GIPIERROR", "Invalid labelDuree");
+            return;
+        }
 
         Placement p;
-        RadioGroup groupMode = (RadioGroup) getView().findViewById(R.id.radioGroupMode);
+        RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
         switch (groupMode.getCheckedRadioButtonId()) {
-            case R.id.radioButtonModeQuinzaine:
+            case id.radioButtonModeQuinzaine:
                 p = new PlacementQuinzaine();
                 break;
 
-            case R.id.radioButtonModeNormal:
+            case id.radioButtonModeNormal:
                 p = new PlacementSansQuinzaine();
                 break;
             default:
@@ -317,14 +335,18 @@ public class NouveauPlacementFragment extends Fragment implements DatePicker.OnD
     @Override
     public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
 
+        RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
+        if (buttonDateFin == null) {
+            Log.e("GIPIERROR", "Invalid buttonDateFin");
+            return;
+        }
         TextView tv;
-        RadioButton buttonDateFin = (RadioButton) getView().findViewById(R.id.radioButtonDateFin);
         if (buttonDateFin.isChecked()) {
-            tv = (TextView) getView().findViewById(R.id.labelSelectedDateFin);
+            tv = (TextView) getView().findViewById(id.labelSelectedDateFin);
             dateFin = new LocalDate(year, month + 1, day);
             tv.setText(dateFormat.print(dateFin));
         } else {
-            tv = (TextView) getView().findViewById(R.id.labelSelectedDateDebut);
+            tv = (TextView) getView().findViewById(id.labelSelectedDateDebut);
             dateDebut = new LocalDate(year, month + 1, day);
             tv.setText(dateFormat.print(dateDebut));
         }

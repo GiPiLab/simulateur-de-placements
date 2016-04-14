@@ -2,6 +2,7 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
+import org.gipilab.simulateurdeplacements.R.string;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.Period;
@@ -18,19 +19,14 @@ import java.util.InputMismatchException;
 /**
  * Created by thibault on 03/03/16.
  */
-public class PlacementQuinzaine extends Placement {
+class PlacementQuinzaine extends Placement {
 
 
     public PlacementQuinzaine() {
         setModeCalculPlacement(enumModeCalculPlacement.QUINZAINE);
     }
 
-    @Override
-    int getMAXECHEANCES() {
-        return 2400; //100 ans
-    }
-
-    private LocalDate aligneDateDebutSurQuinzaine(LocalDate dateDebut) {
+    private static LocalDate aligneDateDebutSurQuinzaine(LocalDate dateDebut) {
         LocalDate dateDebutAlignee;
 
         if (dateDebut.getDayOfMonth() <= 15) {
@@ -41,7 +37,7 @@ public class PlacementQuinzaine extends Placement {
         return dateDebutAlignee;
     }
 
-    private LocalDate aligneDateFinSurQuinzaine(LocalDate dateFin) {
+    private static LocalDate aligneDateFinSurQuinzaine(LocalDate dateFin) {
         LocalDate dateFinAlignee;
         if (dateFin.getDayOfMonth() > 16) {
             dateFinAlignee = dateFin.withDayOfMonth(16);
@@ -51,6 +47,36 @@ public class PlacementQuinzaine extends Placement {
         return dateFinAlignee;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private static boolean estAligneeSurQuinzaine(LocalDate date) {
+        return !(date.getDayOfMonth() != 1 && date.getDayOfMonth() != 16);
+    }
+
+    private static boolean derniereQuinzaineDeAnnee(LocalDate dateEcheance) {
+        return dateEcheance.getMonthOfYear() == 12 && dateEcheance.getDayOfMonth() == 16;
+    }
+
+    private static LocalDate versQuinzaineSuivante(LocalDate quinzaine) {
+        LocalDate quinzaineSuivante;
+        int day = quinzaine.getDayOfMonth();
+
+        switch (day) {
+            case 1:
+                quinzaineSuivante = quinzaine.withDayOfMonth(16);
+                break;
+            case 16:
+                quinzaineSuivante = quinzaine.plusMonths(1).withDayOfMonth(1);
+                break;
+            default:
+                throw new InputMismatchException("Invalid quinzaine");
+        }
+        return quinzaineSuivante;
+    }
+
+    @Override
+    int getMAXECHEANCES() {
+        return 2400; //100 ans
+    }
 
     /**
      * Fixe les dates en alignant sur des quinzaines
@@ -75,13 +101,6 @@ public class PlacementQuinzaine extends Placement {
         setDuree(duree);
     }
 
-
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    boolean estAligneeSurQuinzaine(LocalDate date) {
-        return (!(date.getDayOfMonth() != 1 && date.getDayOfMonth() != 16));
-    }
-
-
     /**
      * Calcule de la durée en quinzaines
      * @param dateDebut la date de début
@@ -91,12 +110,13 @@ public class PlacementQuinzaine extends Placement {
     int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
 
 
-        LocalDate dateDebutAlignee, dateFinAlignee;
+        LocalDate dateDebutAlignee;
 
         if (!estAligneeSurQuinzaine(dateDebut)) {
             dateDebutAlignee = aligneDateDebutSurQuinzaine(dateDebut);
         } else dateDebutAlignee = dateDebut;
 
+        LocalDate dateFinAlignee;
         if (!estAligneeSurQuinzaine(dateFin)) {
             dateFinAlignee = aligneDateFinSurQuinzaine(dateFin);
         } else dateFinAlignee = dateFin;
@@ -137,12 +157,6 @@ public class PlacementQuinzaine extends Placement {
     int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
         return Months.monthsBetween(dateDebut, dateFin).getMonths() * 2;
     }
-
-
-    boolean derniereQuinzaineDeAnnee(LocalDate dateEcheance) {
-        return dateEcheance.getMonthOfYear() == 12 && dateEcheance.getDayOfMonth() == 16;
-    }
-
 
     @Override
     ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances) {
@@ -188,25 +202,6 @@ public class PlacementQuinzaine extends Placement {
 
     }
 
-
-    private LocalDate versQuinzaineSuivante(LocalDate quinzaine) {
-        LocalDate quinzaineSuivante;
-        int day = quinzaine.getDayOfMonth();
-
-        switch (day) {
-            case 1:
-                quinzaineSuivante = quinzaine.withDayOfMonth(16);
-                break;
-            case 16:
-                quinzaineSuivante = quinzaine.plusMonths(1).withDayOfMonth(1);
-                break;
-            default:
-                throw new InputMismatchException("Invalid quinzaine");
-        }
-        return quinzaineSuivante;
-    }
-
-
     /**
      * Le tableau de placements en quinzaines
      * @return la liste d'échéances
@@ -225,8 +220,6 @@ public class PlacementQuinzaine extends Placement {
         BigDecimal tauxQuinzaine = getTauxAnnuel().divide(BigDecimal.valueOf(24), MathContext.DECIMAL128);
 
         BigDecimal capitalPlace = getCapitalInitial();
-        BigDecimal interetsTotaux = BigDecimal.ZERO;
-        BigDecimal interetsDeAnnee = BigDecimal.ZERO;
 
         //Si on a aucun interêt à cause des quinzaines
         if (getDuree() == 0) {
@@ -242,9 +235,10 @@ public class PlacementQuinzaine extends Placement {
         }
 
 
-        int i;
         int dur = getDuree();
-        for (i = 1; i <= dur; i++) {
+        BigDecimal interetsTotaux = BigDecimal.ZERO;
+        BigDecimal interetsDeAnnee = BigDecimal.ZERO;
+        for (int i = 1; i <= dur; i++) {
 
             Echeance quinzaine = new Echeance();
             quinzaine.setDateDebutEcheance(cal);
@@ -291,8 +285,8 @@ public class PlacementQuinzaine extends Placement {
             cal = versQuinzaineSuivante(cal);
 
         }
-        this.setInteretsObtenus(interetsTotaux);
-        this.setValeurAcquise(lesMensualites.get(lesMensualites.size() - 1).getValeurAcquise());
+        setInteretsObtenus(interetsTotaux);
+        setValeurAcquise(lesMensualites.get(lesMensualites.size() - 1).getValeurAcquise());
 
 
         return lesMensualites;
@@ -309,19 +303,19 @@ public class PlacementQuinzaine extends Placement {
 
         Period duration = new Period(getDateDebut(), getDateFin());
 
-        String s = context.getString(R.string.descriptionPlacementLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
+        String s = context.getString(string.descriptionPlacementLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
                 , PeriodFormat.wordBased().print(duration), dateFormatter.print(getDateDebut()), dateFormatter.print(getDateFin()));
 
 
         if (getVariation().compareTo(BigDecimal.ZERO) < 0) {
-            s += context.getString(R.string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
+            s += context.getString(string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
         } else if (getVariation().compareTo(BigDecimal.ZERO) > 0) {
-            s += context.getString(R.string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
+            s += context.getString(string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
         }
 
 
-        s += context.getString(R.string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
-        s += context.getString(R.string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
+        s += context.getString(string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
+        s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
 
 
         return s;
@@ -338,19 +332,19 @@ public class PlacementQuinzaine extends Placement {
         Period duration = new Period(getDateDebut(), getDateFin());
 
 
-        String s = context.getString(R.string.descriptionPlacementLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
+        String s = context.getString(string.descriptionPlacementLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
                 , PeriodFormat.wordBased().print(duration), dateFormatter.print(getDateDebut()), dateFormatter.print(getDateFin()));
 
 
         if (getVariation().compareTo(BigDecimal.ZERO) < 0) {
-            s += context.getString(R.string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
+            s += context.getString(string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
         } else if (getVariation().compareTo(BigDecimal.ZERO) > 0) {
-            s += context.getString(R.string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
+            s += context.getString(string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
         }
 
 
-        s += context.getString(R.string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
-        s += context.getString(R.string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
+        s += context.getString(string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
+        s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
 
 
         return s;

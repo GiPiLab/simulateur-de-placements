@@ -48,33 +48,33 @@ class Echeance {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
         formatter.setMaximumFractionDigits(2);
-        String output = context.getString(string.echeance, this.ieme, dt.print(this.getDateDebutEcheance()), dt.print(this.getDateFinEcheance()));
+        String output = context.getString(string.echeance, ieme, dt.print(dateDebutEcheance), dt.print(dateFinEcheance));
 
         output += "<br>";
 
-        if (this.variation.compareTo(BigDecimal.ZERO) < 0) {
-            output += context.getString(string.retraitDe, formatter.format(this.variation.abs()));
+        if (variation.compareTo(BigDecimal.ZERO) < 0) {
+            output += context.getString(string.retraitDe, formatter.format(variation.abs()));
             output += "<br>";
-        } else if (this.variation.compareTo(BigDecimal.ZERO) > 0) {
-            output += context.getString(string.versementDe, formatter.format(this.variation.abs()));
+        } else if (variation.compareTo(BigDecimal.ZERO) > 0) {
+            output += context.getString(string.versementDe, formatter.format(variation.abs()));
             output += "<br>";
         }
 
-        output += context.getString(string.capitalPlace, formatter.format(this.capitalCourant));
+        output += context.getString(string.capitalPlace, formatter.format(capitalCourant));
         output += "<br>";
 
-        output += context.getString(string.interets, formatter.format(this.interetsObtenus));
+        output += context.getString(string.interets, formatter.format(interetsObtenus));
         output += "<br>";
 
-        output += context.getString(string.interetsTotaux, formatter.format(this.interetsTotaux));
+        output += context.getString(string.interetsTotaux, formatter.format(interetsTotaux));
         output += "<br>";
 
-        output += context.getString(string.valeurAcquise, formatter.format(this.valeurAcquise));
+        output += context.getString(string.valeurAcquise, formatter.format(valeurAcquise));
         return output;
     }
 
     public int getIeme() {
-        return this.ieme;
+        return ieme;
     }
 
     public void setIeme(int ieme) {
@@ -82,7 +82,7 @@ class Echeance {
     }
 
     public LocalDate getDateDebutEcheance() {
-        return this.dateDebutEcheance;
+        return dateDebutEcheance;
     }
 
     public void setDateDebutEcheance(LocalDate dateDebutEcheance) {
@@ -90,7 +90,7 @@ class Echeance {
     }
 
     public LocalDate getDateFinEcheance() {
-        return this.dateFinEcheance;
+        return dateFinEcheance;
     }
 
     public void setDateFinEcheance(LocalDate dateFinEcheance) {
@@ -98,7 +98,7 @@ class Echeance {
     }
 
     public BigDecimal getCapitalInitial() {
-        return this.capitalInitial;
+        return capitalInitial;
     }
 
     public void setCapitalInitial(BigDecimal capitalInitial) {
@@ -106,7 +106,7 @@ class Echeance {
     }
 
     public BigDecimal getCapitalCourant() {
-        return this.capitalCourant;
+        return capitalCourant;
     }
 
     public void setCapitalCourant(BigDecimal capitalCourant) {
@@ -114,7 +114,7 @@ class Echeance {
     }
 
     public BigDecimal getInteretsObtenus() {
-        return this.interetsObtenus;
+        return interetsObtenus;
     }
 
     public void setInteretsObtenus(BigDecimal interetsObtenus) {
@@ -122,7 +122,7 @@ class Echeance {
     }
 
     public BigDecimal getInteretsTotaux() {
-        return this.interetsTotaux;
+        return interetsTotaux;
     }
 
     public void setInteretsTotaux(BigDecimal interetsTotaux) {
@@ -130,7 +130,7 @@ class Echeance {
     }
 
     public BigDecimal getValeurAcquise() {
-        return this.valeurAcquise;
+        return valeurAcquise;
     }
 
     public void setValeurAcquise(BigDecimal valeurAcquise) {
@@ -138,7 +138,7 @@ class Echeance {
     }
 
     public BigDecimal getVariation() {
-        return this.variation;
+        return variation;
     }
 
     public void setVariation(BigDecimal variation) {

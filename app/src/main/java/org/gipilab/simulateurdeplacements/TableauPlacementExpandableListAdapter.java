@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import org.gipilab.simulateurdeplacements.R.id;
+import org.gipilab.simulateurdeplacements.R.layout;
+
 import java.util.ArrayList;
 
 /**
@@ -18,7 +21,7 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
     private final ArrayList<Annualite> _annualites;
     private final Context _context;
 
-    public TableauPlacementExpandableListAdapter(Context context, ArrayList<Annualite> annualites) {
+    TableauPlacementExpandableListAdapter(Context context, ArrayList<Annualite> annualites) {
         _context = context;
         _annualites = annualites;
     }
@@ -61,25 +64,27 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        if (view == null) {
+        View view1 = view;
+        if (view1 == null) {
             LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.tableauplacementexpandablelistview_layout_group, viewGroup, false);
+            view1 = inflater.inflate(layout.tableauplacementexpandablelistview_layout_group, viewGroup, false);
         }
-        TextView tv = (TextView) view.findViewById(R.id.labelVariation);
+        TextView tv = (TextView) view1.findViewById(id.labelVariation);
         tv.setText(Html.fromHtml(getGroup(i).toLocalizedString(_context)));
 
-        return view;
+        return view1;
     }
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        if (view == null) {
+        View view1 = view;
+        if (view1 == null) {
             LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.tableauplacementexpandablelistview_layout_child, viewGroup, false);
+            view1 = inflater.inflate(layout.tableauplacementexpandablelistview_layout_child, viewGroup, false);
         }
-        TextView tv = (TextView) view.findViewById(R.id.textViewExpandableChild);
+        TextView tv = (TextView) view1.findViewById(id.textViewExpandableChild);
         tv.setText(Html.fromHtml(getChild(i, i1).toLocalizedString(_context)));
-        return view;
+        return view1;
     }
 
     @Override

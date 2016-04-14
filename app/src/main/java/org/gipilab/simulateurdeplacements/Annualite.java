@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 final class Annualite {
 
+    private final ArrayList<Echeance> echeances;
     private int ieme;
-    private ArrayList<Echeance> echeances;
     private BigDecimal capitalPlaceDebutAnnee;
     private BigDecimal capitalPlaceFinAnnee;
     private BigDecimal valeurAcquiseFinAnnee;
@@ -37,22 +37,22 @@ final class Annualite {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         formatter.setMaximumFractionDigits(2);
 
-        String sb = context.getString(string.anneeIeme, this.ieme);
+        String sb = context.getString(string.anneeIeme, ieme);
         sb += "<br>";
-        sb += context.getString(string.capitalPlaceDebutAnnee, formatter.format(this.capitalPlaceDebutAnnee));
+        sb += context.getString(string.capitalPlaceDebutAnnee, formatter.format(capitalPlaceDebutAnnee));
         sb += "<br>";
-        sb += context.getString(string.capitalPlaceFinAnnee, formatter.format(this.capitalPlaceFinAnnee));
+        sb += context.getString(string.capitalPlaceFinAnnee, formatter.format(capitalPlaceFinAnnee));
         sb += "<br>";
-        sb += context.getString(string.valeurAcquiseFinAnnee, formatter.format(this.valeurAcquiseFinAnnee));
+        sb += context.getString(string.valeurAcquiseFinAnnee, formatter.format(valeurAcquiseFinAnnee));
         sb += "<br>";
-        sb += context.getString(string.interetsObtenusSurAnnee, formatter.format(this.interetsFinAnnee));
+        sb += context.getString(string.interetsObtenusSurAnnee, formatter.format(interetsFinAnnee));
         sb += "<br>";
-        sb += context.getString(string.interetsTotaux, formatter.format(this.interetsTotaux));
+        sb += context.getString(string.interetsTotaux, formatter.format(interetsTotaux));
         return sb;
     }
 
     public int getIeme() {
-        return this.ieme;
+        return ieme;
     }
 
     public void setIeme(int ieme) {
@@ -60,15 +60,11 @@ final class Annualite {
     }
 
     public ArrayList<Echeance> getEcheances() {
-        return this.echeances;
-    }
-
-    public void setEcheances(ArrayList<Echeance> echeances) {
-        this.echeances = echeances;
+        return echeances;
     }
 
     public BigDecimal getCapitalPlaceDebutAnnee() {
-        return this.capitalPlaceDebutAnnee;
+        return capitalPlaceDebutAnnee;
     }
 
     public void setCapitalPlaceDebutAnnee(BigDecimal capitalPlaceDebutAnnee) {
@@ -76,7 +72,7 @@ final class Annualite {
     }
 
     public BigDecimal getCapitalPlaceFinAnnee() {
-        return this.capitalPlaceFinAnnee;
+        return capitalPlaceFinAnnee;
     }
 
     public void setCapitalPlaceFinAnnee(BigDecimal capitalPlaceFinAnnee) {
@@ -84,7 +80,7 @@ final class Annualite {
     }
 
     public BigDecimal getValeurAcquiseFinAnnee() {
-        return this.valeurAcquiseFinAnnee;
+        return valeurAcquiseFinAnnee;
     }
 
     public void setValeurAcquiseFinAnnee(BigDecimal valeurAcquiseFinAnnee) {
@@ -92,7 +88,7 @@ final class Annualite {
     }
 
     public BigDecimal getInteretsFinAnnee() {
-        return this.interetsFinAnnee;
+        return interetsFinAnnee;
     }
 
     public void setInteretsFinAnnee(BigDecimal interetsFinAnnee) {
@@ -100,7 +96,7 @@ final class Annualite {
     }
 
     public BigDecimal getInteretsTotaux() {
-        return this.interetsTotaux;
+        return interetsTotaux;
     }
 
     public void setInteretsTotaux(BigDecimal interetsTotaux) {
