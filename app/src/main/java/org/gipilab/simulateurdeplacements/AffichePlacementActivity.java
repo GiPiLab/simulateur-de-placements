@@ -21,7 +21,9 @@ import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
@@ -31,7 +33,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
-public class AffichePlacementActivity extends AppCompatActivity {
+public class AffichePlacementActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
 
     private Placement placement;
@@ -124,9 +126,18 @@ public class AffichePlacementActivity extends AppCompatActivity {
                 Log.e("GIPIERROR", "Null button");
             }
         }
-
-        //TODO : afficher le progress dialog avant
         new DisplayPlacementTask(this).execute(placement);
+    }
+
+    @Override
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+        Log.d("GIPI", "Selected entry = " + e);
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
     private class DisplayPlacementTask extends AsyncTask<Placement, Void, Pair<ArrayList<Echeance>, ArrayList<Annualite>>> {
