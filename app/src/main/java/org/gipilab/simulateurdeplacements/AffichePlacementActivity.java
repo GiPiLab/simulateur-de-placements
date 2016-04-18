@@ -47,6 +47,8 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         }
 
         chart.setTouchEnabled(true);
+        chart.setHighlightPerTapEnabled(true);
+        chart.setOnChartValueSelectedListener(this);
 
         chart.setDescription("");
         XAxis xaxis = chart.getXAxis();
@@ -106,8 +108,22 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             Log.e("GIPIERROR", "Null listview");
             return;
         }
-        TableauPlacementExpandableListAdapter adapter = new TableauPlacementExpandableListAdapter(this, annualites);
+        final TableauPlacementExpandableListAdapter adapter = new TableauPlacementExpandableListAdapter(this, annualites);
         listv.setAdapter(adapter);
+        listv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int group, int child, long l) {
+
+                LineChart chart = (LineChart) findViewById(id.lineChart);
+                int flatPosition = adapter.findFlatChildIndexFromGroupAndChild(group, child);
+                Log.d("GIPI", "Flat position=" + flatPosition);
+                chart.highlightValue(flatPosition, 0);
+                return true;
+            }
+        });
+
+
+
     }
 
     @Override
@@ -132,6 +148,14 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
         Log.d("GIPI", "Selected entry = " + e);
+        ExpandableListView elv = (ExpandableListView) findViewById(id.listViewResult);
+        TableauPlacementExpandableListAdapter adapter = (TableauPlacementExpandableListAdapter) elv.getExpandableListAdapter();
+        Pair<Integer, Integer> groupAndChildId = adapter.findGroupAndChildFromFlatIndex(e.getXIndex());
+        Log.d("GIPI", "Selected group = " + groupAndChildId.first + " Selected child = " + groupAndChildId.second);
+        elv.expandGroup(groupAndChildId.first);
+        elv.setSelectedChild(groupAndChildId.first, groupAndChildId.second, true);
+
+
 
     }
 
