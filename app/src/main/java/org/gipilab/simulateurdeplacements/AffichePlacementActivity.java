@@ -2,10 +2,10 @@ package org.gipilab.simulateurdeplacements;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,6 +39,10 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
     private Placement placement;
 
     private void displayChart(ArrayList<Echeance> mens) {
+        boolean modeQuinzaine = false;
+        if (placement.getModeCalculPlacement() == enumModeCalculPlacement.QUINZAINE) {
+            modeQuinzaine = true;
+        }
         LineChart chart = (LineChart) findViewById(id.lineChart);
 
         if (chart == null) {
@@ -72,16 +76,22 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         LineDataSet dataSetValeurAcquise = new LineDataSet(valuesValeurAcquise, getString(string.chartLegendValeurAcquise));
         dataSetValeurAcquise.setAxisDependency(AxisDependency.LEFT);
         dataSetValeurAcquise.setDrawValues(false);
-        dataSetValeurAcquise.setColor(Color.BLUE, 128);
-        dataSetValeurAcquise.setCircleColor(Color.BLUE);
+        dataSetValeurAcquise.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        dataSetValeurAcquise.setCircleColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        dataSetValeurAcquise.setDrawStepped(modeQuinzaine);
         dataSetValeurAcquise.setDrawCircles(false);
+        dataSetValeurAcquise.setHighLightColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        dataSetValeurAcquise.setHighlightLineWidth(1.0f);
 
         LineDataSet dataSetCapitalPlace = new LineDataSet(valuesCapitalPlace, getString(string.chartLegendCapitalPlace));
         dataSetCapitalPlace.setAxisDependency(AxisDependency.LEFT);
         dataSetCapitalPlace.setDrawValues(false);
-        dataSetCapitalPlace.setColor(Color.RED, 128);
-        dataSetCapitalPlace.setCircleColor(Color.RED);
+        dataSetCapitalPlace.setColor(ContextCompat.getColor(this, R.color.colorAccent));
+        dataSetCapitalPlace.setCircleColor(ContextCompat.getColor(this, R.color.colorAccent));
+        dataSetCapitalPlace.setDrawStepped(true);
         dataSetCapitalPlace.setDrawCircles(false);
+        dataSetCapitalPlace.setHighLightColor(ContextCompat.getColor(this, R.color.colorAccent));
+        dataSetCapitalPlace.setHighlightLineWidth(1.0f);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(dataSetValeurAcquise);
@@ -117,7 +127,12 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
                 LineChart chart = (LineChart) findViewById(id.lineChart);
                 int flatPosition = adapter.findFlatChildIndexFromGroupAndChild(group, child);
                 Log.d("GIPI", "Flat position=" + flatPosition);
-                chart.highlightValue(flatPosition, 0);
+                if (flatPosition >= 0 && flatPosition < chart.getLineData().getXValCount()) {
+                    chart.highlightValue(flatPosition, 0);
+
+                } else {
+                    Log.e("GIPIERROR", "selection hors bornes");
+                }
                 return true;
             }
         });
@@ -150,6 +165,10 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         Log.d("GIPI", "Selected entry = " + e);
         ExpandableListView elv = (ExpandableListView) findViewById(id.listViewResult);
         TableauPlacementExpandableListAdapter adapter = (TableauPlacementExpandableListAdapter) elv.getExpandableListAdapter();
+        if (adapter == null) {
+            Log.e("GIPIERROR", "Null adapter");
+            return;
+        }
         Pair<Integer, Integer> groupAndChildId = adapter.findGroupAndChildFromFlatIndex(e.getXIndex());
         Log.d("GIPI", "Selected group = " + groupAndChildId.first + " Selected child = " + groupAndChildId.second);
         elv.expandGroup(groupAndChildId.first);
@@ -183,6 +202,9 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             displayTable(echeancesEtAnnualites.second);
             displayChart(echeancesEtAnnualites.first);
             TextView tvResult = (TextView) findViewById(id.textViewResult);
+
+            getSupportActionBar().hide();
+
             if (tvResult != null) {
                 tvResult.setText(placement.toLocalizedStringForDetailedView(activity));
             } else {

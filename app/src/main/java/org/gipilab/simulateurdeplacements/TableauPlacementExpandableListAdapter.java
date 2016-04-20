@@ -1,6 +1,7 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -128,14 +129,20 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
+    public View getChildView(int group, int child, boolean b, View view, ViewGroup viewGroup) {
         View view1 = view;
         if (view1 == null) {
             LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view1 = inflater.inflate(layout.tableauplacementexpandablelistview_layout_child, viewGroup, false);
         }
         TextView tv = (TextView) view1.findViewById(id.textViewExpandableChild);
-        tv.setText(Html.fromHtml(getChild(i, i1).toLocalizedString(_context)));
+        tv.setText(Html.fromHtml(getChild(group, child).toLocalizedString(_context)));
+
+        if (child % 2 == 1) {
+            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.material_grey_100));
+        } else {
+            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.material_grey_300));
+        }
 
         return view1;
     }
