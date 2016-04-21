@@ -73,9 +73,22 @@ class PlacementQuinzaine extends Placement {
         return quinzaineSuivante;
     }
 
-    @Override
-    int getMAXECHEANCES() {
+
+    static int getMAXECHEANCES() {
         return 2400; //100 ans
+    }
+
+    /**
+     * Retourne rapidement une valeur approchée du nombre de quinzaines sans tenir compte de l'alignement
+     * Utile pour l'affichage des labels de durée en rouge ou noir dans l'interface lors de changements de date
+     *
+     * @param dateDebut
+     * @param dateFin
+     * @return le nombre de quinzaines APPROCHE
+     */
+
+    static int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
+        return Months.monthsBetween(dateDebut, dateFin).getMonths() * 2;
     }
 
     /**
@@ -143,19 +156,6 @@ class PlacementQuinzaine extends Placement {
         }
 
         return nbQuinzaines;
-    }
-
-    /**
-     * Retourne rapidement une valeur approchée du nombre de quinzaines sans tenir compte de l'alignement
-     * Utile pour l'affichage des labels de durée en rouge ou noir dans l'interface lors de changements de date
-     *
-     * @param dateDebut
-     * @param dateFin
-     * @return le nombre de quinzaines APPROCHE
-     */
-    @Override
-    int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
-        return Months.monthsBetween(dateDebut, dateFin).getMonths() * 2;
     }
 
     @Override

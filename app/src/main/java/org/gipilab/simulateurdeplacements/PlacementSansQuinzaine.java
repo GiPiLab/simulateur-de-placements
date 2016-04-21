@@ -26,8 +26,8 @@ class PlacementSansQuinzaine extends Placement {
         setModeCalculPlacement(enumModeCalculPlacement.SANSQUINZAINE);
     }
 
-    @Override
-    int getMAXECHEANCES() {
+
+    static int getMAXECHEANCES() {
         return 1200;
     }
 
@@ -38,8 +38,8 @@ class PlacementSansQuinzaine extends Placement {
      * @param dateFin
      * @return la durée approchée en mois sans le mois résiduel éventuel
      */
-    @Override
-    int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
+
+    static int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
         return Months.monthsBetween(dateDebut, dateFin).getMonths();
     }
 

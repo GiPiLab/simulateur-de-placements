@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,6 +19,7 @@ import org.gipilab.simulateurdeplacements.R.string;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
     private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
+    private static final int REQUEST_CODE_PLACEMENT_TO_MODIFY = 2;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -47,19 +47,11 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(id.container);
-        if (mViewPager != null)
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-        else {
-            Log.e("GIPIERROR", "Null viewpager");
-        }
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(id.tabs);
-        if (tabLayout != null) {
-            tabLayout.setupWithViewPager(mViewPager);
-        } else {
-            Log.e("GIPIERROR", "Invalid tab layout");
-        }
-/*
+        tabLayout.setupWithViewPager(mViewPager);
+  /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,9 +99,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         Intent intent = new Intent(this, AffichePlacementActivity.class);
         intent.putExtra("placement", placement);
         intent.putExtra("enregistrable", false);
-        startActivity(intent);
-
-
+        startActivityForResult(intent, REQUEST_CODE_PLACEMENT_TO_MODIFY);
     }
 
     @Override
@@ -121,7 +111,16 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                 ListePlacementsFragment frag = (ListePlacementsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.FRAGMENT_LISTE_PLACEMENTS_ID);
                 frag.updateListView(frag.getView());
             }
+        } else if (requestCode == REQUEST_CODE_PLACEMENT_TO_MODIFY) {
+            if (resultCode == RESULT_OK) {
+                Placement p = (Placement) data.getSerializableExtra("placement");
+
+                NouveauPlacementFragment frag = (NouveauPlacementFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.FRAGMENT_NOUVEAU_PLACEMENT_ID);
+                mViewPager.setCurrentItem(SectionsPagerAdapter.FRAGMENT_NOUVEAU_PLACEMENT_ID);
+                frag.loadPlacement(p);
+            }
         }
+
     }
 
     /**

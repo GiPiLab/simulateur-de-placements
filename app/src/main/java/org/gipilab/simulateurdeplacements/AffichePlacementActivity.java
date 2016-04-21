@@ -10,8 +10,8 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -103,6 +103,14 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
 
     }
 
+
+    public void btnModifierClicked(View v) {
+        Intent data = new Intent();
+        data.putExtra("placement", placement);
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
     public void btnSaveClicked(View v) {
         placement.save();
         setResult(RESULT_OK);
@@ -150,7 +158,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         placement = (Placement) intent.getSerializableExtra("placement");
         boolean enregistrable = intent.getBooleanExtra("enregistrable", true);
         if (!enregistrable) {
-            Button btnSave = (Button) findViewById(id.buttonSavePlacement);
+            ImageButton btnSave = (ImageButton) findViewById(id.buttonSavePlacement);
             if (btnSave != null) {
                 btnSave.setEnabled(false);
             } else {

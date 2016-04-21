@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,14 +42,6 @@ import java.math.MathContext;
  * create an instance of this fragment.
  */
 public class NouveauPlacementFragment extends Fragment implements OnDateChangedListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String ARG_PARAM1 = "param1";
-    //private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
 
     private OnFragmentInteractionListener mListener;
     private LocalDate dateDebut, dateFin;
@@ -91,10 +82,6 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
                 }
 
                 RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
-                if (groupMode == null) {
-                    Log.e("GIPIERROR", "Invalid group mode");
-                    return;
-                }
                 Placement placement;
                 switch (groupMode.getCheckedRadioButtonId()) {
                     case id.radioButtonModeQuinzaine:
@@ -166,10 +153,6 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         dateFormat = DateTimeFormat.longDate();
         final DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
-        if (dp == null) {
-            Log.e("GIPIERROR", "Invalid group mode");
-            return;
-        }
 
         dp.init(dateFin.getYear(), dateFin.getMonthOfYear() - 1, dateFin.getDayOfMonth(), this);
         dp.setMaxDate(dateDebut.plusYears(200).toDate().getTime());
@@ -206,20 +189,11 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
     private boolean validateInputs() {
         EditText editCapital = (EditText) getView().findViewById(id.editCapital);
-        if (editCapital == null) {
-            Log.e("GIPIERROR", "Invalid editCapital");
-            return false;
-        }
+
         EditText editTaux = (EditText) getView().findViewById(id.editTaux);
-        if (editTaux == null) {
-            Log.e("GIPIERROR", "Invalid editTaux");
-            return false;
-        }
+
         EditText editVariation = (EditText) getView().findViewById(id.editVariation);
-        if (editVariation == null) {
-            Log.e("GIPIERROR", "Invalid editVariation");
-            return false;
-        }
+
 
         if (editCapital.getText().length() == 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.saisissezLeCapital, Snackbar.LENGTH_SHORT);
@@ -234,8 +208,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             return false;
         }
         if (capital.compareTo(Placement.MAXCAPITAL) > 0) {
-            //FIXME : message %1s
-            Snackbar snackbar = Snackbar.make(getView(), string.capitalDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), getString(string.capitalDoitEtreInferieurA, Placement.MAXCAPITAL), Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
@@ -254,34 +227,36 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         }
 
         if (taux.compareTo(Placement.MAXTAUX) > 0) {
-            //FIXME : message %1s
-            Snackbar snackbar = Snackbar.make(getView(), string.tauxDoitEtreInferieurA, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(getView(), getString(string.tauxDoitEtreInferieurA, Placement.MAXTAUX), Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
-        Placement p;
+
+        int dureeApprochee, maxEcheances;
         RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
         switch (groupMode.getCheckedRadioButtonId()) {
             case id.radioButtonModeQuinzaine:
-                p = new PlacementQuinzaine();
+                dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+                maxEcheances = PlacementQuinzaine.getMAXECHEANCES();
                 break;
 
             case id.radioButtonModeNormal:
-                p = new PlacementSansQuinzaine();
+                dureeApprochee = PlacementSansQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+                maxEcheances = PlacementSansQuinzaine.getMAXECHEANCES();
                 break;
             default:
                 throw new IllegalArgumentException("Erreur mode");
         }
 
-        int duree = p.approximeDureeEnEcheances(dateDebut, dateFin);
-        if (duree > p.getMAXECHEANCES()) {
+
+        if (dureeApprochee > maxEcheances) {
             Snackbar snackbar = Snackbar.make(getView(), string.dureeTropLongue, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
         }
 
-        if (duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
+        if (dureeApprochee < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
             Snackbar snackbar = Snackbar.make(getView(), string.dureeDoitEtrePositive, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return false;
@@ -303,28 +278,25 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
     private void updateLabelDuree(LocalDate dateDebut, LocalDate dateFin) {
         TextView labelDuree = (TextView) getView().findViewById(id.labelDuree);
-        if (labelDuree == null) {
-            Log.e("GIPIERROR", "Invalid labelDuree");
-            return;
-        }
 
-        Placement p;
         RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
+        int dureeApprochee, maxEcheances;
         switch (groupMode.getCheckedRadioButtonId()) {
             case id.radioButtonModeQuinzaine:
-                p = new PlacementQuinzaine();
+                dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+                maxEcheances = PlacementQuinzaine.getMAXECHEANCES();
                 break;
 
             case id.radioButtonModeNormal:
-                p = new PlacementSansQuinzaine();
+                dureeApprochee = PlacementSansQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+                maxEcheances = PlacementSansQuinzaine.getMAXECHEANCES();
                 break;
             default:
                 throw new IllegalArgumentException("Erreur mode");
         }
 
-        int dureeApprochee = p.approximeDureeEnEcheances(dateDebut, dateFin);
 
-        if (dureeApprochee > p.getMAXECHEANCES() || dureeApprochee < 0 || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
+        if (dureeApprochee > maxEcheances || dureeApprochee < 0 || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
             labelDuree.setTextColor(Color.RED);
         } else {
             labelDuree.setTextColor(Color.BLACK);
@@ -336,10 +308,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
     public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
 
         RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
-        if (buttonDateFin == null) {
-            Log.e("GIPIERROR", "Invalid buttonDateFin");
-            return;
-        }
+
         TextView tv;
         if (buttonDateFin.isChecked()) {
             tv = (TextView) getView().findViewById(id.labelSelectedDateFin);
@@ -351,6 +320,54 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             tv.setText(dateFormat.print(dateDebut));
         }
         updateLabelDuree(dateDebut, dateFin);
+    }
+
+    public void loadPlacement(Placement p) {
+        DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
+        RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
+        this.dateDebut = p.getDateDebut();
+        this.dateFin = p.getDateFin();
+
+        buttonDateFin.setChecked(true);
+        dp.updateDate(p.getDateFin().getYear(), p.getDateFin().getMonthOfYear() - 1, p.getDateFin().getDayOfMonth());
+        updateLabelDuree(p.getDateDebut(), p.getDateFin());
+
+        TextView dateDebut = (TextView) getView().findViewById(id.labelSelectedDateDebut);
+        dateDebut.setText(dateFormat.print(p.getDateDebut()));
+        TextView dateFin = (TextView) getView().findViewById(id.labelSelectedDateFin);
+        dateFin.setText(dateFormat.print(p.getDateFin()));
+
+        EditText capital = (EditText) getView().findViewById(id.editCapital);
+        capital.setText(p.getCapitalInitial().toPlainString());
+
+        EditText taux = (EditText) getView().findViewById(id.editTaux);
+        taux.setText(p.getTauxAnnuel().multiply(BigDecimal.valueOf(100), MathContext.DECIMAL128).toPlainString());
+
+        EditText variation = (EditText) getView().findViewById(id.editVariation);
+        variation.setText(p.getVariation().toPlainString());
+
+        Spinner freqVar = (Spinner) getView().findViewById(id.spinnerFrequenceVariation);
+
+        switch (p.getFrequenceVariation()) {
+            case MENSUELLE:
+                freqVar.setSelection(0);
+                break;
+            case TRIMESTRIELLE:
+                freqVar.setSelection(1);
+                break;
+        }
+
+        variation.setText(p.getVariation().toPlainString());
+
+        RadioButton buttonModeLivret = (RadioButton) getView().findViewById(id.radioButtonModeQuinzaine);
+        switch (p.getModeCalculPlacement()) {
+            case QUINZAINE:
+                buttonModeLivret.setChecked(true);
+                break;
+            case SANSQUINZAINE:
+                buttonModeLivret.setChecked(false);
+                break;
+        }
     }
 
 

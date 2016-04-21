@@ -52,9 +52,9 @@ abstract class Placement extends SugarRecord implements Serializable {
         modeCalculPlacement = mode;
     }
 
-    abstract int getMAXECHEANCES();
+    //abstract int getMAXECHEANCES();
 
-    abstract int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
+    //abstract int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
 
     abstract int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
 
@@ -149,10 +149,6 @@ abstract class Placement extends SugarRecord implements Serializable {
     void setDatesPlacement(LocalDate dateDebut, LocalDate dateFin) {
 
         int duree = calculeDureeEnEcheances(dateDebut, dateFin);
-
-        if (duree > getMAXECHEANCES() || duree < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
-            throw new InputMismatchException("duree hors bornes");
-        }
         setDateDebut(dateDebut);
         setDateFin(dateFin);
         this.duree = duree;

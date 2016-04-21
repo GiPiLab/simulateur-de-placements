@@ -8,7 +8,7 @@
     <string name="saisissezLeCapital">Saisissez le capital</string>
     <string name="saisissezLeTaux">Saisissez le taux</string>
     <string name="saisissezLaVariationPeriodique">Saisissez la variation périodique (retrait ou versement)</string>
-    <string name="capitalDoitEtreInferieurA">le capital doit être inférieur ou égale à %1s</string>
+    <string name="capitalDoitEtreInferieurA">le capital doit être inférieur ou égal à %1s</string>
     <string name="tauxDoitEtreInferieurA">Le taux doit être inférieur ou égal à %1s</string>
     <string name="capitalDoitEtrePositif">Le capital doit être positif</string>
     <string name="tauxDoitEtrePositifOuNul">Le taux doit être positif ou nul</string>
@@ -69,6 +69,8 @@
     <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce placement ?</string>
     <string name="supprimer_le_placement">Supprimer le placement</string>
     <string name="patienterCalculsEnCours">Patientez calculs en cours...</string>
+    <string name="btnModifier">Modifier</string>
+    <string name="btnSupprimer">Supprimer</string>
 
 
 </resources>

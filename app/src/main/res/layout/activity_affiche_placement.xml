@@ -40,12 +40,34 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/buttonSavePlacement"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="btnSaveClicked"
-            android:text="@string/btnEnregistrerPlacement" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonSavePlacement"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/btnEnregistrerPlacement"
+                android:onClick="btnSaveClicked"
+                android:src="@android:drawable/ic_menu_save"
+                android:text="@string/btnEnregistrerPlacement" />
+
+            <ImageButton
+                android:id="@+id/buttonModifier"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/btnModifier"
+                android:onClick="btnModifierClicked"
+                android:src="@android:drawable/ic_menu_edit"
+                android:text="@string/btnModifier" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
