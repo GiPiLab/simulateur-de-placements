@@ -157,12 +157,21 @@
                 android:datePickerMode="spinner"
                 android:spinnersShown="true" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modeCalculDesInterets"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+
             <RadioGroup
                 android:id="@+id/radioGroupMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
+
+
 
                 <RadioButton
                     android:id="@+id/radioButtonModeQuinzaine"

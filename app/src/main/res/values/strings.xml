@@ -43,13 +43,13 @@
 
     <string name="periodiciteVariationMois">mois</string>
     <string name="periodiciteVariationTrimestre">trimestre</string>
-    <string name="descriptionPlacementLivret">Placement sur livret de %1$s à %2$s pendant %3$s du %4$s au %5$s</string>
-    <string name="descriptionPlacementSansLivret">Placement de %1$s à %2$s pendant %3$s du %4$s au %5$s</string>
-    <string name="avecRetraitDe">" avec retrait de %1$s par %2$s"</string>
-    <string name="avecVersementDe">" avec versement de %1$s par %2$s"</string>
+    <string name="descriptionPlacementLivret"><![CDATA["Placement sur livret de <b>%1$s</b> à <b>%2$s</b> pendant <b>%3$s</b> du %4$s au %5$s"]]></string>
+    <string name="descriptionPlacementSansLivret"><![CDATA["Placement de <b>%1$s</b> à <b>%2$s</b> pendant <b>%3$s</b> du %4$s au %5$s"]]></string>
+    <string name="avecRetraitDe"><![CDATA[" avec <i>retrait de %1$s par %2$s</i>"]]></string>
+    <string name="avecVersementDe"><![CDATA[" avec <i>versement de %1$s par %2$s</i>"]]></string>
 
-    <string name="descriptionInteretsObtenus">"\nIntérêts obtenus = %1$s"</string>
-    <string name="descriptionValeurAcquise">"\nValeur acquise en fin de période = %1$s"</string>
+    <string name="descriptionInteretsObtenus"><![CDATA["<br>Intérêts obtenus = %1$s"]]></string>
+    <string name="descriptionValeurAcquise"><![CDATA["<br>Valeur acquise en fin de période = %1$s"]]></string>
     <string name="btnEnregistrerPlacement">Enregistrer</string>
     <string name="descriptionDuAu">Du %1$s au %2$s</string>
 
@@ -63,14 +63,15 @@
     <string name="ongletNouveauPlacement">Nouveau placement</string>
     <string name="ongletPlacementsEnregistres">Placements enregistrés</string>
     <string name="placementEnregistre">Placement enregistré</string>
-    <string name="placements_sans_quinzaine">Placements sans quinzaine</string>
-    <string name="placements_sur_livrets">Placements sur livrets</string>
+    <string name="placements_sans_quinzaine">Autres placements</string>
+    <string name="placements_sur_livrets">Placements type livret</string>
     <string name="supprimerPlacement">Supprimer le placement</string>
     <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce placement ?</string>
     <string name="supprimer_le_placement">Supprimer le placement</string>
     <string name="patienterCalculsEnCours">Patientez calculs en cours...</string>
     <string name="btnModifier">Modifier</string>
     <string name="btnSupprimer">Supprimer</string>
+    <string name="modeCalculDesInterets">Mode de calcul des intérêts : </string>
 
 
 </resources>

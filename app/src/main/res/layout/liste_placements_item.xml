@@ -5,10 +5,10 @@
 
     <TextView
         android:id="@+id/textViewItem"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:gravity="fill_horizontal"
+        android:padding="10dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

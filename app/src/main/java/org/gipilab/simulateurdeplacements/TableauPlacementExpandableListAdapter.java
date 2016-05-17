@@ -139,9 +139,9 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
         tv.setText(Html.fromHtml(getChild(group, child).toLocalizedString(_context)));
 
         if (child % 2 == 1) {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.material_grey_100));
+            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
         } else {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.material_grey_300));
+            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
         }
 
         return view1;

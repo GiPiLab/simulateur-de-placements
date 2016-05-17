@@ -1,6 +1,8 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,13 +74,14 @@ class ListePlacementsListAdapter extends BaseAdapter {
             view1 = inflater.inflate(layout.liste_placements_item, viewGroup, false);
         }
         TextView tv = (TextView) view1.findViewById(id.textViewItem);
-        if (tv != null) {
-            //tv.setText(Html.fromHtml(getItem(i).toLocalizedStringForListePlacementsView(_context)));
-            tv.setText(getItem(i).toLocalizedStringForListePlacementsView(_context));
-        } else {
-            Log.e("GIPIERROR", "Null textview");
-        }
 
+        tv.setText(Html.fromHtml(getItem(i).toLocalizedStringForListePlacementsView(_context)));
+
+        if (i % 2 == 0) {
+            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
+        } else {
+            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
+        }
 
         return view1;
     }

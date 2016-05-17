@@ -239,6 +239,10 @@ class PlacementSansQuinzaine extends Placement {
 
     @Override
     String toLocalizedStringForListePlacementsView(Context context) {
+
+        return toLocalizedStringForDetailedView(context);
+
+        /*
         NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
         NumberFormat percentFormatter = NumberFormat.getPercentInstance();
         DateTimeFormatter dateFormatter = DateTimeFormat.longDate();
@@ -262,7 +266,7 @@ class PlacementSansQuinzaine extends Placement {
         s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
 
 
-        return s;
+        return s;*/
     }
 
 

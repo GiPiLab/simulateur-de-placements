@@ -323,6 +323,11 @@ class PlacementQuinzaine extends Placement {
 
     @Override
     String toLocalizedStringForListePlacementsView(Context context) {
+
+        return toLocalizedStringForDetailedView(context);
+
+        /*
+
         NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
         NumberFormat percentFormatter = NumberFormat.getPercentInstance();
         DateTimeFormatter dateFormatter = DateTimeFormat.longDate();
@@ -348,6 +353,7 @@ class PlacementQuinzaine extends Placement {
 
 
         return s;
+        */
     }
 
 }

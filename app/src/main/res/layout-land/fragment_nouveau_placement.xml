@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutTaux"
             android:columnCount="3"
-            android:rowCount="5">
+            android:rowCount="6">
 
             <!--<TextView
                 android:id="@+id/labelDureeDuPlacementSection"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:layout_row="0"
-                android:layout_rowSpan="5"
+                android:layout_rowSpan="6"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 android:spinnersShown="true" />
@@ -123,6 +123,19 @@
                     android:text="@string/radioReglerDateFin" />
             </RadioGroup>
 
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modeCalculDesInterets"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_column="0"
+                android:layout_columnSpan="3"
+                android:layout_row="4"
+
+                />
+
             <RadioGroup
                 android:id="@+id/radioGroupMode"
                 android:layout_width="wrap_content"
@@ -130,8 +143,10 @@
                 android:layout_column="0"
                 android:layout_columnSpan="2"
                 android:layout_gravity="center_horizontal"
-                android:layout_row="4"
+                android:layout_row="5"
                 android:orientation="horizontal">
+
+
 
                 <RadioButton
                     android:id="@+id/radioButtonModeQuinzaine"
@@ -192,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:layout_columnSpan="2"
+                android:layout_columnSpan="3"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
