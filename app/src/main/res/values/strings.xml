@@ -48,8 +48,8 @@
     <string name="avecRetraitDe"><![CDATA[" avec <i>retrait de %1$s par %2$s</i>"]]></string>
     <string name="avecVersementDe"><![CDATA[" avec <i>versement de %1$s par %2$s</i>"]]></string>
 
-    <string name="descriptionInteretsObtenus"><![CDATA["<br>Intérêts obtenus = %1$s"]]></string>
-    <string name="descriptionValeurAcquise"><![CDATA["<br>Valeur acquise en fin de période = %1$s"]]></string>
+    <string name="descriptionInteretsObtenus"><![CDATA["intérêts obtenus %1$s"]]></string>
+    <string name="descriptionValeurAcquise"><![CDATA["valeur acquise en fin de période %1$s"]]></string>
     <string name="btnEnregistrerPlacement">Enregistrer</string>
     <string name="descriptionDuAu">Du %1$s au %2$s</string>
 

@@ -15,30 +15,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <TextView
             android:id="@+id/textViewResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+
             android:text="Resultat"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorAccent" />
 
-        <ExpandableListView
-        android:id="@+id/listViewResult"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:choiceMode="singleChoice"
-        android:fastScrollEnabled="true"
-        android:numColumns="auto_fit"
-        tools:listitem="@android:layout/simple_list_item_1" />
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ExpandableListView
+                android:id="@+id/listViewResult"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:choiceMode="singleChoice"
+                android:fastScrollEnabled="true"
+                android:numColumns="auto_fit"
+                tools:listitem="@android:layout/simple_list_item_1" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

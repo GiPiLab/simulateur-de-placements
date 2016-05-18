@@ -1,5 +1,6 @@
 package org.gipilab.simulateurdeplacements;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import org.gipilab.simulateurdeplacements.ListePlacementsFragment.OnFragmentInteractionListener;
 import org.gipilab.simulateurdeplacements.R.id;
@@ -44,13 +46,43 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        getSupportActionBar().hide();
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case SectionsPagerAdapter.FRAGMENT_LISTE_PLACEMENTS_ID:
+                        //getSupportActionBar().hide();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (getCurrentFocus() != null)
+                            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                        break;
+                    default:
+                        //getSupportActionBar().show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
         TabLayout tabLayout = (TabLayout) findViewById(id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
   /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

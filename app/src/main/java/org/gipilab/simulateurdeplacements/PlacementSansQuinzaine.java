@@ -231,8 +231,8 @@ class PlacementSansQuinzaine extends Placement {
         }
 
 
-        s += context.getString(string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
-        s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
+        s += " (" + context.getString(string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus())) + ", ";
+        s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise())) + ")";
 
         return s;
     }

@@ -137,6 +137,7 @@
                     android:id="@+id/radioButtonDateDebut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:checked="false"
                     android:text="@string/radioReglerDateDebut" />
 
@@ -144,6 +145,7 @@
                     android:id="@+id/radioButtonDateFin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:checked="true"
                     android:text="@string/radioReglerDateFin" />
             </RadioGroup>
@@ -177,6 +179,7 @@
                     android:id="@+id/radioButtonModeQuinzaine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:checked="true"
                     android:text="@string/radioModeQuinzaine" />
 
@@ -184,6 +187,7 @@
                     android:id="@+id/radioButtonModeNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:checked="true"
                     android:text="@string/radioModeSansQuinzaine" />
             </RadioGroup>
