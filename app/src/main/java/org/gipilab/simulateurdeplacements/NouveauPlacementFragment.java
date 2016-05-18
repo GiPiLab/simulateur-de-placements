@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -77,11 +78,20 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             @Override
             public void onClick(View view) {
 
-                if (!validateInputs()) {
+                if (areInputsInvalid()) {
+                    return;
+                }
+
+                if (getView() == null) {
+                    Log.e("SIMUPLACEMENT", "Null getView");
                     return;
                 }
 
                 RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
+                if (groupMode == null) {
+                    Log.e("SIMUPLACEMENT", "Null groupMode");
+                    return;
+                }
                 Placement placement;
                 switch (groupMode.getCheckedRadioButtonId()) {
                     case id.radioButtonModeQuinzaine:
@@ -152,7 +162,18 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         dateFin = dateDebut.plusYears(1);
 
         dateFormat = DateTimeFormat.longDate();
+
+        if (getView() == null) {
+            Log.e("SIMUPLACEMENT", "Null getView");
+            return;
+        }
+
+
         final DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
+        if (dp == null) {
+            Log.e("SIMUPLACEMENT", "Null datePicker");
+            return;
+        }
 
         dp.init(dateFin.getYear(), dateFin.getMonthOfYear() - 1, dateFin.getDayOfMonth(), this);
         dp.setMaxDate(dateDebut.plusYears(200).toDate().getTime());
@@ -187,49 +208,58 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         });
     }
 
-    private boolean validateInputs() {
+    private boolean areInputsInvalid() {
+        if (getView() == null) {
+            Log.e("SIMUPLACEMENT", "Null getView");
+            return true;
+        }
+
         EditText editCapital = (EditText) getView().findViewById(id.editCapital);
 
         EditText editTaux = (EditText) getView().findViewById(id.editTaux);
 
         EditText editVariation = (EditText) getView().findViewById(id.editVariation);
 
+        if (editCapital == null || editTaux == null || editVariation == null) {
+            Log.e("SIMUPLACEMENT", "Null edit field in validateInput");
+            return true;
+        }
 
         if (editCapital.getText().length() == 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.saisissezLeCapital, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
         BigDecimal capital = new BigDecimal(editCapital.getText().toString());
 
         if (capital.compareTo(BigDecimal.ZERO) <= 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.capitalDoitEtrePositif, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
         if (capital.compareTo(Placement.MAXCAPITAL) > 0) {
             Snackbar snackbar = Snackbar.make(getView(), getString(string.capitalDoitEtreInferieurA, Placement.MAXCAPITAL), Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
 
         if (editTaux.getText().length() == 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.saisissezLeTaux, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
         BigDecimal taux = new BigDecimal(editTaux.getText().toString());
 
         if (taux.compareTo(BigDecimal.ZERO) < 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.tauxDoitEtrePositifOuNul, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
 
         if (taux.compareTo(Placement.MAXTAUX) > 0) {
             Snackbar snackbar = Snackbar.make(getView(), getString(string.tauxDoitEtreInferieurA, Placement.MAXTAUX), Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
 
 
@@ -253,31 +283,42 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         if (dureeApprochee > maxEcheances) {
             Snackbar snackbar = Snackbar.make(getView(), string.dureeTropLongue, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
 
         if (dureeApprochee < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
             Snackbar snackbar = Snackbar.make(getView(), string.dureeDoitEtrePositive, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
 
         if (editVariation.getText().length() == 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.saisissezLaVariationPeriodique, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
         BigDecimal variation = new BigDecimal(editVariation.getText().toString());
         if (variation.compareTo(BigDecimal.ZERO) < 0 && variation.abs().compareTo(capital) > 0 && variation.compareTo(Placement.MAXVARIATION) >= 0) {
             Snackbar snackbar = Snackbar.make(getView(), string.variationDoitEtreInferieureAuCapital, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void updateLabelDuree(LocalDate dateDebut, LocalDate dateFin) {
+
+        if (getView() == null) {
+            Log.e("SIMUPLACEMENT", "Null getView");
+            return;
+        }
+
         TextView labelDuree = (TextView) getView().findViewById(id.labelDuree);
+
+        if (labelDuree == null) {
+            Log.e("SIMUPLACEMENT", "Null labelDuree");
+            return;
+        }
 
         RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
         int dureeApprochee, maxEcheances;
@@ -307,7 +348,17 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
     @Override
     public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
 
+        if (getView() == null) {
+            Log.e("SIMUPLACEMENT", "Null getView");
+            return;
+        }
+
         RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
+
+        if (buttonDateFin == null) {
+            Log.e("SIMUPLACEMENT", "Null buttonDateFin");
+            return;
+        }
 
         TextView tv;
         if (buttonDateFin.isChecked()) {
@@ -323,7 +374,18 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
     }
 
     public void loadPlacement(Placement p) {
+
+        if (getView() == null) {
+            Log.e("SIMUPLACEMENT", "Null getView");
+            return;
+        }
+
         DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
+
+        if (dp == null) {
+            Log.e("SIMUPLACEMENT", "Null datepicker");
+            return;
+        }
         RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
         this.dateDebut = p.getDateDebut();
         this.dateFin = p.getDateFin();

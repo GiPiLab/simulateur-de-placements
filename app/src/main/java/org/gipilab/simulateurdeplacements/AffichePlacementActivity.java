@@ -47,7 +47,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         LineChart chart = (LineChart) findViewById(id.lineChart);
 
         if (chart == null) {
-            Log.e("GIPIERROR", "NULL chart");
+            Log.e("SIMUPLACEMENT", "NULL chart");
             return;
         }
 
@@ -105,7 +105,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
     }
 
 
-    public void btnModifierClicked(View v) {
+    public void btnModifierClicked(@SuppressWarnings("UnusedParameters") View v) {
         Intent data = new Intent();
         data.putExtra("placement", placement);
         setResult(RESULT_OK, data);
@@ -124,7 +124,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
 
         ExpandableListView listv = (ExpandableListView) findViewById(id.listViewResult);
         if (listv == null) {
-            Log.e("GIPIERROR", "Null listview");
+            Log.e("SIMUPLACEMENT", "Null listview");
             return;
         }
         final TableauPlacementExpandableListAdapter adapter = new TableauPlacementExpandableListAdapter(this, annualites);
@@ -134,13 +134,21 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             public boolean onChildClick(ExpandableListView expandableListView, View view, int group, int child, long l) {
 
                 LineChart chart = (LineChart) findViewById(id.lineChart);
+                if (chart == null) {
+                    Log.e("SIMUPLACEMENT", "Null chart");
+                    return true;
+                }
                 int flatPosition = adapter.findFlatChildIndexFromGroupAndChild(group, child);
-                Log.d("GIPI", "Flat position=" + flatPosition);
+                if (chart.getLineData() == null) {
+                    Log.e("SIMUPLACEMENT", "Null getLineData");
+                    return true;
+                }
+
                 if (flatPosition >= 0 && flatPosition < chart.getLineData().getXValCount()) {
                     chart.highlightValue(flatPosition, 0);
 
                 } else {
-                    Log.e("GIPIERROR", "selection hors bornes");
+                    Log.e("SIMUPLACEMENT", "selection hors bornes");
                 }
                 return true;
             }
@@ -163,7 +171,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             if (btnSave != null) {
                 btnSave.setEnabled(false);
             } else {
-                Log.e("GIPIERROR", "Null button");
+                Log.e("SIMUPLACEMENT", "Null button");
             }
         }
         new DisplayPlacementTask(this).execute(placement);
@@ -171,15 +179,17 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        Log.d("GIPI", "Selected entry = " + e);
         ExpandableListView elv = (ExpandableListView) findViewById(id.listViewResult);
+        if (elv == null) {
+            Log.e("SIMUPLACEMENT", "Null expandable list view");
+            return;
+        }
         TableauPlacementExpandableListAdapter adapter = (TableauPlacementExpandableListAdapter) elv.getExpandableListAdapter();
         if (adapter == null) {
-            Log.e("GIPIERROR", "Null adapter");
+            Log.e("SIMUPLACEMENT", "Null adapter");
             return;
         }
         Pair<Integer, Integer> groupAndChildId = adapter.findGroupAndChildFromFlatIndex(e.getXIndex());
-        Log.d("GIPI", "Selected group = " + groupAndChildId.first + " Selected child = " + groupAndChildId.second);
         elv.expandGroup(groupAndChildId.first);
         elv.setSelectedChild(groupAndChildId.first, groupAndChildId.second, true);
 
@@ -212,12 +222,13 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             displayChart(echeancesEtAnnualites.first);
             TextView tvResult = (TextView) findViewById(id.textViewResult);
 
-            getSupportActionBar().hide();
+            if (getSupportActionBar() != null)
+                getSupportActionBar().hide();
 
             if (tvResult != null) {
                 tvResult.setText(Html.fromHtml(placement.toLocalizedStringForDetailedView(activity)));
             } else {
-                Log.e("GIPIERROR", "Null textview");
+                Log.e("SIMUPLACEMENT", "Null textview");
             }
             if (progressDialog.isShowing())
                 progressDialog.dismiss();

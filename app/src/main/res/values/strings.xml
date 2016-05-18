@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Simulateur de placements</string>
     <string name="labelCapital">Capital :</string>
     <string name="labelTaux">Taux (en %) :</string>
@@ -68,7 +68,7 @@
     <string name="supprimerPlacement">Supprimer le placement</string>
     <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce placement ?</string>
     <string name="supprimer_le_placement">Supprimer le placement</string>
-    <string name="patienterCalculsEnCours">Patientez calculs en cours...</string>
+    <string name="patienterCalculsEnCours" tools:ignore="Typos">Patientez calculs en cours…</string>
     <string name="btnModifier">Modifier</string>
     <string name="btnSupprimer">Supprimer</string>
     <string name="modeCalculDesInterets">Mode de calcul des intérêts : </string>

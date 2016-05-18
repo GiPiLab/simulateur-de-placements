@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
@@ -46,11 +47,17 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        getSupportActionBar().hide();
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(id.container);
+        if (mViewPager == null) {
+            Log.e("SIMUPLACEMENT", "Null viewPager");
+            return;
+        }
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -81,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
 
         TabLayout tabLayout = (TabLayout) findViewById(id.tabs);
+        if (tabLayout == null) {
+            Log.e("SIMUPLACEMENT", "Null tabLayout");
+            return;
+        }
         tabLayout.setupWithViewPager(mViewPager);
 
   /*

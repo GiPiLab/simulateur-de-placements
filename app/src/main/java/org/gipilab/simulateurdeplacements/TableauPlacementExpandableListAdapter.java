@@ -72,6 +72,7 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
                 break;
             }
         }
+        //noinspection ConstantConditions
         if (foundGroup == -1 || foundChild == -1) {
             throw new ArrayIndexOutOfBoundsException(flatIndex);
         }

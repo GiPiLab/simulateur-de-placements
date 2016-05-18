@@ -46,7 +46,7 @@ class ListePlacementsListAdapter extends BaseAdapter {
         if (i < _lesPlacements.size()) {
             return _lesPlacements.get(i);
         } else {
-            Log.e("GIPIERROR", "Returning null as getItem");
+            Log.e("SIMUPLACEMENT", "Returning null as getItem");
             return null;
         }
     }
@@ -56,7 +56,7 @@ class ListePlacementsListAdapter extends BaseAdapter {
         if (i < _lesPlacements.size() && _lesPlacements.get(i) != null) {
             return _lesPlacements.get(i).getId();
         } else {
-            Log.e("GIPIERROR", "Returning -1 as getItemId");
+            Log.e("SIMUPLACEMENT", "Returning -1 as getItemId");
             return -1;
         }
     }
@@ -78,9 +78,10 @@ class ListePlacementsListAdapter extends BaseAdapter {
         tv.setText(Html.fromHtml(getItem(i).toLocalizedStringForListePlacementsView(_context)));
 
         if (i % 2 == 0) {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
+            tv.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_light));
+
         } else {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
+            tv.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_dark));
         }
 
         return view1;

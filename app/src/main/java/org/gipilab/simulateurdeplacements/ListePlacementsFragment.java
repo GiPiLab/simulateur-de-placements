@@ -139,8 +139,8 @@ public class ListePlacementsFragment extends Fragment {
     public void updateListView(View v) {
         ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
-        ArrayList<Placement> listPlacementsQuinzaine = (ArrayList) SugarRecord.listAll(PlacementQuinzaine.class);
-        ArrayList<Placement> listPlacementsSansQuinzaine = (ArrayList) SugarRecord.listAll(PlacementSansQuinzaine.class);
+        @SuppressWarnings("unchecked") ArrayList<Placement> listPlacementsQuinzaine = (ArrayList) SugarRecord.listAll(PlacementQuinzaine.class);
+        @SuppressWarnings("unchecked") ArrayList<Placement> listPlacementsSansQuinzaine = (ArrayList) SugarRecord.listAll(PlacementSansQuinzaine.class);
 
         listViewQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsQuinzaine));
         listViewSansQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsSansQuinzaine));

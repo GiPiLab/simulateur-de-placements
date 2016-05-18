@@ -42,7 +42,8 @@
                 android:ems="10"
                 android:hint="@string/editVariationHint"
                 android:inputType="numberSigned|numberDecimal"
-                android:text="0" />
+                android:text="0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textViewEurosPar"
@@ -128,11 +129,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/modeCalculDesInterets"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_column="0"
                 android:layout_columnSpan="3"
                 android:layout_row="4"
+                android:text="@string/modeCalculDesInterets"
+                android:textAppearance="?android:attr/textAppearanceMedium"
 
                 />
 
@@ -180,7 +181,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_row="1"
                 android:text="01/01/2000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textView"
@@ -199,7 +201,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_row="2"
                 android:text="01/01/2001"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
 
             <TextView
@@ -213,7 +216,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_row="0"
                 android:text="dureeEnMois"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:ignore="HardcodedText" />
 
         </GridLayout>
 

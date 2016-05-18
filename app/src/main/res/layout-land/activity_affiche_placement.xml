@@ -24,7 +24,8 @@
 
             android:text="Resultat"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            tools:ignore="HardcodedText" />
 
 
         <LinearLayout
