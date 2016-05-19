@@ -286,7 +286,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             return true;
         }
 
-        if (dureeApprochee < 0 || dateDebut.toDate().getTime() == dateFin.toDate().getTime()) {
+        if (dateDebut.toDate().getTime() >= dateFin.toDate().getTime()) {
             Snackbar snackbar = Snackbar.make(getView(), string.dureeDoitEtrePositive, Snackbar.LENGTH_SHORT);
             snackbar.show();
             return true;
@@ -337,7 +337,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         }
 
 
-        if (dureeApprochee > maxEcheances || dureeApprochee < 0 || this.dateDebut.toDate().getTime() == this.dateFin.toDate().getTime()) {
+        if (dureeApprochee > maxEcheances || this.dateDebut.toDate().getTime() >= this.dateFin.toDate().getTime()) {
             labelDuree.setTextColor(Color.RED);
         } else {
             labelDuree.setTextColor(Color.BLACK);
