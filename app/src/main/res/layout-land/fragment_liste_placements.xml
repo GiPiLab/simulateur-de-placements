@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,51 +13,82 @@
 
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textViewPlacementQuinzaines"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/placements_sur_livrets"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-             />
-        <ListView
-            android:id="@+id/listViewPlacementsQuinzaine"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            android:choiceMode="singleChoice" />
+            <TextView
+                android:id="@+id/textViewPlacementQuinzaines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placements_sur_livrets"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <ListView
+                android:id="@+id/listViewPlacementsQuinzaine"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:choiceMode="singleChoice" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewPlacementSansQuinzaine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placements_sans_quinzaine"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+
+                />
+
+
+            <ListView
+                android:id="@+id/listViewPlacementsSansQuinzaine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice" />
+        </LinearLayout>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textViewPlacementSansQuinzaine"
+
+        <Button
+            android:id="@+id/btnSupprimerPlacement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/placements_sans_quinzaine"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_weight="1"
+            android:text="@string/btnSupprimerPlacement" />
 
-            />
+        <Button
+            android:id="@+id/btnComparer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnComparerPlacement" />
 
-
-        <ListView
-                android:id="@+id/listViewPlacementsSansQuinzaine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:choiceMode="singleChoice"
-             />
     </LinearLayout>
 </LinearLayout>

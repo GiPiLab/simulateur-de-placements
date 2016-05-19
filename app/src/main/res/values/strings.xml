@@ -72,6 +72,8 @@
     <string name="btnModifier">Modifier</string>
     <string name="btnSupprimer">Supprimer</string>
     <string name="modeCalculDesInterets">Mode de calcul des intérêts : </string>
+    <string name="btnSupprimerPlacement">Supprimer</string>
+    <string name="btnComparerPlacement">Comparer</string>
 
 
 </resources>

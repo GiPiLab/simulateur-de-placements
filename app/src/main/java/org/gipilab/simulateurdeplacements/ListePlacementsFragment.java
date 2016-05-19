@@ -134,6 +134,7 @@ public class ListePlacementsFragment extends Fragment {
                 return true;
             }
         });
+
     }
 
     public void updateListView(View v) {
