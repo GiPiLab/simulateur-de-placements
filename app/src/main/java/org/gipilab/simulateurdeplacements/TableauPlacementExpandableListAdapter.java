@@ -28,7 +28,6 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
         _annualites = annualites;
     }
 
-
     int findFlatChildIndexFromGroupAndChild(int group, int child) {
         int flatIndex = 0;
         if (group >= _annualites.size()) {
@@ -44,7 +43,6 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
         flatIndex += child;
         return flatIndex;
     }
-
 
     Pair<Integer, Integer> findGroupAndChildFromFlatIndex(int flatIndex) {
         int foundChild = -1;
@@ -79,8 +77,6 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
         return new Pair<Integer, Integer>(foundGroup, foundChild);
     }
 
-
-
     @Override
     public int getGroupCount() {
         return _annualites.size();
@@ -113,18 +109,25 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean hasStableIds() {
-        return true;
+        return false;
     }
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         View view1 = view;
+        ViewHolder holder;
         if (view1 == null) {
+            holder = new ViewHolder();
+
             LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view1 = inflater.inflate(layout.tableauplacementexpandablelistview_layout_group, viewGroup, false);
+            holder.description = (TextView) view1.findViewById(id.labelVariation);
+            view1.setTag(holder);
+        } else {
+            holder = (ViewHolder) view1.getTag();
         }
-        TextView tv = (TextView) view1.findViewById(id.labelVariation);
-        tv.setText(Html.fromHtml(getGroup(i).toLocalizedString(_context)));
+
+        holder.description.setText(Html.fromHtml(getGroup(i).toLocalizedString(_context)));
 
         return view1;
     }
@@ -132,17 +135,25 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int group, int child, boolean b, View view, ViewGroup viewGroup) {
         View view1 = view;
+
+        ViewHolder holder;
+
         if (view1 == null) {
+            holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view1 = inflater.inflate(layout.tableauplacementexpandablelistview_layout_child, viewGroup, false);
+            holder.description = (TextView) view1.findViewById(id.textViewExpandableChild);
+            view1.setTag(holder);
+        } else {
+            holder = (ViewHolder) view1.getTag();
         }
-        TextView tv = (TextView) view1.findViewById(id.textViewExpandableChild);
-        tv.setText(Html.fromHtml(getChild(group, child).toLocalizedString(_context)));
+
+        holder.description.setText(Html.fromHtml(getChild(group, child).toLocalizedString(_context)));
 
         if (child % 2 == 1) {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
+            holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
         } else {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
+            holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
         }
 
         return view1;
@@ -151,5 +162,9 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;
+    }
+
+    private static class ViewHolder {
+        TextView description;
     }
 }

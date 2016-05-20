@@ -23,6 +23,7 @@ class ListePlacementsListAdapter extends BaseAdapter {
     private final ArrayList<Placement> _lesPlacements;
     private final Context _context;
 
+
     ListePlacementsListAdapter(Context context, ArrayList<Placement> lesPlacements) {
         _context = context;
         _lesPlacements = lesPlacements;
@@ -69,21 +70,29 @@ class ListePlacementsListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View view1 = view;
+        ViewHolder holder;
         if (view1 == null) {
+            holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view1 = inflater.inflate(layout.liste_placements_item, viewGroup, false);
+            holder.description = (TextView) view1.findViewById(id.textViewItem);
+            view1.setTag(holder);
+        } else {
+            holder = (ViewHolder) view1.getTag();
         }
-        TextView tv = (TextView) view1.findViewById(id.textViewItem);
-
-        tv.setText(Html.fromHtml(getItem(i).toLocalizedStringForListePlacementsView(_context)));
+        holder.description.setText(Html.fromHtml(getItem(i).toLocalizedStringForListePlacementsView(_context)));
 
         if (i % 2 == 0) {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_light));
+            holder.description.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_light));
 
         } else {
-            tv.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_dark));
+            holder.description.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_dark));
         }
 
         return view1;
+    }
+
+    private static class ViewHolder {
+        TextView description;
     }
 }
