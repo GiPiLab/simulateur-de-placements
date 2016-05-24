@@ -6,14 +6,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog.Builder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.orm.SugarRecord;
@@ -57,18 +60,125 @@ public class ListePlacementsFragment extends Fragment {
 
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+
+        if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
+            ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+            ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+
+            outState.putSerializable("checkedItemStatesPlacementQuinzaine", adapterQuinzaine.getCheckedStates());
+            outState.putSerializable("checkedItemStatesPlacementSansQuinzaine", adapterSansQuinzaine.getCheckedStates());
+            Log.d("GIPI", "Save Instance State");
+        }
+
+
+        super.onSaveInstanceState(outState);
+
+
+    }
+
+    //TODO : Better check state handling for listview
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+
+        if (savedInstanceState == null)
+            return;
+
+        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+
+        if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
+
+            ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+            ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+
+
+            ArrayList<Boolean> statsQuinzaine = (ArrayList<Boolean>) savedInstanceState.getSerializable("checkedItemStatesPlacementQuinzaine");
+            ArrayList<Boolean> statsSansQuinzaine = (ArrayList<Boolean>) savedInstanceState.getSerializable("checkedItemStatesPlacementSansQuinzaine");
+            adapterQuinzaine.setCheckedStates(statsQuinzaine);
+            adapterSansQuinzaine.setCheckedStates(statsSansQuinzaine);
+            Log.d("GIPI", "Restored");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(layout.fragment_liste_placements, container, false);
         updateListView(v);
         setListViewListeners(v);
-
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button btnSupprimer = (Button) getView().findViewById(id.btnSupprimerPlacement);
+
+        if (btnSupprimer != null) {
+            btnSupprimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+                    ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+
+                    if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
+
+                        Log.d("GIPI", "Supprimer clicked");
+                        final ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+                        final ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+
+                        final ArrayList<Boolean> statesQuinzaine = adapterQuinzaine.getCheckedStates();
+                        final ArrayList<Boolean> statesSansQuinzaine = adapterSansQuinzaine.getCheckedStates();
+
+                        int countQuinzaine = adapterQuinzaine.getCheckedCount();
+                        int countSansQuinzaine = adapterSansQuinzaine.getCheckedCount();
+                        Log.d("GIPI", "Count quinzaine = " + countQuinzaine + " count sans quinzaine = " + countSansQuinzaine);
+                        if (countQuinzaine + countSansQuinzaine > 0) {
+                            new Builder(getContext())
+                                    .setTitle(getString(R.string.supprimerPlacement))
+                                    .setMessage(getString(R.string.confirmerSupprimerPlacement))
+                                    .setPositiveButton(string.yes, new OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            for (int i = 0; i < statesQuinzaine.size(); i++) {
+                                                if (statesQuinzaine.get(i) == true) {
+                                                    Log.d("GIPI", "Deleting quinzaine " + i);
+                                                    adapterQuinzaine.deleteItem(i);
+                                                }
+                                            }
+                                            for (int i = 0; i < statesSansQuinzaine.size(); i++) {
+                                                if (statesSansQuinzaine.get(i) == true) {
+                                                    Log.d("GIPI", "Deleting sans quinzaine " + i);
+                                                    adapterSansQuinzaine.deleteItem(i);
+                                                }
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton(string.no, new OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    })
+                                    .setIcon(drawable.ic_dialog_alert)
+                                    .show();
+                        }
+                    }
+                }
+            });
+        }
+
+
+    }
+
     private void setListViewListeners(View v) {
-        ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
+        final ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
 
         //Click handlers
@@ -90,9 +200,12 @@ public class ListePlacementsFragment extends Fragment {
         });
 
         //Long click handlers
+
         listViewQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+
+                /*
                 new Builder(getContext())
                         .setTitle(getString(R.string.supprimerPlacement))
                         .setMessage(getString(R.string.confirmerSupprimerPlacement))
@@ -109,12 +222,22 @@ public class ListePlacementsFragment extends Fragment {
                         })
                         .setIcon(drawable.ic_dialog_alert)
                         .show();
+                return true;*/
+
+
+                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
+                listViewQuinzaine.setItemChecked(i, true);
+                adapter.swapCheckedState(i);
+
                 return true;
             }
         });
+
+
         listViewSansQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+            /*
                 new Builder(getContext())
                         .setTitle(getString(R.string.supprimerPlacement))
                         .setMessage(getString(R.string.confirmerSupprimerPlacement))
@@ -133,8 +256,12 @@ public class ListePlacementsFragment extends Fragment {
                         .show();
                 return true;
             }
+        });*/
+                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
+                adapter.swapCheckedState(i);
+                return true;
+            }
         });
-
     }
 
     public void updateListView(View v) {

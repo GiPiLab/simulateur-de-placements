@@ -66,7 +66,7 @@
     <string name="placements_sans_quinzaine">Autres placements</string>
     <string name="placements_sur_livrets">Placements type livret</string>
     <string name="supprimerPlacement">Supprimer le placement</string>
-    <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce placement ?</string>
+    <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce(s) placement(s) ?</string>
     <string name="supprimer_le_placement">Supprimer le placement</string>
     <string name="patienterCalculsEnCours" tools:ignore="Typos">Patientez calculs en cours…</string>
     <string name="btnModifier">Modifier</string>

@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/textViewItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="fill_horizontal"
         android:padding="10dp"
         android:text="Medium Text"
+
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>
