@@ -74,6 +74,7 @@ class PlacementQuinzaine extends Placement {
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     static int getMAXECHEANCES() {
         return 2400; //100 ans
     }

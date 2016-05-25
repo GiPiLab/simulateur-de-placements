@@ -25,6 +25,7 @@ import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 /**
@@ -61,16 +62,18 @@ public class ListePlacementsFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+        if (getView() != null) {
+            ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+            ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
-        if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
-            ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
-            ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+            if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
+                ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+                ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
 
-            outState.putSerializable("checkedItemStatesPlacementQuinzaine", adapterQuinzaine.getCheckedStates());
-            outState.putSerializable("checkedItemStatesPlacementSansQuinzaine", adapterSansQuinzaine.getCheckedStates());
-            Log.d("GIPI", "Save Instance State");
+                outState.putSerializable("checkedItemStatesPlacementQuinzaine", adapterQuinzaine.getCheckedIds());
+                outState.putSerializable("checkedItemStatesPlacementSansQuinzaine", adapterSansQuinzaine.getCheckedIds());
+                Log.d("GIPI", "Save Instance State");
+            }
         }
 
 
@@ -79,7 +82,7 @@ public class ListePlacementsFragment extends Fragment {
 
     }
 
-    //TODO : Better check state handling for listview
+    
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -88,20 +91,22 @@ public class ListePlacementsFragment extends Fragment {
         if (savedInstanceState == null)
             return;
 
-        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+        if (getView() != null) {
+            ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+            ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
-        if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
+            if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
 
-            ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
-            ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+                ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+                ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
 
 
-            ArrayList<Boolean> statsQuinzaine = (ArrayList<Boolean>) savedInstanceState.getSerializable("checkedItemStatesPlacementQuinzaine");
-            ArrayList<Boolean> statsSansQuinzaine = (ArrayList<Boolean>) savedInstanceState.getSerializable("checkedItemStatesPlacementSansQuinzaine");
-            adapterQuinzaine.setCheckedStates(statsQuinzaine);
-            adapterSansQuinzaine.setCheckedStates(statsSansQuinzaine);
-            Log.d("GIPI", "Restored");
+                HashSet<Long> statsQuinzaine = (HashSet<Long>) savedInstanceState.getSerializable("checkedItemStatesPlacementQuinzaine");
+                HashSet<Long> statsSansQuinzaine = (HashSet<Long>) savedInstanceState.getSerializable("checkedItemStatesPlacementSansQuinzaine");
+                adapterQuinzaine.setCheckedIds(statsQuinzaine);
+                adapterSansQuinzaine.setCheckedIds(statsSansQuinzaine);
+                Log.d("GIPI", "Restored");
+            }
         }
     }
 
@@ -119,55 +124,58 @@ public class ListePlacementsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnSupprimer = (Button) getView().findViewById(id.btnSupprimerPlacement);
+        Button btnSupprimer = (Button) view.findViewById(id.btnSupprimerPlacement);
 
         if (btnSupprimer != null) {
             btnSupprimer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-                    ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+                    if (getView() != null) {
 
-                    if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
+                        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+                        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
-                        Log.d("GIPI", "Supprimer clicked");
-                        final ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
-                        final ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+                        if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
 
-                        final ArrayList<Boolean> statesQuinzaine = adapterQuinzaine.getCheckedStates();
-                        final ArrayList<Boolean> statesSansQuinzaine = adapterSansQuinzaine.getCheckedStates();
+                            final ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+                            final ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
 
-                        int countQuinzaine = adapterQuinzaine.getCheckedCount();
-                        int countSansQuinzaine = adapterSansQuinzaine.getCheckedCount();
-                        Log.d("GIPI", "Count quinzaine = " + countQuinzaine + " count sans quinzaine = " + countSansQuinzaine);
-                        if (countQuinzaine + countSansQuinzaine > 0) {
-                            new Builder(getContext())
-                                    .setTitle(getString(R.string.supprimerPlacement))
-                                    .setMessage(getString(R.string.confirmerSupprimerPlacement))
-                                    .setPositiveButton(string.yes, new OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            for (int i = 0; i < statesQuinzaine.size(); i++) {
-                                                if (statesQuinzaine.get(i) == true) {
-                                                    Log.d("GIPI", "Deleting quinzaine " + i);
-                                                    adapterQuinzaine.deleteItem(i);
+                            final HashSet<Long> checkedIdsQuinzaine = adapterQuinzaine.getCheckedIds();
+                            final HashSet<Long> checkedIdsSansQuinzaine = adapterSansQuinzaine.getCheckedIds();
+
+                            int countQuinzaine = adapterQuinzaine.getCheckedCount();
+                            int countSansQuinzaine = adapterSansQuinzaine.getCheckedCount();
+                            Log.d("GIPI", "Count quinzaine = " + countQuinzaine + " count sans quinzaine = " + countSansQuinzaine);
+                            if (countQuinzaine + countSansQuinzaine > 0) {
+                                new Builder(getContext())
+                                        .setTitle(getString(R.string.supprimerPlacement))
+                                        .setMessage(getString(R.string.confirmerSupprimerPlacement))
+                                        .setPositiveButton(string.yes, new OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                for (long checkedIdQuinzaine : checkedIdsQuinzaine) {
+                                                    if (BuildConfig.DEBUG)
+                                                        Log.d("GIPI", "Deleting quinzaine " + checkedIdQuinzaine);
+                                                    adapterQuinzaine.deleteItemId(checkedIdQuinzaine);
+
+                                                }
+
+                                                for (long checkedIdSansQuinzaine : checkedIdsSansQuinzaine) {
+
+                                                    if (BuildConfig.DEBUG)
+                                                        Log.d("GIPI", "Deleting sans quinzaine " + checkedIdSansQuinzaine);
+                                                    adapterSansQuinzaine.deleteItemId(checkedIdSansQuinzaine);
                                                 }
                                             }
-                                            for (int i = 0; i < statesSansQuinzaine.size(); i++) {
-                                                if (statesSansQuinzaine.get(i) == true) {
-                                                    Log.d("GIPI", "Deleting sans quinzaine " + i);
-                                                    adapterSansQuinzaine.deleteItem(i);
-                                                }
-                                            }
-                                        }
-                                    })
-                                    .setNegativeButton(string.no, new OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        })
+                                        .setNegativeButton(string.no, new OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
 
-                                        }
-                                    })
-                                    .setIcon(drawable.ic_dialog_alert)
-                                    .show();
+                                            }
+                                        })
+                                        .setIcon(drawable.ic_dialog_alert)
+                                        .show();
+                            }
                         }
                     }
                 }
@@ -226,8 +234,7 @@ public class ListePlacementsFragment extends Fragment {
 
 
                 ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
-                listViewQuinzaine.setItemChecked(i, true);
-                adapter.swapCheckedState(i);
+                adapter.swapCheckedState(adapter.getItemId(i));
 
                 return true;
             }
@@ -258,7 +265,7 @@ public class ListePlacementsFragment extends Fragment {
             }
         });*/
                 ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
-                adapter.swapCheckedState(i);
+                adapter.swapCheckedState(adapter.getItemId(i));
                 return true;
             }
         });

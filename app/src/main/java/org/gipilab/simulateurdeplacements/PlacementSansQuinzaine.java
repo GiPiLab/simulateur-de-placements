@@ -27,6 +27,7 @@ class PlacementSansQuinzaine extends Placement {
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     static int getMAXECHEANCES() {
         return 1200;
     }

@@ -3,7 +3,6 @@ package org.gipilab.simulateurdeplacements;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,102 +13,85 @@ import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.TreeMap;
 
 /**
  * Created by thibault on 07/04/16.
  */
 class ListePlacementsListAdapter extends BaseAdapter {
 
-    private final ArrayList<Placement> _lesPlacements;
+    private final TreeMap<Long, Placement> _placementIdToPlacement;
     private final Context _context;
-    private ArrayList<Boolean> _checkedStates; //0 = unchecked, 1 = checked, -1 = invalid after deletion
+    private final ArrayList<Placement> _lesPlacements;
+    private HashSet<Long> _checkedItemsIds;
 
     ListePlacementsListAdapter(Context context, ArrayList<Placement> lesPlacements) {
         _context = context;
-        _lesPlacements = lesPlacements;
-        _checkedStates = new ArrayList<>(lesPlacements.size());
-        for (int i = 0; i < lesPlacements.size(); i++) {
-            _checkedStates.add(false);
+        _lesPlacements = (ArrayList<Placement>) lesPlacements.clone();
+        _checkedItemsIds = new HashSet<>();
+        _placementIdToPlacement = new TreeMap<>();
+        for (Placement p : lesPlacements) {
+            _placementIdToPlacement.put(p.getId(), p);
         }
     }
 
-    public void deleteItem(int i) {
-        if (i < _lesPlacements.size()) {
-            _lesPlacements.get(i).delete();
-            _lesPlacements.remove(i);
-            _checkedStates.remove(i);
-            notifyDataSetChanged();
+    public void deleteItemId(long itemId) {
+        Placement p = _placementIdToPlacement.get(itemId);
+        p.delete();
+        _lesPlacements.remove(p);
+        _placementIdToPlacement.remove(itemId);
+        if (_checkedItemsIds.contains(itemId)) {
+            _checkedItemsIds.remove(itemId);
         }
+
+        notifyDataSetChanged();
     }
 
-    public void swapCheckedState(int item) {
-        if (_checkedStates.get(item) == false) {
-            _checkedStates.set(item, true);
+    public void swapCheckedState(long itemId) {
+        if (_checkedItemsIds.contains(itemId)) {
+            _checkedItemsIds.remove(itemId);
         } else {
-            _checkedStates.set(item, false);
+            _checkedItemsIds.add(itemId);
         }
         notifyDataSetChanged();
     }
 
-    public void setItemChecked(int item, boolean checked) {
-        _checkedStates.set(item, checked);
-        notifyDataSetChanged();
+
+    public HashSet<Long> getCheckedIds() {
+        return (HashSet<Long>) _checkedItemsIds.clone();
     }
 
-    public boolean getCheckedState(int item) {
-        return _checkedStates.get(item);
-    }
-
-    public ArrayList<Boolean> getCheckedStates() {
-        return (ArrayList<Boolean>) _checkedStates.clone();
-    }
-
-    public void setCheckedStates(ArrayList<Boolean> savedCheckedStates) {
-        if (savedCheckedStates.size() != _lesPlacements.size()) {
+    public void setCheckedIds(HashSet<Long> itemIdsOfCheckedItems) {
+        if (itemIdsOfCheckedItems.size() > _placementIdToPlacement.size()) {
             throw new IndexOutOfBoundsException();
         }
-        _checkedStates = (ArrayList<Boolean>) savedCheckedStates.clone();
+        _checkedItemsIds = (HashSet<Long>) itemIdsOfCheckedItems.clone();
         notifyDataSetChanged();
     }
 
     public int getCheckedCount() {
-        int count = 0;
-
-        for (boolean state : _checkedStates) {
-            if (state == true)
-                count++;
-        }
-        return count;
+        return _checkedItemsIds.size();
     }
 
     @Override
     public int getCount() {
-        return _lesPlacements.size();
+        return _placementIdToPlacement.size();
     }
 
     @Override
     public Placement getItem(int i) {
-        if (i < _lesPlacements.size()) {
-            return _lesPlacements.get(i);
-        } else {
-            Log.e("SIMUPLACEMENT", "Returning null as getItem");
-            return null;
-        }
+        return _lesPlacements.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        if (i < _lesPlacements.size() && _lesPlacements.get(i) != null) {
-            return _lesPlacements.get(i).getId();
-        } else {
-            Log.e("SIMUPLACEMENT", "Returning -1 as getItemId");
-            return -1;
-        }
+        return _lesPlacements.get(i).getId();
     }
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
     @Override
@@ -135,7 +117,7 @@ class ListePlacementsListAdapter extends BaseAdapter {
             holder.description.setBackgroundColor(ContextCompat.getColor(_context, R.color.ripple_material_dark));
         }
 
-        holder.description.setChecked(_checkedStates.get(i));
+        holder.description.setChecked(_checkedItemsIds.contains(getItemId(i)));
 
         return view1;
     }
