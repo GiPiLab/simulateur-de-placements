@@ -84,6 +84,10 @@ class ListePlacementsListAdapter extends BaseAdapter {
         return _lesPlacements.get(i);
     }
 
+    public Placement getPlacementFromItemId(long itemId) {
+        return _placementIdToPlacement.get(itemId);
+    }
+
     @Override
     public long getItemId(int i) {
         return _lesPlacements.get(i).getId();

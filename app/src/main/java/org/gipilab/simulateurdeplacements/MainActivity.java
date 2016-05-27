@@ -20,6 +20,8 @@ import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
     private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     private static final int REQUEST_CODE_PLACEMENT_TO_MODIFY = 2;
@@ -143,6 +145,12 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         intent.putExtra("placement", placement);
         intent.putExtra("enregistrable", false);
         startActivityForResult(intent, REQUEST_CODE_PLACEMENT_TO_MODIFY);
+    }
+
+    public void onComparePlacementClickedFromListPlacementsFragment(ArrayList<Placement> placements) {
+        Intent intent = new Intent(this, ComparePlacementsActivity.class);
+        intent.putExtra("listePlacements", placements);
+        startActivity(intent);
     }
 
     @Override

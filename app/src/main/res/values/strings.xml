@@ -74,6 +74,8 @@
     <string name="modeCalculDesInterets">Mode de calcul des intérêts : </string>
     <string name="btnSupprimerPlacement">Supprimer</string>
     <string name="btnComparerPlacement">Comparer</string>
+    <string name="selectionnerPlacementsASupprimer">"Sélectionnez le ou les placement(s) à supprimer "</string>
+    <string name="maxPlacementsToCompare">Vous pouvez comparer au maximum %1$d placements</string>
 
 
 </resources>
