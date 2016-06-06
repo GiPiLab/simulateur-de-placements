@@ -3,4 +3,30 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
+
+    <color name="colorCompare1">#ff0000</color>
+    <color name="colorCompare2">#00ff00</color>
+    <color name="colorCompare3">#0000ff</color>
+    <color name="colorCompare4">#ffff00</color>
+    <color name="colorCompare5">#ff00ff</color>
+    <color name="colorCompare6">#00ffff</color>
+    <color name="colorCompare7">#aa0000</color>
+    <color name="colorCompare8">#00aa00</color>
+    <color name="colorCompare9">#aabbcc</color>
+    <color name="colorCompare10">#aadd00</color>
+
+
+    <array name="colorsOfPlacementsToCompare">
+        <item>@color/colorCompare1</item>
+        <item>@color/colorCompare2</item>
+        <item>@color/colorCompare3</item>
+        <item>@color/colorCompare4</item>
+        <item>@color/colorCompare5</item>
+        <item>@color/colorCompare6</item>
+        <item>@color/colorCompare7</item>
+        <item>@color/colorCompare8</item>
+        <item>@color/colorCompare9</item>
+        <item>@color/colorCompare10</item>
+    </array>
+
 </resources>
