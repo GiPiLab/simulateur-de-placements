@@ -50,6 +50,11 @@
 
     <string name="descriptionInteretsObtenus"><![CDATA["intérêts obtenus %1$s"]]></string>
     <string name="descriptionValeurAcquise"><![CDATA["valeur acquise en fin de période %1$s"]]></string>
+
+    <string name="descriptionCourteLivrets"><![CDATA["%1$s à %2$s pendant %3$s sur livret"]]></string>
+    <string name="descriptionCourteSansLivret"><![CDATA["%1$s à %2$s pendant %3$s"]]></string>
+
+
     <string name="btnEnregistrerPlacement">Enregistrer</string>
     <string name="descriptionDuAu">Du %1$s au %2$s</string>
 

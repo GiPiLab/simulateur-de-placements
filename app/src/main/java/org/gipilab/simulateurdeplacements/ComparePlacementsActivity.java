@@ -11,9 +11,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -22,7 +20,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ComparePlacementsActivity extends AppCompatActivity implements OnChartValueSelectedListener {
+public class ComparePlacementsActivity extends AppCompatActivity {// implements OnChartValueSelectedListener {
 
     private ArrayList<Placement> _lesPlacements;
     private HashMap<Placement, ArrayList<Echeance>> _dataToPlot;
@@ -101,8 +99,9 @@ public class ComparePlacementsActivity extends AppCompatActivity implements OnCh
 
 
         chart.setTouchEnabled(true);
-        chart.setHighlightPerTapEnabled(true);
-        chart.setOnChartValueSelectedListener(this);
+        // chart.setHighlightPerTapEnabled(true);
+        // chart.setOnChartValueSelectedListener(this);
+
 
         chart.setDescription("");
         XAxis xaxis = chart.getXAxis();
@@ -143,7 +142,7 @@ public class ComparePlacementsActivity extends AppCompatActivity implements OnCh
             modeQuinzaine = placement.getModeCalculPlacement() == enumModeCalculPlacement.QUINZAINE;
 
 
-            LineDataSet dataSetValeurAcquise = new LineDataSet(values, placement.toLocalizedStringForListePlacementsView(this));
+            LineDataSet dataSetValeurAcquise = new LineDataSet(values, placement.toLocalizedVeryShortDescription(this));
             dataSetValeurAcquise.setAxisDependency(YAxis.AxisDependency.LEFT);
             dataSetValeurAcquise.setDrawValues(false);
 
@@ -152,10 +151,6 @@ public class ComparePlacementsActivity extends AppCompatActivity implements OnCh
             dataSetValeurAcquise.setCircleColor(colors[i]);
             dataSetValeurAcquise.setDrawStepped(modeQuinzaine);
             dataSetValeurAcquise.setDrawCircles(false);
-            dataSetValeurAcquise.setHighlightEnabled(true);
-            dataSetValeurAcquise.setDrawHighlightIndicators(true);
-            dataSetValeurAcquise.setHighLightColor(colors[i]);
-            dataSetValeurAcquise.setHighlightLineWidth(1.0f);
 
             dataSets.add(dataSetValeurAcquise);
             i++;
@@ -167,11 +162,12 @@ public class ComparePlacementsActivity extends AppCompatActivity implements OnCh
 
         LineData chartData = new LineData(xLabels, dataSets);
         chart.setData(chartData);
+        chart.getLegend().setWordWrapEnabled(true);
         chart.invalidate();
 
 
     }
-
+/*
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
@@ -185,7 +181,7 @@ public class ComparePlacementsActivity extends AppCompatActivity implements OnCh
     @Override
     public void onNothingSelected() {
 
-    }
+    }*/
 }
 
 

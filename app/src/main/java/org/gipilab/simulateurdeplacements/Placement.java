@@ -66,6 +66,8 @@ abstract class Placement extends SugarRecord implements Serializable {
 
     abstract String toLocalizedStringForListePlacementsView(Context context);
 
+    abstract String toLocalizedVeryShortDescription(Context context);
+
     BigDecimal getTauxAnnuel() {
         return tauxAnnuel;
     }

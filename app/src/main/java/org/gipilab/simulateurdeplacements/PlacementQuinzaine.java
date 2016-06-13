@@ -299,8 +299,9 @@ class PlacementQuinzaine extends Placement {
         NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
         NumberFormat percentFormatter = NumberFormat.getPercentInstance();
         DateTimeFormatter dateFormatter = DateTimeFormat.longDate();
-        moneyFormatter.setMaximumFractionDigits(2);
-        percentFormatter.setMaximumFractionDigits(2);
+
+        moneyFormatter.setMaximumFractionDigits(context.getResources().getInteger(R.integer.numDecimalMoney));
+        percentFormatter.setMaximumFractionDigits(context.getResources().getInteger(R.integer.numDecimalPercent));
 
         Period duration = new Period(getDateDebut(), getDateFin());
 
@@ -314,10 +315,8 @@ class PlacementQuinzaine extends Placement {
             s += context.getString(string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
         }
 
-
         s += " (" + context.getString(string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus())) + ", ";
         s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise())) + ")";
-
 
         return s;
     }
@@ -326,35 +325,21 @@ class PlacementQuinzaine extends Placement {
     String toLocalizedStringForListePlacementsView(Context context) {
 
         return toLocalizedStringForDetailedView(context);
+    }
 
-        /*
-
+    @Override
+    String toLocalizedVeryShortDescription(Context context) {
+        String s;
         NumberFormat moneyFormatter = NumberFormat.getCurrencyInstance();
         NumberFormat percentFormatter = NumberFormat.getPercentInstance();
-        DateTimeFormatter dateFormatter = DateTimeFormat.longDate();
 
-        moneyFormatter.setMaximumFractionDigits(2);
-        percentFormatter.setMaximumFractionDigits(2);
+        moneyFormatter.setMaximumFractionDigits(context.getResources().getInteger(R.integer.numDecimalMoney));
+        percentFormatter.setMaximumFractionDigits(context.getResources().getInteger(R.integer.numDecimalPercent));
         Period duration = new Period(getDateDebut(), getDateFin());
 
-
-        String s = context.getString(string.descriptionPlacementLivret, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel())
-                , PeriodFormat.wordBased().print(duration), dateFormatter.print(getDateDebut()), dateFormatter.print(getDateFin()));
-
-
-        if (getVariation().compareTo(BigDecimal.ZERO) < 0) {
-            s += context.getString(string.avecRetraitDe, moneyFormatter.format(getVariation().abs()), getFrequenceVariation().toLocalizedString(context));
-        } else if (getVariation().compareTo(BigDecimal.ZERO) > 0) {
-            s += context.getString(string.avecVersementDe, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
-        }
-
-
-        s += context.getString(string.descriptionInteretsObtenus, moneyFormatter.format(getInteretsObtenus()));
-        s += context.getString(string.descriptionValeurAcquise, moneyFormatter.format(getValeurAcquise()));
-
+        s = context.getString(string.descriptionCourteLivrets, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel()), PeriodFormat.wordBased().print(duration));
 
         return s;
-        */
     }
 
 }
