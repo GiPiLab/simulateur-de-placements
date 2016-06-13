@@ -47,6 +47,7 @@
     <string name="descriptionPlacementSansLivret"><![CDATA["Placement de <b>%1$s</b> à <b>%2$s</b> pendant <b>%3$s</b> du %4$s au %5$s"]]></string>
     <string name="avecRetraitDe"><![CDATA[" avec <i>retrait de %1$s par %2$s</i>"]]></string>
     <string name="avecVersementDe"><![CDATA[" avec <i>versement de %1$s par %2$s</i>"]]></string>
+    <string name="avecVariationSmall"><![CDATA[" (%1$s par %2$s)"]]></string>
 
     <string name="descriptionInteretsObtenus"><![CDATA["intérêts obtenus %1$s"]]></string>
     <string name="descriptionValeurAcquise"><![CDATA["valeur acquise en fin de période %1$s"]]></string>
@@ -81,6 +82,9 @@
     <string name="btnComparerPlacement">Comparer</string>
     <string name="selectionnerPlacementsASupprimer">"Sélectionnez le ou les placement(s) à supprimer "</string>
     <string name="maxPlacementsToCompare">Vous pouvez comparer au maximum %1$d placements</string>
+    <string name="afficherBtn">Afficher</string>
+    <string name="selectionnerPlacementsAComparer">"Sélectionnez au moins deux placements à comparer"</string>
+    <string name="selectionnerPlacementAAfficher">"Sélectionnez un seul placement à afficher"</string>
 
 
 </resources>

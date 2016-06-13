@@ -60,8 +60,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
     }
 
     private int getIndex(long timestamp) {
-        int index = (int) ((timestamp - minTimeStamp) / 86400000);
-        return index;
+        return (int) ((timestamp - minTimeStamp) / 86400000);
     }
 
     private long getMinTimestamp() {
@@ -90,7 +89,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
 
     private void displayChart() {
 
-        boolean modeQuinzaine = false;
+        boolean modeQuinzaine;
 
         if (chart == null) {
             Log.e("SIMUPLACEMENT", "NULL chart");
@@ -103,32 +102,33 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         // chart.setOnChartValueSelectedListener(this);
 
 
+        //FIXME : Legend word wrap seems to not working
+        //Legend legend=chart.getLegend();
+        //legend.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        //legend.setWordWrapEnabled(true);
+
         chart.setDescription("");
+
         XAxis xaxis = chart.getXAxis();
         chart.getAxisRight().setEnabled(false);
 
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-
         ArrayList<String> xLabels = new ArrayList<String>();
 
         DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
-
 
         for (long currentTimeStamp = minTimeStamp; currentTimeStamp <= maxTimeStamp; currentTimeStamp += 86400000) {
             xLabels.add(dateFormat.print(new LocalDate(currentTimeStamp)));
         }
 
-
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-
 
         int colors[] = getResources().getIntArray(R.array.colorsOfPlacementsToCompare);
         int i = 0;
 
         for (Placement placement : _lesPlacements) {
-
 
             ArrayList<Entry> values = new ArrayList<Entry>();
 
@@ -140,7 +140,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             }
 
             modeQuinzaine = placement.getModeCalculPlacement() == enumModeCalculPlacement.QUINZAINE;
-
 
             LineDataSet dataSetValeurAcquise = new LineDataSet(values, placement.toLocalizedVeryShortDescription(this));
             dataSetValeurAcquise.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -157,12 +156,11 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             if (i >= getResources().getInteger(R.integer.maxPlacementsToCompare)) {
                 i = 0;
             }
-
         }
 
         LineData chartData = new LineData(xLabels, dataSets);
         chart.setData(chartData);
-        chart.getLegend().setWordWrapEnabled(true);
+
         chart.invalidate();
 
 

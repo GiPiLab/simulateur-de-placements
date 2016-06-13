@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -119,6 +118,45 @@ public class ListePlacementsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+        Button btnAfficher = (Button) view.findViewById(id.btnAfficher);
+        btnAfficher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getView() != null) {
+                    ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
+                    ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+
+                    final ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
+                    final ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
+
+                    final HashSet<Long> checkedIdsQuinzaine = adapterQuinzaine.getCheckedIds();
+                    final HashSet<Long> checkedIdsSansQuinzaine = adapterSansQuinzaine.getCheckedIds();
+
+                    int countQuinzaine = adapterQuinzaine.getCheckedCount();
+                    int countSansQuinzaine = adapterSansQuinzaine.getCheckedCount();
+
+                    if (countQuinzaine + countSansQuinzaine != 1) {
+                        Snackbar snackbar = Snackbar.make(getView(), getString(R.string.selectionnerPlacementAAfficher), Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                        return;
+                    }
+
+                    if (mListener != null) {
+                        if (countQuinzaine == 1) {
+                            mListener.onPlacementClickedFromListePlacementsFragment(adapterQuinzaine.getPlacementFromItemId(checkedIdsQuinzaine.iterator().next()));
+                        } else if (countSansQuinzaine == 1) {
+                            mListener.onPlacementClickedFromListePlacementsFragment(adapterSansQuinzaine.getPlacementFromItemId(checkedIdsSansQuinzaine.iterator().next()));
+                        } else {
+                            throw new IndexOutOfBoundsException();
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+
         Button btnCompare = (Button) view.findViewById(id.btnComparer);
         if (btnCompare != null) {
             btnCompare.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +176,12 @@ public class ListePlacementsFragment extends Fragment {
 
                             int countQuinzaine = adapterQuinzaine.getCheckedCount();
                             int countSansQuinzaine = adapterSansQuinzaine.getCheckedCount();
+
+                            if (countQuinzaine + countSansQuinzaine <= 1) {
+                                Snackbar snackbar = Snackbar.make(getView(), getString(R.string.selectionnerPlacementsAComparer), Snackbar.LENGTH_SHORT);
+                                snackbar.show();
+                                return;
+                            }
 
                             if ((countQuinzaine + countSansQuinzaine) < getResources().getInteger(R.integer.maxPlacementsToCompare)) {
 
@@ -227,22 +271,20 @@ public class ListePlacementsFragment extends Fragment {
         listViewQuinzaine.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mListener != null) {
-                    mListener.onPlacementClickedFromListePlacementsFragment((Placement) adapterView.getItemAtPosition(i));
-                }
+                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
+                adapter.swapCheckedState(adapter.getItemId(i));
             }
         });
         listViewSansQuinzaine.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mListener != null) {
-                    mListener.onPlacementClickedFromListePlacementsFragment((Placement) adapterView.getItemAtPosition(i));
-                }
+                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
+                adapter.swapCheckedState(adapter.getItemId(i));
             }
         });
 
         //Long click handlers
-
+/*
         listViewQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
@@ -262,6 +304,7 @@ public class ListePlacementsFragment extends Fragment {
                 return true;
             }
         });
+        */
     }
 
     public void updateListView(View v) {

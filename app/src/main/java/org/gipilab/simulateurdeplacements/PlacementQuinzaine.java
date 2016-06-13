@@ -339,6 +339,10 @@ class PlacementQuinzaine extends Placement {
 
         s = context.getString(string.descriptionCourteLivrets, moneyFormatter.format(getCapitalInitial()), percentFormatter.format(getTauxAnnuel()), PeriodFormat.wordBased().print(duration));
 
+        if (getVariation().compareTo(BigDecimal.ZERO) != 0) {
+            s += context.getString(string.avecVariationSmall, moneyFormatter.format(getVariation()), getFrequenceVariation().toLocalizedString(context));
+        }
+
         return s;
     }
 
