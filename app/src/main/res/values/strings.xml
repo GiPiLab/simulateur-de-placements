@@ -64,19 +64,17 @@
         <item>mois</item>
         <item>trimestre</item>
     </string-array>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Options</string>
 
     <string name="ongletNouveauPlacement">Nouveau placement</string>
     <string name="ongletPlacementsEnregistres">Placements enregistrés</string>
     <string name="placementEnregistre">Placement enregistré</string>
     <string name="placements_sans_quinzaine">Autres placements</string>
-    <string name="placements_sur_livrets">Placements type livret</string>
+    <string name="placements_sur_livrets">Placements type livret (règle des quinzaines)</string>
     <string name="supprimerPlacement">Supprimer le placement</string>
     <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce(s) placement(s) ?</string>
-    <string name="supprimer_le_placement">Supprimer le placement</string>
     <string name="patienterCalculsEnCours" tools:ignore="Typos">Patientez calculs en cours…</string>
     <string name="btnModifier">Modifier</string>
-    <string name="btnSupprimer">Supprimer</string>
     <string name="modeCalculDesInterets">Mode de calcul des intérêts : </string>
     <string name="btnSupprimerPlacement">Supprimer</string>
     <string name="btnComparerPlacement">Comparer</string>
@@ -85,6 +83,15 @@
     <string name="afficherBtn">Afficher</string>
     <string name="selectionnerPlacementsAComparer">"Sélectionnez au moins deux placements à comparer"</string>
     <string name="selectionnerPlacementAAfficher">"Sélectionnez un seul placement à afficher"</string>
+    <string name="ongletPresentation">Présentation</string>
+
+    <string name="textPresentation">"Le simulateur de placements conçu par le Laboratoire de Recherche pour le Développement Local apporte le complément susceptible de faciliter toute décision de placement, que le possesseur des fonds soit une Collectivité locale agissant dans le cadre de la gestion active de ses liquidités ou l'un de ses gestionnaires, pour ses besoins particuliers.
+Tout comme un emprunt, dont il est la symétrie, un placement peut être défini, en tant qu'objet, comme le cadre dans lequel s'inscrit un ensemble de paramètres :
+un excédent de liquidités, constaté par une personne physique ou morale (le titulaire), au vu d'un capital sans affectation à court, moyen ou long terme (CSAT) ou de la récurrence d'un flux d'argent, susceptible de composer le même type de capital. Tout ou partie du CSAT transite du titulaire, jouant le rôle d'un prêteur, vers un agent, le plus souvent une banque, jouant le rôle d'un emprunteur
+un taux, correspondant toujours à un pourcentage appliqué à la partie placée du CSAT pour former les intérêts, ou valeur de transaction de l'argent, en sa qualité de matière première, négociée en contrepartie de l'excédent de liquidités du titulaire
+une durée, au cours de laquelle la rentabilité du placement se met en oeuvre
+une fin, caractérisée par la rupture du placement (le retrait) et la concrétisation de la rentabilité attendue.
+ "</string>
 
 
 </resources>

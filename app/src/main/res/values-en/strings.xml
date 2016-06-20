@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simulateur de placements</string>
+    <string name="afficherBtn">Show</string>
+    <string name="anneeIeme"><![CDATA["<b>Period %1$d</b>"]]></string>
+    <string name="avecRetraitDe"><![CDATA[" with <i>withdrawal of %1$s per %2$s</i>"]]></string>
+    <string name="avecVariationSmall"><![CDATA[" (%1$s per %2$s)"]]></string>
+    <string name="avecVersementDe"><![CDATA[" with <i>deposit of %1$s per %2$s</i>"]]></string>
+    <string name="btnComparerPlacement">Compare</string>
+    <string name="btnEnregistrerPlacement">Save</string>
+    <string name="btnModifier">Edit</string>
+    <string name="btnSupprimerPlacement">Delete</string>
+    <string name="buttonCalculer">COMPUTE</string>
+    <string name="capitalDoitEtreInferieurA">Capital must be lower than %1s</string>
+    <string name="capitalDoitEtrePositif">Capital must be positive</string>
+    <string name="confirmerSupprimerPlacement">Do you want to delete selected placements ?</string>
+    <string name="dateDebutPlacement">Placement start date</string>
+    <string name="dateFinPlacement">Placement end date</string>
+    <string name="descriptionDuAu">From %1$s to %2$s</string>
+    <string name="dureeDoitEtrePositive">Duration must be positive</string>
+    <string name="dureeTropLongue">Duration is too long</string>
+    <string name="dureeXmois">Duration : %1$s</string>
+    <string name="eurosPar">$ per</string>
+    <string name="interets"><![CDATA["interests : %1s"]]></string>
+    <string name="capitalPlace"><![CDATA["invested capital : %1s"]]></string>
+    <string name="capitalPlaceDebutAnnee">Invested capital at the beginning of the period = %1s</string>
+    <string name="capitalPlaceFinAnnee">Invested capital at the end of the period = %1s</string>
+    <string name="chartLegendCapitalPlace">Invested capital</string>
+    <string name="chartLegendValeurAcquise">Vested value</string>
+    <string name="descriptionCourteLivrets"><![CDATA["%1$s at %2$s during %3$s on saving book"]]></string>
+    <string name="descriptionCourteSansLivret"><![CDATA["%1$s at %2$s during %3$s"]]></string>
+    <string name="descriptionInteretsObtenus"><![CDATA["interest earned %1$s"]]></string>
+    <string name="descriptionPlacementLivret"><![CDATA["Placement with fortnight rule of <b>%1$s</b> at <b>%2$s</b> during <b>%3$s</b> from %4$s to %5$s"]]></string>
+    <string name="descriptionPlacementSansLivret"><![CDATA["Placement of <b>%1$s</b> at <b>%2$s</b> during <b>%3$s</b> from %4$s to %5$s"]]></string>
+    <string name="descriptionValeurAcquise"><![CDATA["Vested value at the end of the period %1$s"]]></string>
+    <string name="echeanceVide">No interest have been produced due to the fortnight rule</string>
+    <string name="echeance">"Step %1$d from %2$s to %3$s"</string>
+    <string name="editCapitalHint"><i>invested capital</i></string>
+    <string name="editTauxHint"><i>annual interest rate in %</i></string>
+    <string name="editVariationHint"><i><![CDATA["deposit (>0) or withdrawals (<0)"]]></i></string>
+    <string name="interetsObtenusSurAnnee">Interest earned during the period = %1s</string>
+    <string name="interetsTotaux"><![CDATA["Total amount of interests : %1s"]]></string>
+    <string name="labelCapital">Capital :</string>
+    <string name="labelTaux">Annual rate (in %)</string>
+    <string name="labelVariation">Variation (deposit or withdrawal) :</string>
+    <string name="maxPlacementsToCompare">You can compare at most %1$d placements</string>
+    <string name="modeCalculDesInterets">Interest computation model</string>
+    <string name="ongletNouveauPlacement">New placement</string>
+    <string name="ongletPlacementsEnregistres">Saved placements</string>
+    <string name="patienterCalculsEnCours">Please wait computation in progress...</string>
+    <string name="periodiciteVariationMois">month</string>
+    <string name="periodiciteVariationTrimestre">trimester</string>
+    <string name="placementEnregistre">Placement saved</string>
+    <string name="placements_sans_quinzaine">Placements without fortnight rule</string>
+    <string name="placements_sur_livrets">Placements with fortnight rule</string>
+    <string name="radioModeQuinzaine">with fortnight rule</string>
+    <string name="radioModeSansQuinzaine">without fortnight rule</string>
+    <string name="radioReglerDateDebut">Select starting date</string>
+    <string name="radioReglerDateFin">Select ending date</string>
+    <string name="retraitDe"><![CDATA["<i>withdrawal of %1s</i>"]]></string>
+    <string name="saisissezLaVariationPeriodique">Please choose the amount of periodic variation</string>
+    <string name="saisissezLeCapital">Please choose the invested capital</string>
+    <string name="saisissezLeTaux">Please choose the annual interest rate</string>
+    <string name="selectionnerPlacementAAfficher">You can only display one placement</string>
+    <string name="selectionnerPlacementsAComparer">Select at least two placements to compare</string>
+    <string name="selectionnerPlacementsASupprimer">Select the placement(s) to delete</string>
+    <string name="supprimerPlacement">Delete placement</string>
+    <string name="tauxDoitEtreInferieurA">Annual interest rate must be bellow or equal than %1s</string>
+    <string name="tauxDoitEtrePositifOuNul">Annuel interest rate must positive or null</string>
+    <string name="valeurAcquise"><![CDATA["<b>vested value : %1s"]]></string>
+    <string name="valeurAcquiseFinAnnee">Vested value at the end of the period = %1s</string>
+    <string name="variationDoitEtreInferieureAuCapital">The amount of variation must be lower than the invested capital</string>
+    <string name="versementDe"><![CDATA["<i>deposit of %1s</i>"]]></string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="periodiciteVariation">
+        <item>month</item>
+        <item>trimester</item>
+    </string-array>
+    <string name="ongletPresentation">Presentation</string>
+
+
+</resources>

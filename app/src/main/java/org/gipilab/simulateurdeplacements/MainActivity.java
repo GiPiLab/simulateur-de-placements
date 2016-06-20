@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
         public static final int FRAGMENT_NOUVEAU_PLACEMENT_ID = 0;
         public static final int FRAGMENT_LISTE_PLACEMENTS_ID = 1;
+        public static final int FRAGMENT_PRESENTATION_ID = 2;
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -194,13 +195,15 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                     return NouveauPlacementFragment.newInstance();
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return ListePlacementsFragment.newInstance();
+                case FRAGMENT_PRESENTATION_ID:
+                    return PresentationFragment.newInstance();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -210,6 +213,8 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                     return getString(string.ongletNouveauPlacement);
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return getString(string.ongletPlacementsEnregistres);
+                case FRAGMENT_PRESENTATION_ID:
+                    return getString(string.ongletPresentation);
             }
             return null;
         }

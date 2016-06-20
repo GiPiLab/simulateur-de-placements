@@ -3,7 +3,7 @@ package org.gipilab.simulateurdeplacements;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -36,11 +36,16 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         Intent intent = getIntent();
         _lesPlacements = (ArrayList<Placement>) intent.getSerializableExtra("listePlacements");
 
-        Log.d("GIPI", "Taille lesPlacements = " + _lesPlacements.size());
         if (_lesPlacements.size() > getResources().getInteger(R.integer.maxPlacementsToCompare)) {
-            Log.e("GIPI", "Too much placements");
+
+            Toast toast = Toast.makeText(this, getString(R.string.maxPlacementsToCompare, getResources().getInteger(R.integer.maxPlacementsToCompare)), Toast.LENGTH_SHORT);
+            toast.show();
             finish();
         }
+
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         chart = (LineChart) findViewById(R.id.lineChart);
         _dataToPlot = new HashMap<Placement, ArrayList<Echeance>>();
@@ -91,14 +96,8 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
 
         boolean modeQuinzaine;
 
-        if (chart == null) {
-            Log.e("SIMUPLACEMENT", "NULL chart");
-            return;
-        }
-
-
         chart.setTouchEnabled(true);
-        // chart.setHighlightPerTapEnabled(true);
+        chart.setHighlightPerTapEnabled(false);
         // chart.setOnChartValueSelectedListener(this);
 
 
