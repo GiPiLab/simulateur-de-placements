@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 /**
  */
@@ -61,10 +62,8 @@ public class PresentationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //   TextView tv=(TextView)view.findViewById(R.id.textViewPresentation);
-        //   tv.setText(Html.fromHtml(getString(R.string.textPresentation)));
-
-
+        WebView webview = (WebView) view.findViewById(R.id.webView);
+        webview.loadData(getString(R.string.textPresentation), "text/html;charset=utf-8", "utf-8");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

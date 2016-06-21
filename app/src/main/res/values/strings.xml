@@ -85,13 +85,58 @@
     <string name="selectionnerPlacementAAfficher">"Sélectionnez un seul placement à afficher"</string>
     <string name="ongletPresentation">Présentation</string>
 
-    <string name="textPresentation">"Le simulateur de placements conçu par le Laboratoire de Recherche pour le Développement Local apporte le complément susceptible de faciliter toute décision de placement, que le possesseur des fonds soit une Collectivité locale agissant dans le cadre de la gestion active de ses liquidités ou l'un de ses gestionnaires, pour ses besoins particuliers.
+    <string name="textPresentation" formatted="false"><![CDATA["
+
+
+   Le simulateur de placements conçu par le Laboratoire de Recherche pour le Développement Local apporte le complément susceptible de faciliter toute décision de placement, que le possesseur des fonds soit une Collectivité locale agissant dans le cadre de la gestion active de ses liquidités ou l'un de ses gestionnaires, pour ses besoins particuliers.
 Tout comme un emprunt, dont il est la symétrie, un placement peut être défini, en tant qu'objet, comme le cadre dans lequel s'inscrit un ensemble de paramètres :
-un excédent de liquidités, constaté par une personne physique ou morale (le titulaire), au vu d'un capital sans affectation à court, moyen ou long terme (CSAT) ou de la récurrence d'un flux d'argent, susceptible de composer le même type de capital. Tout ou partie du CSAT transite du titulaire, jouant le rôle d'un prêteur, vers un agent, le plus souvent une banque, jouant le rôle d'un emprunteur
-un taux, correspondant toujours à un pourcentage appliqué à la partie placée du CSAT pour former les intérêts, ou valeur de transaction de l'argent, en sa qualité de matière première, négociée en contrepartie de l'excédent de liquidités du titulaire
-une durée, au cours de laquelle la rentabilité du placement se met en oeuvre
-une fin, caractérisée par la rupture du placement (le retrait) et la concrétisation de la rentabilité attendue.
- "</string>
+        <ul>
+          <li>un excédent de liquidités, constaté par une personne physique ou morale (le titulaire), au vu d'un capital sans affectation à court, moyen ou long terme (CSAT) ou de la récurrence d'un flux d'argent, susceptible de composer le même type de capital. Tout ou partie du CSAT transite du titulaire, jouant le rôle d'un prêteur, vers un agent, le plus souvent une banque, jouant le rôle d'un emprunteur</li>
+
+          <li>un taux, correspondant toujours à un pourcentage appliqué à la partie placée du CSAT pour former les intérêts, ou valeur de transaction de l'argent, en sa qualité de matière première, négociée en contrepartie de l'excédent de liquidités du titulaire</li>
+
+          <li>une durée, au cours de laquelle la rentabilité du placement se met en oeuvre</li>
+
+          <li>une fin, caractérisée par la rupture du placement (le retrait) et la concrétisation de la rentabilité attendue.</li>
+        </ul>
+
+        <h2>Principales fonctionnalités</h2>
+
+        <dl>
+          <dt>affichage des réponses sous forme d'un tableau de placement :</dt>
+
+          <dd>au lieu de fournir une réponse du type : combien vais-je obtenir d'intérêts si je place [somme] pendant [t] à [%] = [réponse], le simulateur de placements propose un tableau contenant la répartition mensuelle de [réponse] sur toute la durée [t] prévue du placement.</dd>
+
+          <dt>répartition mensuelle de la rentabilité acquise :</dt>
+
+          <dd>le tableau de placement, homologue du tableau d'amortissement établi pour un emprunt, permet de connaître le montant des intérêts acquis à la fin de chaque mois. Cette information est à la disposition permanente du titulaire.</dd>
+
+          <dt>distinction automatique entre intérêts simples et intérêts composés :</dt>
+
+          <dd>le simulateur interdit le calcul d'intérêts composés sur des placements d'une durée prévisionnelle inférieure à un an. Les intérêts simples sont obtenus par l'application d'un taux annuel à une somme, l'ensemble rapporté à une durée strictement inférieure ou égale à un an. Les intérêts composés sont produits par un capital placé pour une durée supérieure à un an, dès lors que les intérêts simples acquis chaque année ne sont pas retirés par le titulaire mais assimilés au capital placé pour produire eux-mêmes des intérêts. Voir « anatocisme » dans le lexique financier.</dd>
+
+          <dt>contrôleur des versements ou des retraits périodiques :</dt>
+
+          <dd>un contrôleur prend en charge les prévisions de versements ou de retraits mensuels ou trimestriels. Les informations sont transcrites sur le tableau de placement et incorporées à la chaîne de calcul des intérêts. Le contrôleur distingue entre capital d'origine et capital placé et interdit les retraits périodiques dont la somme prévisionnelle est supérieure au capital d'origine.</dd>
+
+          <dt>comparaisons graphiques :</dt>
+
+          <dd>
+            un outil graphique permet de comparer deux placements pour anticiper la meilleure rentabilité compte tenu de paramètres initiaux susceptibles d'infléchir la décision vers le mauvais choix.
+
+            <ul>
+              <li>Pour les intérêts simples, les comparaisons sont réalisées pour une durée de placement d'un an. <i>Exemple : comparer un placement de 10 000 à 2.75% et un placement de 10 000 - 1% de frais, soit 9 900 à 4%.</i></li>
+
+              <li>Pour les intérêts composés, les comparaisons sont réalisées pour un nombre entier d'années. <i>Exemple : comparer un placement de 10 000 à 2.75% et un placement de 10 000 - 4% de droits d'entrée, soit 9 600 à 4% pour 8 ans.</i></li>
+            </ul>L'intersection des courbes donne la période au cours de laquelle l'incidence des frais détériore la rentabilité du placement au taux initial le plus attractif.
+          </dd>
+        </dl>
+
+        <p>Le simulateur de placements du Laboratoire de Recherche pour le Développement Local fonctionne selon le principe du calcul de l'inconnu. Outre l'affichage des réponses en tableau de placement, ce principe permet de déterminer la durée nécessaire d'un placement ou de connaître le montant à placer pour obtenir une somme donnée.</p>
+
+
+    "]]>
+ </string>
 
 
 </resources>
