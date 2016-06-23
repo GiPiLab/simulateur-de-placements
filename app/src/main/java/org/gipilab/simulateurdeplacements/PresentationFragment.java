@@ -62,8 +62,15 @@ public class PresentationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        String s = getString(R.string.textPresentation);
+
+        s += getString(R.string.textLicence);
+
+        s += "<h3>Version " + MainActivity.VERSION + "</h3>";
+
         WebView webview = (WebView) view.findViewById(R.id.webView);
-        webview.loadData(getString(R.string.textPresentation), "text/html;charset=utf-8", "utf-8");
+        webview.loadData(s, "text/html;charset=utf-8", "utf-8");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

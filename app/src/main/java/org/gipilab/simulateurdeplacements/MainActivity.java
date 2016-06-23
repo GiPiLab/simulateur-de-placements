@@ -23,6 +23,7 @@ import org.gipilab.simulateurdeplacements.R.string;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
+    public static final String VERSION = "210616";
     private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     private static final int REQUEST_CODE_PLACEMENT_TO_MODIFY = 2;
     /**
@@ -50,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        if (getSupportActionBar() != null)
+      /*  if (getSupportActionBar() != null)
             getSupportActionBar().hide();
-
+*/
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(id.container);
