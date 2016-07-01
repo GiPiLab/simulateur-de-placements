@@ -44,9 +44,9 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         }
 
 
-        if (getSupportActionBar() != null)
+        /*if (getSupportActionBar() != null)
             getSupportActionBar().hide();
-
+*/
         chart = (LineChart) findViewById(R.id.lineChart);
         _dataToPlot = new HashMap<Placement, ArrayList<Echeance>>();
 
