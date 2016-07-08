@@ -113,11 +113,18 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
     }
 
     public void btnSaveClicked(View v) {
-        placement.save();
-        setResult(RESULT_OK);
-        Snackbar snackbar = Snackbar.make(v, string.placementEnregistre, Snackbar.LENGTH_SHORT);
-        snackbar.show();
-        v.setEnabled(false);
+        PlacementDatabaseHelper dbHelper = PlacementDatabaseHelper.getInstance(this);
+        if (dbHelper.placementExists(placement)) {
+            Snackbar snackbar = Snackbar.make(v, string.placementDejaEnregistre, Snackbar.LENGTH_SHORT);
+            snackbar.show();
+            return;
+        } else {
+            dbHelper.addPlacement(placement);
+            setResult(RESULT_OK);
+            Snackbar snackbar = Snackbar.make(v, string.placementEnregistre, Snackbar.LENGTH_SHORT);
+            snackbar.show();
+            v.setEnabled(false);
+        }
     }
 
     private void displayTable(ArrayList<Annualite> annualites) {
@@ -222,9 +229,9 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             displayChart(echeancesEtAnnualites.first);
             TextView tvResult = (TextView) findViewById(id.textViewResult);
 
-            if (getSupportActionBar() != null)
+          /*  if (getSupportActionBar() != null)
                 getSupportActionBar().hide();
-
+*/
             if (tvResult != null) {
                 tvResult.setText(Html.fromHtml(placement.toLocalizedStringForDetailedView(activity)));
             } else {

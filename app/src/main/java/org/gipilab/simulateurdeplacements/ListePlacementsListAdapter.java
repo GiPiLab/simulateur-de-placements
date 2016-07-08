@@ -24,6 +24,7 @@ class ListePlacementsListAdapter extends BaseAdapter {
     private final TreeMap<Long, Placement> _placementIdToPlacement;
     private final Context _context;
     private final ArrayList<Placement> _lesPlacements;
+    PlacementDatabaseHelper dbHelper;
     private HashSet<Long> _checkedItemsIds;
 
     ListePlacementsListAdapter(Context context, ArrayList<Placement> lesPlacements) {
@@ -31,20 +32,21 @@ class ListePlacementsListAdapter extends BaseAdapter {
         _lesPlacements = (ArrayList<Placement>) lesPlacements.clone();
         _checkedItemsIds = new HashSet<>();
         _placementIdToPlacement = new TreeMap<>();
+        dbHelper = PlacementDatabaseHelper.getInstance(context);
+
         for (Placement p : lesPlacements) {
-            _placementIdToPlacement.put(p.getId(), p);
+            _placementIdToPlacement.put(dbHelper.getPlacementId(p), p);
         }
     }
 
     public void deleteItemId(long itemId) {
         Placement p = _placementIdToPlacement.get(itemId);
-        p.delete();
+        dbHelper.deletePlacement(itemId);
         _lesPlacements.remove(p);
         _placementIdToPlacement.remove(itemId);
         if (_checkedItemsIds.contains(itemId)) {
             _checkedItemsIds.remove(itemId);
         }
-
         notifyDataSetChanged();
     }
 
@@ -81,7 +83,9 @@ class ListePlacementsListAdapter extends BaseAdapter {
 
     @Override
     public Placement getItem(int i) {
-        return _lesPlacements.get(i);
+        if (i < _lesPlacements.size()) {
+            return _lesPlacements.get(i);
+        } else return null;
     }
 
     public Placement getPlacementFromItemId(long itemId) {
@@ -90,7 +94,10 @@ class ListePlacementsListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return _lesPlacements.get(i).getId();
+        //FIXME : lors de la suppression il arrive que ça soit appelé alors que _lesPlacements est vide
+        if (i < _lesPlacements.size()) {
+            return dbHelper.getPlacementId(_lesPlacements.get(i));
+        } else return -1;
     }
 
     @Override

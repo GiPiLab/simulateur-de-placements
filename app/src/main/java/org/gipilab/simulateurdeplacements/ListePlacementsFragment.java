@@ -18,8 +18,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.orm.SugarRecord;
-
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 
@@ -310,8 +308,11 @@ public class ListePlacementsFragment extends Fragment {
     public void updateListView(View v) {
         ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
-        @SuppressWarnings("unchecked") ArrayList<Placement> listPlacementsQuinzaine = (ArrayList) SugarRecord.listAll(PlacementQuinzaine.class);
-        @SuppressWarnings("unchecked") ArrayList<Placement> listPlacementsSansQuinzaine = (ArrayList) SugarRecord.listAll(PlacementSansQuinzaine.class);
+
+        PlacementDatabaseHelper dbHelper = PlacementDatabaseHelper.getInstance(getContext());
+
+        ArrayList<Placement> listPlacementsQuinzaine = dbHelper.getPlacementsQuinzaine();
+        ArrayList<Placement> listPlacementsSansQuinzaine = dbHelper.getPlacementsSansQuinzaine();
 
         listViewQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsQuinzaine));
         listViewSansQuinzaine.setAdapter(new ListePlacementsListAdapter(getContext(), listPlacementsSansQuinzaine));

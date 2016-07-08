@@ -3,8 +3,6 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 
-import com.orm.SugarRecord;
-
 import org.joda.time.LocalDate;
 
 import java.io.Serializable;
@@ -17,7 +15,7 @@ import java.util.InputMismatchException;
  */
 
 
-abstract class Placement extends SugarRecord implements Serializable {
+abstract class Placement implements Serializable {
 
     public static final BigDecimal MAXCAPITAL = new BigDecimal("10000000000");
     public static final BigDecimal MAXTAUX = new BigDecimal("10000");
@@ -25,6 +23,7 @@ abstract class Placement extends SugarRecord implements Serializable {
     private BigDecimal tauxAnnuel = BigDecimal.ZERO;
     private BigDecimal capitalInitial = BigDecimal.ZERO;
     private BigDecimal interetsObtenus = BigDecimal.ZERO;
+    private BigDecimal valeurAcquise = BigDecimal.ZERO;
     private BigDecimal variation = BigDecimal.ZERO;
 
     private long timestampDebut;
@@ -32,12 +31,8 @@ abstract class Placement extends SugarRecord implements Serializable {
 
 
 
-    /*private LocalDate dateDebut;
-    private LocalDate dateFin;*/
-
     private int duree;
     private enumFrequenceVariation frequenceVariation = enumFrequenceVariation.MENSUELLE;
-    private BigDecimal valeurAcquise = BigDecimal.ZERO;
     private enumModeCalculPlacement modeCalculPlacement;
 
     Placement() {
@@ -132,7 +127,7 @@ abstract class Placement extends SugarRecord implements Serializable {
         return new LocalDate(timestampDebut);
     }
 
-    void setDateDebut(LocalDate date) {
+    protected void setDateDebut(LocalDate date) {
         timestampDebut = date.toDate().getTime();
     }
 
@@ -140,7 +135,7 @@ abstract class Placement extends SugarRecord implements Serializable {
         return new LocalDate(timestampFin);
     }
 
-    void setDateFin(LocalDate date) {
+    protected void setDateFin(LocalDate date) {
         timestampFin = date.toDate().getTime();
     }
 

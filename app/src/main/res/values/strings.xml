@@ -428,6 +428,7 @@ Tout comme un emprunt, dont il est la symétrie, un placement peut être défini
 </div>
     "]]>
     </string>
+    <string name="placementDejaEnregistre">Le placement est déjà enregistré</string>
 
 
 </resources>
