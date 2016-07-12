@@ -1,29 +1,30 @@
 package org.gipilab.simulateurdeplacements;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 
 /**
  */
-public class PresentationFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //   private static final String ARG_PARAM1 = "param1";
-    //   private static final String ARG_PARAM2 = "param2";
+public class WebviewDialogFragment extends DialogFragment {
 
-    // TODO: Rename and change types of parameters
-    //   private String mParam1;
-    //  private String mParam2;
+    private static final String ARG_FILENAMETODISPlAY = "arg_filename_to_display";
+
+    private String mFilenameToDisplay;
 
     //private OnFragmentInteractionListener mListener;
 
-    public PresentationFragment() {
+    public WebviewDialogFragment() {
         // Required empty public constructor
     }
 
@@ -31,14 +32,13 @@ public class PresentationFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment PresentationFragment.
+     * @return A new instance of fragment WebviewDialogFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static PresentationFragment newInstance() {
-        PresentationFragment fragment = new PresentationFragment();
+
+    public static WebviewDialogFragment newInstance(String fileNameToDisplay) {
+        WebviewDialogFragment fragment = new WebviewDialogFragment();
         Bundle args = new Bundle();
-        //    args.putString(ARG_PARAM1, param1);
-        //    args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_FILENAMETODISPlAY, fileNameToDisplay);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,31 +46,51 @@ public class PresentationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  if (getArguments() != null) {
-        //      mParam1 = getArguments().getString(ARG_PARAM1);
-        //      mParam2 = getArguments().getString(ARG_PARAM2);
-        //  }
+        if (getArguments() != null) {
+            mFilenameToDisplay = getArguments().getString(ARG_FILENAMETODISPlAY);
+
+        }
     }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+
+    }
+
+
+    public void onResume() {
+        // Store access variables for window and blank point
+        Window window = getDialog().getWindow();
+        Point size = new Point();
+        // Store dimensions of the screen in `size`
+        Display display = window.getWindowManager().getDefaultDisplay();
+        display.getSize(size);
+        // Set the width of the dialog proportional to 75% of the screen width
+        window.setLayout((int) (size.x * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        // Call super onResume after sizing
+        super.onResume();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_presentation, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String s = getString(R.string.textPresentation);
-
-        s += getString(R.string.textLicence);
-
-        s += "<h3>Version " + MainActivity.VERSION + "</h3>";
-
         WebView webview = (WebView) view.findViewById(R.id.webView);
-        webview.loadData(s, "text/html;charset=utf-8", "utf-8");
+        webview.loadUrl(mFilenameToDisplay);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

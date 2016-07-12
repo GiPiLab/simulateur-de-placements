@@ -53,9 +53,9 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + " (" + FIELD_ID + " integer primary key, " + FIELD_TYPE_PLACEMENT + " string not null, " + FIELD_TAUX_ANNUEL + " string not null, " + FIELD_CAPITAL_INITIAL + " string not null, "
-                + FIELD_VARIATION + " string not null, " + FIELD_FREQUENCE_VARIATION + " integer, " + FIELD_TIMESTAMP_DEBUT + " integer not null," + FIELD_TIMESTAMP_FIN + " integer not null," +
-                FIELD_INTERETS_OBTENUS + " string not null," + FIELD_VALEUR_ACQUISE + " string not null)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + FIELD_ID + " INTEGER PRIMARY KEY, " + FIELD_TYPE_PLACEMENT + " TEXT NOT NULL, " + FIELD_TAUX_ANNUEL + " TEXT NOT NULL, " + FIELD_CAPITAL_INITIAL + " TEXT NOT NULL, "
+                + FIELD_VARIATION + " TEXT NOT NULL, " + FIELD_FREQUENCE_VARIATION + " INTEGER NOT NULL, " + FIELD_TIMESTAMP_DEBUT + " INTEGER NOT NULL," + FIELD_TIMESTAMP_FIN + " INTEGER NOT NULL," +
+                FIELD_INTERETS_OBTENUS + " TEXT NOT NULL," + FIELD_VALEUR_ACQUISE + " TEXT NOT NULL)");
     }
 
     @Override

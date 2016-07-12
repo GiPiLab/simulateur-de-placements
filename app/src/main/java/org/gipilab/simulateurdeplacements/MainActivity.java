@@ -23,7 +23,7 @@ import org.gipilab.simulateurdeplacements.R.string;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
-    public static final String VERSION = "210616";
+    public static final String VERSION = "120716";
     private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     private static final int REQUEST_CODE_PLACEMENT_TO_MODIFY = 2;
     /**
@@ -124,11 +124,22 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        FragmentManager fm = getSupportFragmentManager();
+        WebviewDialogFragment frag;
 
+        switch (id) {
+            case R.id.action_licence:
+
+                frag = WebviewDialogFragment.newInstance("file:///android_asset/cecill.html");
+                frag.show(fm, "fragment_licence");
+                return true;
+
+            case R.id.action_presentation:
+
+                frag = WebviewDialogFragment.newInstance("file:///android_asset/presentation.html");
+                frag.show(fm, "fragment_presentation");
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -183,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
         public static final int FRAGMENT_NOUVEAU_PLACEMENT_ID = 0;
         public static final int FRAGMENT_LISTE_PLACEMENTS_ID = 1;
-        public static final int FRAGMENT_PRESENTATION_ID = 2;
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -196,15 +207,13 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                     return NouveauPlacementFragment.newInstance();
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return ListePlacementsFragment.newInstance();
-                case FRAGMENT_PRESENTATION_ID:
-                    return PresentationFragment.newInstance();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -214,8 +223,6 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                     return getString(string.ongletNouveauPlacement);
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return getString(string.ongletPlacementsEnregistres);
-                case FRAGMENT_PRESENTATION_ID:
-                    return getString(string.ongletPresentation);
             }
             return null;
         }

@@ -29,10 +29,10 @@
     <string name="chartLegendValeurAcquise">Vested value</string>
     <string name="descriptionCourteLivrets"><![CDATA["%1$s at %2$s during %3$s on saving book"]]></string>
     <string name="descriptionCourteSansLivret"><![CDATA["%1$s at %2$s during %3$s"]]></string>
-    <string name="descriptionInteretsObtenus"><![CDATA["interest earned %1$s"]]></string>
+    <string name="descriptionInteretsObtenus"><![CDATA["interest earned <b>%1$s</b>"]]></string>
     <string name="descriptionPlacementLivret"><![CDATA["Placement with fortnight rule of <b>%1$s</b> at <b>%2$s</b> during <b>%3$s</b> from %4$s to %5$s"]]></string>
     <string name="descriptionPlacementSansLivret"><![CDATA["Placement of <b>%1$s</b> at <b>%2$s</b> during <b>%3$s</b> from %4$s to %5$s"]]></string>
-    <string name="descriptionValeurAcquise"><![CDATA["Vested value at the end of the period %1$s"]]></string>
+    <string name="descriptionValeurAcquise"><![CDATA["Vested value at the end of the period <b>%1$s</b>"]]></string>
     <string name="echeanceVide">No interest have been produced due to the fortnight rule</string>
     <string name="echeance">"Step %1$d from %2$s to %3$s"</string>
     <string name="editCapitalHint"><i>invested capital</i></string>
