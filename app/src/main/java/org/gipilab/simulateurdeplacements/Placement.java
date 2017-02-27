@@ -174,4 +174,24 @@ abstract class Placement implements Serializable {
     void setValeurAcquise(BigDecimal valeurAcquise) {
         this.valeurAcquise = valeurAcquise;
     }
+
+
+    LocalDate estimeDateFin(LocalDate dateDebut,BigDecimal valeurAcquiseVoulue)
+    {
+        boolean depasse=false;
+        LocalDate dateFinEstimee=dateDebut.plusMonths(1);
+        do {
+            setDatesPlacement(dateDebut, dateFinEstimee);
+            tableauPlacement();
+            if (getValeurAcquise().compareTo(valeurAcquiseVoulue) == 0) {
+                return dateFinEstimee;
+            } else if (getValeurAcquise().compareTo(valeurAcquiseVoulue) < 0) {
+                dateFinEstimee = dateFinEstimee.plusMonths(1);
+            } else {
+                depasse=true;
+            }
+        }while(depasse==false);
+        return dateFinEstimee;
+    }
+
 }

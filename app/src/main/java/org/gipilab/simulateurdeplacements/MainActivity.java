@@ -20,6 +20,7 @@ import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
