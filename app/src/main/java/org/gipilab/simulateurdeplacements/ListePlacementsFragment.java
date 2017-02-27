@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
@@ -265,6 +266,7 @@ public class ListePlacementsFragment extends Fragment {
         final ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
 
+
         //Click handlers
         listViewQuinzaine.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -308,6 +310,12 @@ public class ListePlacementsFragment extends Fragment {
     public void updateListView(View v) {
         ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
         ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
+
+        TextView emptyView1 = (TextView) v.findViewById(id.emptyListView1);
+        TextView emptyView2 = (TextView) v.findViewById(id.emptyListView2);
+
+        listViewQuinzaine.setEmptyView(emptyView1);
+        listViewSansQuinzaine.setEmptyView(emptyView2);
 
         PlacementDatabaseHelper dbHelper = PlacementDatabaseHelper.getInstance(getContext());
 

@@ -374,6 +374,7 @@
 
     </string>
     <string name="placementDejaEnregistre">Placement already saved</string>
+    <string name="emptyListPlacement">No placement saved</string>
 
 
 </resources>

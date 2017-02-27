@@ -11,6 +11,7 @@
 
     tools:context="org.gipilab.simulateurdeplacements.ListePlacementsFragment">
 
+
     <TextView
         android:id="@+id/textViewPlacementQuinzaines"
         android:layout_width="match_parent"
@@ -24,6 +25,16 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:choiceMode="singleChoice" />
+
+    <TextView
+        android:id="@+id/emptyListView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/emptyListPlacement"
+        android:textSize="22sp"
+        android:textStyle="normal|italic" />
 
 
     <TextView
@@ -40,6 +51,16 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:choiceMode="singleChoice" />
+
+    <TextView
+        android:id="@+id/emptyListView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/emptyListPlacement"
+        android:textSize="22sp"
+        android:textStyle="normal|italic" />
 
 
     <LinearLayout
