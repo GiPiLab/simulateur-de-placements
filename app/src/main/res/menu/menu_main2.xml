@@ -3,17 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-
-    <item
-        android:id="@+id/action_presentation"
-        android:orderInCategory="100"
-        android:title="@string/menu_presentation"
-        app:showAsAction="never" />
-
     <item
         android:id="@+id/action_licence"
         android:orderInCategory="100"
-        android:title="@string/menu_licence"
+        android:title="@string/menu_about"
         app:showAsAction="never" />
 
 </menu>

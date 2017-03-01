@@ -20,7 +20,6 @@ import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
@@ -131,14 +130,13 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         switch (id) {
             case R.id.action_licence:
 
-                frag = WebviewDialogFragment.newInstance("file:///android_asset/cecill.html");
-                frag.show(fm, "fragment_licence");
-                return true;
-
-            case R.id.action_presentation:
-
-                frag = WebviewDialogFragment.newInstance("file:///android_asset/presentation.html");
-                frag.show(fm, "fragment_presentation");
+                String language = getResources().getConfiguration().locale.getISO3Language();
+                if (language.equals("fra") || language.equals("fre")) {
+                    frag = WebviewDialogFragment.newInstance("file:///android_asset/cecill_fr.html");
+                } else {
+                    frag = WebviewDialogFragment.newInstance("file:///android_asset/cecill_en.html");
+                }
+                frag.show(fm, "licence");
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -195,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
         public static final int FRAGMENT_NOUVEAU_PLACEMENT_ID = 0;
         public static final int FRAGMENT_LISTE_PLACEMENTS_ID = 1;
+        public static final int FRAGMENT_PRESENTATION_ID = 2;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -208,13 +207,20 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                     return NouveauPlacementFragment.newInstance();
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return ListePlacementsFragment.newInstance();
+                case FRAGMENT_PRESENTATION_ID:
+                    String language = getResources().getConfiguration().locale.getISO3Language();
+                    if (language.equals("fra") || language.equals("fre")) {
+                        return WebviewDialogFragment.newInstance("file:///android_asset/presentation_fr.html");
+                    } else {
+                        return WebviewDialogFragment.newInstance("file:///android_asset/presentation_en.html");
+                    }
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -224,6 +230,8 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                     return getString(string.ongletNouveauPlacement);
                 case FRAGMENT_LISTE_PLACEMENTS_ID:
                     return getString(string.ongletPlacementsEnregistres);
+                case FRAGMENT_PRESENTATION_ID:
+                    return getString(string.ongletPresentation);
             }
             return null;
         }
