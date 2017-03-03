@@ -29,8 +29,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
 import org.gipilab.simulateurdeplacements.R.string;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
@@ -55,31 +53,37 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         chart.setHighlightPerTapEnabled(true);
         chart.setOnChartValueSelectedListener(this);
 
-        chart.setDescription("");
+        chart.setDescription(getString(string.chartAxisDescriptionEcheance));
+        //chart.setDescription(null);
         XAxis xaxis = chart.getXAxis();
         chart.getAxisRight().setEnabled(false);
 
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxisPosition.BOTTOM);
 
+
         ArrayList<Entry> valuesValeurAcquise = new ArrayList<Entry>();
         ArrayList<Entry> valuesCapitalPlace = new ArrayList<Entry>();
         ArrayList<String> xLabels = new ArrayList<String>();
 
-        DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
+        //DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
+
 
         for (Echeance aMens : mens) {
-            xLabels.add(dateFormat.print(aMens.getDateDebutEcheance()));
+            // xLabels.add(dateFormat.print(aMens.getDateDebutEcheance()));
+            xLabels.add(String.valueOf(aMens.getIeme()));
             valuesValeurAcquise.add(new Entry(aMens.getValeurAcquise().floatValue(), aMens.getIeme() - 1));
             valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme() - 1));
         }
+
 
         LineDataSet dataSetValeurAcquise = new LineDataSet(valuesValeurAcquise, getString(string.chartLegendValeurAcquise));
         dataSetValeurAcquise.setAxisDependency(AxisDependency.LEFT);
         dataSetValeurAcquise.setDrawValues(false);
         dataSetValeurAcquise.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         dataSetValeurAcquise.setCircleColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        dataSetValeurAcquise.setDrawStepped(modeQuinzaine);
+        if (modeQuinzaine == true)
+            dataSetValeurAcquise.setMode(LineDataSet.Mode.STEPPED);
         dataSetValeurAcquise.setDrawCircles(false);
         dataSetValeurAcquise.setHighLightColor(ContextCompat.getColor(this, R.color.colorPrimary));
         dataSetValeurAcquise.setHighlightLineWidth(1.0f);
@@ -89,7 +93,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         dataSetCapitalPlace.setDrawValues(false);
         dataSetCapitalPlace.setColor(ContextCompat.getColor(this, R.color.colorAccent));
         dataSetCapitalPlace.setCircleColor(ContextCompat.getColor(this, R.color.colorAccent));
-        dataSetCapitalPlace.setDrawStepped(true);
+        dataSetCapitalPlace.setMode(LineDataSet.Mode.STEPPED);
         dataSetCapitalPlace.setDrawCircles(false);
         dataSetCapitalPlace.setHighLightColor(ContextCompat.getColor(this, R.color.colorAccent));
         dataSetCapitalPlace.setHighlightLineWidth(1.0f);
@@ -146,6 +150,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
                     return true;
                 }
                 int flatPosition = adapter.findFlatChildIndexFromGroupAndChild(group, child);
+                adapter.setSelected(group, child);
                 if (chart.getLineData() == null) {
                     Log.e("SIMUPLACEMENT", "Null getLineData");
                     return true;
@@ -198,10 +203,9 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         }
         Pair<Integer, Integer> groupAndChildId = adapter.findGroupAndChildFromFlatIndex(e.getXIndex());
         elv.expandGroup(groupAndChildId.first);
+        adapter.setSelected(groupAndChildId.first, groupAndChildId.second);
+
         elv.setSelectedChild(groupAndChildId.first, groupAndChildId.second, true);
-
-
-
     }
 
     @Override

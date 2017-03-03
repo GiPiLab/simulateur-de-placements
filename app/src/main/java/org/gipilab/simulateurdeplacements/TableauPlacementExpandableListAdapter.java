@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,13 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final ArrayList<Annualite> _annualites;
     private final Context _context;
+    private int _selectedGroup, _selectedChild;
 
     TableauPlacementExpandableListAdapter(Context context, ArrayList<Annualite> annualites) {
         _context = context;
         _annualites = annualites;
+        _selectedChild = -1;
+        _selectedGroup = -1;
     }
 
     int findFlatChildIndexFromGroupAndChild(int group, int child) {
@@ -150,11 +154,17 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
 
         holder.description.setText(Html.fromHtml(getChild(group, child).toLocalizedString(_context)));
 
-        if (child % 2 == 1) {
-            holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
+
+        if (group == _selectedGroup && child == _selectedChild) {
+            holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.accent_material_light));
         } else {
-            holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
+            if (child % 2 == 1) {
+                holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_light));
+            } else {
+                holder.description.setBackgroundColor(ContextCompat.getColor(_context, android.support.v7.appcompat.R.color.ripple_material_dark));
+            }
         }
+
 
         return view1;
     }
@@ -162,6 +172,13 @@ class TableauPlacementExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;
+    }
+
+    public void setSelected(int group, int child) {
+        Log.d("GIPI", "Selected = " + group + " - " + child);
+        _selectedGroup = group;
+        _selectedChild = child;
+        notifyDataSetChanged();
     }
 
     private static class ViewHolder {

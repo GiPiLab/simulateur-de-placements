@@ -106,7 +106,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         //legend.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
         //legend.setWordWrapEnabled(true);
 
-        chart.setDescription("");
+        chart.setDescription(null);
 
         XAxis xaxis = chart.getXAxis();
         chart.getAxisRight().setEnabled(false);
@@ -134,7 +134,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             ArrayList<Echeance> mens = _dataToPlot.get(placement);
 
             for (Echeance aMens : mens) {
-                int index = getIndex(aMens.getDateDebutEcheance().toDate().getTime());
+                int index = getIndex(aMens.getDateFinEcheance().toDate().getTime());
                 values.add(new Entry(aMens.getValeurAcquise().floatValue(), index));
             }
 
@@ -147,7 +147,11 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             dataSetValeurAcquise.setColor(colors[i]);
 
             dataSetValeurAcquise.setCircleColor(colors[i]);
-            dataSetValeurAcquise.setDrawStepped(modeQuinzaine);
+            if (modeQuinzaine == true)
+                dataSetValeurAcquise.setMode(LineDataSet.Mode.STEPPED);
+            else
+                dataSetValeurAcquise.setMode(LineDataSet.Mode.LINEAR);
+
             dataSetValeurAcquise.setDrawCircles(false);
 
             dataSets.add(dataSetValeurAcquise);

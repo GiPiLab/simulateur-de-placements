@@ -18,10 +18,10 @@
     <string name="echeance">"Echéance %1$d du %2$s au %3$s"</string>
     <string name="retraitDe"><![CDATA["<i>retrait de %1s</i>"]]></string>
     <string name="versementDe"><![CDATA["<i>versement de %1s</i>"]]></string>
-    <string name="capitalPlace"><![CDATA["capital placé : %1s"]]></string>
+    <string name="capitalPlace"><![CDATA["capital placé en début d'échéance : %1s"]]></string>
     <string name="interets"><![CDATA["intérêts : %1s"]]></string>
     <string name="interetsTotaux"><![CDATA["Intérêts totaux : %1s"]]></string>
-    <string name="valeurAcquise"><![CDATA["<b>valeur acquise : %1s"]]></string>
+    <string name="valeurAcquise"><![CDATA["<b>valeur acquise en fin d'échéance : %1s"]]></string>
     <string name="anneeIeme"><![CDATA["<b>Période %1$d</b>"]]></string>
     <string name="capitalPlaceDebutAnnee">Capital placé en début de période = %1s</string>
     <string name="capitalPlaceFinAnnee">Capital placé en fin de période = %1s</string>
@@ -35,8 +35,8 @@
     <string name="editVariationHint"><i><![CDATA["somme versée (>0) ou retirée (<0)"]]></i></string>
     <string name="radioReglerDateDebut">Régler la date de début</string>
     <string name="radioReglerDateFin">Régler la date de fin</string>
-    <string name="chartLegendValeurAcquise">Valeur acquise</string>
-    <string name="chartLegendCapitalPlace">Capital placé</string>
+    <string name="chartLegendValeurAcquise">Valeur acquise en fin d\'échéance</string>
+    <string name="chartLegendCapitalPlace">Capital placé en début d\'échéance</string>
     <string name="radioModeQuinzaine">Mode livret d\'épargne</string>
     <string name="radioModeSansQuinzaine">Mode sans quinzaine</string>
     <string name="echeanceVide">Aucun intérêt généré à cause de la règle des quinzaines</string>
@@ -90,6 +90,8 @@
     <string name="menu_about">A propos...</string>
 
     <string name="emptyListPlacement">Pas de placement enregistré</string>
+    <string name="chartAxisDescriptionEcheance">Echéances</string>
+    <string name="valeurs_acquises">Valeurs acquises</string>
 
 
 </resources>

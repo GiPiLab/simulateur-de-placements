@@ -10,12 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.gipilab.simulateurdeplacements.ComparePlacementsActivity">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/valeurs_acquises"
+        android:textAlignment="center" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"
         android:layout_alignParentRight="false"
-        android:layout_centerInParent="true" />
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
