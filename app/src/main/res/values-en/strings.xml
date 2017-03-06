@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simulateur de placements</string>
+    <string name="app_name">Investments simulator</string>
     <string name="afficherBtn">Show</string>
     <string name="anneeIeme"><![CDATA["<b>Period %1$d</b>"]]></string>
     <string name="avecRetraitDe"><![CDATA[" with <i>withdrawal of %1$s per %2$s</i>"]]></string>

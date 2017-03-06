@@ -23,7 +23,6 @@ import org.gipilab.simulateurdeplacements.R.string;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
-    public static final String VERSION = "120716";
     private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     private static final int REQUEST_CODE_PLACEMENT_TO_MODIFY = 2;
     /**
