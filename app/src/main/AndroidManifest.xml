@@ -9,19 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="DATABASE"
-            android:value="simulateurplacements.db" />
-        <meta-data
-            android:name="VERSION"
-            android:value="2" />
-        <meta-data
-            android:name="QUERY_LOG"
-            android:value="true" />
-        <meta-data
-            android:name="DOMAIN_PACKAGE_NAME"
-            android:value="org.gipilab.simulateurdeplacements.Placement" />
-
+        
         <activity android:name=".AffichePlacementActivity" />
         <activity
             android:name=".MainActivity"
