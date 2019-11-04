@@ -1,13 +1,53 @@
+/*
+* Simulateur de placements
+*
+* Copyright Thibault et Gilbert Mondary, Laboratoire de Recherche pour le Développement Local (2006--)
+*
+* labo@gipilab.org
+*
+* Ce logiciel est un programme informatique servant à simuler des placements
+*
+*
+* Ce logiciel est régi par la licence CeCILL soumise au droit français et
+* respectant les principes de diffusion des logiciels libres. Vous pouvez
+* utiliser, modifier et/ou redistribuer ce programme sous les conditions
+* de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+* sur le site "http://www.cecill.info".
+*
+* En contrepartie de l'accessibilité au code source et des droits de copie,
+* de modification et de redistribution accordés par cette licence, il n'est
+* offert aux utilisateurs qu'une garantie limitée. Pour les mêmes raisons,
+* seule une responsabilité restreinte pèse sur l'auteur du programme, le
+* titulaire des droits patrimoniaux et les concédants successifs.
+*
+* A cet égard l'attention de l'utilisateur est attirée sur les risques
+* associés au chargement, à l'utilisation, à la modification et/ou au
+* développement et à la reproduction du logiciel par l'utilisateur étant
+* donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+* manipuler et qui le réserve donc à des développeurs et des professionnels
+* avertis possédant des connaissances informatiques approfondies. Les
+* utilisateurs sont donc invités à charger et tester l'adéquation du
+* logiciel à leurs besoins dans des conditions permettant d'assurer la
+* sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+* à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+*
+* Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+* pris connaissance de la licence CeCILL, et que vous en avez accepté les
+* termes.
+*
+*/
+
+
 package org.gipilab.simulateurdeplacements;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +82,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         if (placement.getModeCalculPlacement() == enumModeCalculPlacement.QUINZAINE) {
             modeQuinzaine = true;
         }
-        LineChart chart = (LineChart) findViewById(id.lineChart);
+        LineChart chart = findViewById(id.lineChart);
 
         if (chart == null) {
             Log.e("SIMUPLACEMENT", "NULL chart");
@@ -116,6 +156,10 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         finish();
     }
 
+    public void btnBackClicked(View v){
+        finish();
+    }
+
     public void btnSaveClicked(View v) {
         PlacementDatabaseHelper dbHelper = PlacementDatabaseHelper.getInstance(this);
         if (dbHelper.placementExists(placement)) {
@@ -133,7 +177,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
 
     private void displayTable(ArrayList<Annualite> annualites) {
 
-        ExpandableListView listv = (ExpandableListView) findViewById(id.listViewResult);
+        ExpandableListView listv = findViewById(id.listViewResult);
         if (listv == null) {
             Log.e("SIMUPLACEMENT", "Null listview");
             return;
@@ -144,7 +188,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int group, int child, long l) {
 
-                LineChart chart = (LineChart) findViewById(id.lineChart);
+                LineChart chart = findViewById(id.lineChart);
                 if (chart == null) {
                     Log.e("SIMUPLACEMENT", "Null chart");
                     return true;
@@ -179,7 +223,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         placement = (Placement) intent.getSerializableExtra("placement");
         boolean enregistrable = intent.getBooleanExtra("enregistrable", true);
         if (!enregistrable) {
-            ImageButton btnSave = (ImageButton) findViewById(id.buttonSavePlacement);
+            ImageButton btnSave = findViewById(id.buttonSavePlacement);
             if (btnSave != null) {
                 btnSave.setEnabled(false);
             } else {
@@ -191,7 +235,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        ExpandableListView elv = (ExpandableListView) findViewById(id.listViewResult);
+        ExpandableListView elv = findViewById(id.listViewResult);
         if (elv == null) {
             Log.e("SIMUPLACEMENT", "Null expandable list view");
             return;
@@ -231,7 +275,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         protected void onPostExecute(Pair<ArrayList<Echeance>, ArrayList<Annualite>> echeancesEtAnnualites) {
             displayTable(echeancesEtAnnualites.second);
             displayChart(echeancesEtAnnualites.first);
-            TextView tvResult = (TextView) findViewById(id.textViewResult);
+            TextView tvResult = findViewById(id.textViewResult);
 
           /*  if (getSupportActionBar() != null)
                 getSupportActionBar().hide();

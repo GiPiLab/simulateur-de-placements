@@ -75,6 +75,7 @@
     <string name="confirmerSupprimerPlacement">Confirmez-vous la suppression de ce(s) placement(s) ?</string>
     <string name="patienterCalculsEnCours" tools:ignore="Typos">Patientez calculs en cours…</string>
     <string name="btnModifier">Modifier</string>
+    <string name="btnBack">Retour</string>
     <string name="modeCalculDesInterets">Mode de calcul des intérêts : </string>
     <string name="btnSupprimerPlacement">Supprimer</string>
     <string name="btnComparerPlacement">Comparer</string>
@@ -87,11 +88,12 @@
 
 
     <string name="placementDejaEnregistre">Le placement est déjà enregistré</string>
-    <string name="menu_about">A propos...</string>
+    <string name="menu_about">A propos…</string>
 
     <string name="emptyListPlacement">Pas de placement enregistré</string>
     <string name="chartAxisDescriptionEcheance">Echéances</string>
     <string name="valeurs_acquises">Valeurs acquises</string>
+    <string name="pressAgainToExit">Appuyez à nouveau pour quitter</string>
 
 
 </resources>

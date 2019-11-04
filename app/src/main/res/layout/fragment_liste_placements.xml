@@ -70,6 +70,7 @@
 
         <Button
             android:id="@+id/btnSupprimerPlacement"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -77,6 +78,7 @@
 
         <Button
             android:id="@+id/btnComparer"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -84,6 +86,7 @@
 
         <Button
             android:id="@+id/btnAfficher"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

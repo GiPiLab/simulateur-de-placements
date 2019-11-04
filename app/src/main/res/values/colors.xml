@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
 
+
+    <color name="colorBackground1">#ffffff</color>
+    <color name="colorBackground2">#dddddd</color>
+
     <color name="colorCompare1">#ff0000</color>
     <color name="colorCompare2">#00ff00</color>
     <color name="colorCompare3">#0000ff</color>

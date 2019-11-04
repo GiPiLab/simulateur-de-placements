@@ -1,10 +1,50 @@
+/*
+ * Simulateur de placements
+ *
+ * Copyright Thibault et Gilbert Mondary, Laboratoire de Recherche pour le Développement Local (2006--)
+ *
+ * labo@gipilab.org
+ *
+ * Ce logiciel est un programme informatique servant à simuler des placements
+ *
+ *
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
+ * respectant les principes de diffusion des logiciels libres. Vous pouvez
+ * utiliser, modifier et/ou redistribuer ce programme sous les conditions
+ * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+ * sur le site "http://www.cecill.info".
+ *
+ * En contrepartie de l'accessibilité au code source et des droits de copie,
+ * de modification et de redistribution accordés par cette licence, il n'est
+ * offert aux utilisateurs qu'une garantie limitée. Pour les mêmes raisons,
+ * seule une responsabilité restreinte pèse sur l'auteur du programme, le
+ * titulaire des droits patrimoniaux et les concédants successifs.
+ *
+ * A cet égard l'attention de l'utilisateur est attirée sur les risques
+ * associés au chargement, à l'utilisation, à la modification et/ou au
+ * développement et à la reproduction du logiciel par l'utilisateur étant
+ * donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+ * manipuler et qui le réserve donc à des développeurs et des professionnels
+ * avertis possédant des connaissances informatiques approfondies. Les
+ * utilisateurs sont donc invités à charger et tester l'adéquation du
+ * logiciel à leurs besoins dans des conditions permettant d'assurer la
+ * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+ * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+ *
+ * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+ * pris connaissance de la licence CeCILL, et que vous en avez accepté les
+ * termes.
+ *
+ */
+
+
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +113,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         initDateSelectionSystem();
 
-        Button btnCalculer = (Button) view.findViewById(id.buttonCalculer);
+        Button btnCalculer = view.findViewById(id.buttonCalculer);
         btnCalculer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +127,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
                     return;
                 }
 
-                RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
+                RadioGroup groupMode = getView().findViewById(id.radioGroupMode);
                 if (groupMode == null) {
                     Log.e("SIMUPLACEMENT", "Null groupMode");
                     return;
@@ -108,7 +148,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
                 placement.setCapitalInitial(new BigDecimal(((EditText) getView().findViewById(id.editCapital)).getText().toString()));
                 placement.setVariation(new BigDecimal(((EditText) getView().findViewById(id.editVariation)).getText().toString()));
                 placement.setTauxAnnuel(new BigDecimal(((EditText) getView().findViewById(id.editTaux)).getText().toString()).divide(BigDecimal.valueOf(100), MathContext.DECIMAL128));
-                Spinner spinnerFrequence = (Spinner) getView().findViewById(id.spinnerFrequenceVariation);
+                Spinner spinnerFrequence = getView().findViewById(id.spinnerFrequenceVariation);
                 placement.setDatesPlacement(dateDebut, dateFin);
 
                 switch (spinnerFrequence.getSelectedItemPosition()) {
@@ -169,7 +209,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         }
 
 
-        final DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
+        final DatePicker dp = getView().findViewById(id.datePicker);
         if (dp == null) {
             Log.e("SIMUPLACEMENT", "Null datePicker");
             return;
@@ -177,14 +217,14 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         dp.init(dateFin.getYear(), dateFin.getMonthOfYear() - 1, dateFin.getDayOfMonth(), this);
         dp.setMaxDate(dateDebut.plusYears(200).toDate().getTime());
-        TextView tv = (TextView) getView().findViewById(id.labelSelectedDateDebut);
+        TextView tv = getView().findViewById(id.labelSelectedDateDebut);
         tv.setText(dateFormat.print(dateDebut));
-        TextView labelDateFin = (TextView) getView().findViewById(id.labelSelectedDateFin);
+        TextView labelDateFin = getView().findViewById(id.labelSelectedDateFin);
         labelDateFin.setText(dateFormat.print(dateFin));
 
         updateLabelDuree(dateDebut, dateFin);
 
-        RadioButton dateButtonFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
+        RadioButton dateButtonFin = getView().findViewById(id.radioButtonDateFin);
 
         dateButtonFin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -199,7 +239,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             }
         });
 
-        RadioGroup modeLivret = (RadioGroup) getView().findViewById(id.radioGroupMode);
+        RadioGroup modeLivret = getView().findViewById(id.radioGroupMode);
         modeLivret.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -214,11 +254,11 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             return true;
         }
 
-        EditText editCapital = (EditText) getView().findViewById(id.editCapital);
+        EditText editCapital = getView().findViewById(id.editCapital);
 
-        EditText editTaux = (EditText) getView().findViewById(id.editTaux);
+        EditText editTaux = getView().findViewById(id.editTaux);
 
-        EditText editVariation = (EditText) getView().findViewById(id.editVariation);
+        EditText editVariation = getView().findViewById(id.editVariation);
 
         if (editCapital == null || editTaux == null || editVariation == null) {
             Log.e("SIMUPLACEMENT", "Null edit field in validateInput");
@@ -264,7 +304,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
 
         int dureeApprochee, maxEcheances;
-        RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
+        RadioGroup groupMode = getView().findViewById(id.radioGroupMode);
         switch (groupMode.getCheckedRadioButtonId()) {
             case id.radioButtonModeQuinzaine:
                 dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
@@ -313,14 +353,14 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             return;
         }
 
-        TextView labelDuree = (TextView) getView().findViewById(id.labelDuree);
+        TextView labelDuree = getView().findViewById(id.labelDuree);
 
         if (labelDuree == null) {
             Log.e("SIMUPLACEMENT", "Null labelDuree");
             return;
         }
 
-        RadioGroup groupMode = (RadioGroup) getView().findViewById(id.radioGroupMode);
+        RadioGroup groupMode = getView().findViewById(id.radioGroupMode);
         int dureeApprochee, maxEcheances;
         switch (groupMode.getCheckedRadioButtonId()) {
             case id.radioButtonModeQuinzaine:
@@ -353,7 +393,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             return;
         }
 
-        RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
+        RadioButton buttonDateFin = getView().findViewById(id.radioButtonDateFin);
 
         if (buttonDateFin == null) {
             Log.e("SIMUPLACEMENT", "Null buttonDateFin");
@@ -362,11 +402,11 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         TextView tv;
         if (buttonDateFin.isChecked()) {
-            tv = (TextView) getView().findViewById(id.labelSelectedDateFin);
+            tv = getView().findViewById(id.labelSelectedDateFin);
             dateFin = new LocalDate(year, month + 1, day);
             tv.setText(dateFormat.print(dateFin));
         } else {
-            tv = (TextView) getView().findViewById(id.labelSelectedDateDebut);
+            tv = getView().findViewById(id.labelSelectedDateDebut);
             dateDebut = new LocalDate(year, month + 1, day);
             tv.setText(dateFormat.print(dateDebut));
         }
@@ -380,13 +420,13 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
             return;
         }
 
-        DatePicker dp = (DatePicker) getView().findViewById(id.datePicker);
+        DatePicker dp = getView().findViewById(id.datePicker);
 
         if (dp == null) {
             Log.e("SIMUPLACEMENT", "Null datepicker");
             return;
         }
-        RadioButton buttonDateFin = (RadioButton) getView().findViewById(id.radioButtonDateFin);
+        RadioButton buttonDateFin = getView().findViewById(id.radioButtonDateFin);
         this.dateDebut = p.getDateDebut();
         this.dateFin = p.getDateFin();
 
@@ -394,21 +434,21 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
         dp.updateDate(p.getDateFin().getYear(), p.getDateFin().getMonthOfYear() - 1, p.getDateFin().getDayOfMonth());
         updateLabelDuree(p.getDateDebut(), p.getDateFin());
 
-        TextView dateDebut = (TextView) getView().findViewById(id.labelSelectedDateDebut);
+        TextView dateDebut = getView().findViewById(id.labelSelectedDateDebut);
         dateDebut.setText(dateFormat.print(p.getDateDebut()));
-        TextView dateFin = (TextView) getView().findViewById(id.labelSelectedDateFin);
+        TextView dateFin = getView().findViewById(id.labelSelectedDateFin);
         dateFin.setText(dateFormat.print(p.getDateFin()));
 
-        EditText capital = (EditText) getView().findViewById(id.editCapital);
+        EditText capital = getView().findViewById(id.editCapital);
         capital.setText(p.getCapitalInitial().toPlainString());
 
-        EditText taux = (EditText) getView().findViewById(id.editTaux);
+        EditText taux = getView().findViewById(id.editTaux);
         taux.setText(p.getTauxAnnuel().multiply(BigDecimal.valueOf(100), MathContext.DECIMAL128).toPlainString());
 
-        EditText variation = (EditText) getView().findViewById(id.editVariation);
+        EditText variation = getView().findViewById(id.editVariation);
         variation.setText(p.getVariation().toPlainString());
 
-        Spinner freqVar = (Spinner) getView().findViewById(id.spinnerFrequenceVariation);
+        Spinner freqVar = getView().findViewById(id.spinnerFrequenceVariation);
 
         switch (p.getFrequenceVariation()) {
             case MENSUELLE:
@@ -421,7 +461,7 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         variation.setText(p.getVariation().toPlainString());
 
-        RadioButton buttonModeLivret = (RadioButton) getView().findViewById(id.radioButtonModeQuinzaine);
+        RadioButton buttonModeLivret = getView().findViewById(id.radioButtonModeQuinzaine);
         switch (p.getModeCalculPlacement()) {
             case QUINZAINE:
                 buttonModeLivret.setChecked(true);

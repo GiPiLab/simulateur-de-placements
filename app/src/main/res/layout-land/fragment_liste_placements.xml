@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/emptyListView1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/emptyListPlacement"
@@ -82,7 +82,7 @@
             <TextView
                 android:id="@+id/emptyListView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/emptyListPlacement"
@@ -102,6 +102,7 @@
 
         <Button
             android:id="@+id/btnSupprimerPlacement"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -109,6 +110,7 @@
 
         <Button
             android:id="@+id/btnComparer"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -116,6 +118,7 @@
 
         <Button
             android:id="@+id/btnAfficher"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

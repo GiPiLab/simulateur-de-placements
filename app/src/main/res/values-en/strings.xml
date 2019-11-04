@@ -9,6 +9,7 @@
     <string name="btnComparerPlacement">Compare</string>
     <string name="btnEnregistrerPlacement">Save</string>
     <string name="btnModifier">Edit</string>
+    <string name="btnBack">Back</string>
     <string name="btnSupprimerPlacement">Delete</string>
     <string name="buttonCalculer">COMPUTE</string>
     <string name="capitalDoitEtreInferieurA">Capital must be lower than %1s</string>
@@ -47,7 +48,7 @@
     <string name="modeCalculDesInterets">Interest computation model</string>
     <string name="ongletNouveauPlacement">New placement</string>
     <string name="ongletPlacementsEnregistres">Saved placements</string>
-    <string name="patienterCalculsEnCours">Please wait computation in progress...</string>
+    <string name="patienterCalculsEnCours">Please wait computation in progress…</string>
     <string name="periodiciteVariationMois">month</string>
     <string name="periodiciteVariationTrimestre">trimester</string>
     <string name="placementEnregistre">Placement saved</string>
@@ -81,9 +82,10 @@
 
     <string name="placementDejaEnregistre">Placement already saved</string>
     <string name="emptyListPlacement">No placement saved</string>
-    <string name="menu_about">About...</string>
+    <string name="menu_about">About…</string>
     <string name="chartAxisDescriptionEcheance">Step</string>
     <string name="valeurs_acquises">Vested values</string>
+    <string name="pressAgainToExit">Press again to exit</string>
 
 
 </resources>

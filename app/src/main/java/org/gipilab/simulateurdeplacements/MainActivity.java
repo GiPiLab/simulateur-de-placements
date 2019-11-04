@@ -1,19 +1,62 @@
+/*
+ * Simulateur de placements
+ *
+ * Copyright Thibault et Gilbert Mondary, Laboratoire de Recherche pour le Développement Local (2006--)
+ *
+ * labo@gipilab.org
+ *
+ * Ce logiciel est un programme informatique servant à simuler des placements
+ *
+ *
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
+ * respectant les principes de diffusion des logiciels libres. Vous pouvez
+ * utiliser, modifier et/ou redistribuer ce programme sous les conditions
+ * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+ * sur le site "http://www.cecill.info".
+ *
+ * En contrepartie de l'accessibilité au code source et des droits de copie,
+ * de modification et de redistribution accordés par cette licence, il n'est
+ * offert aux utilisateurs qu'une garantie limitée. Pour les mêmes raisons,
+ * seule une responsabilité restreinte pèse sur l'auteur du programme, le
+ * titulaire des droits patrimoniaux et les concédants successifs.
+ *
+ * A cet égard l'attention de l'utilisateur est attirée sur les risques
+ * associés au chargement, à l'utilisation, à la modification et/ou au
+ * développement et à la reproduction du logiciel par l'utilisateur étant
+ * donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+ * manipuler et qui le réserve donc à des développeurs et des professionnels
+ * avertis possédant des connaissances informatiques approfondies. Les
+ * utilisateurs sont donc invités à charger et tester l'adéquation du
+ * logiciel à leurs besoins dans des conditions permettant d'assurer la
+ * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+ * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+ *
+ * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+ * pris connaissance de la licence CeCILL, et que vous en avez accepté les
+ * termes.
+ *
+ */
+
+
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import org.gipilab.simulateurdeplacements.ListePlacementsFragment.OnFragmentInteractionListener;
 import org.gipilab.simulateurdeplacements.R.id;
@@ -25,13 +68,18 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements NouveauPlacementFragment.OnFragmentInteractionListener, OnFragmentInteractionListener {
     private static final int REQUEST_CODE_PLACEMENT_SAVED = 1;
     private static final int REQUEST_CODE_PLACEMENT_TO_MODIFY = 2;
+
+
+    private long back_pressed = 0L;
+
+
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * {@link FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     /**
@@ -44,18 +92,18 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(id.toolbar);
+        Toolbar toolbar = findViewById(id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-      /*  if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().hide();
-*/
+
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(id.container);
+        mViewPager = findViewById(id.container);
         if (mViewPager == null) {
             Log.e("SIMUPLACEMENT", "Null viewPager");
             return;
@@ -89,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         });
 
 
-        TabLayout tabLayout = (TabLayout) findViewById(id.tabs);
+        TabLayout tabLayout = findViewById(id.tabs);
         if (tabLayout == null) {
             Log.e("SIMUPLACEMENT", "Null tabLayout");
             return;
@@ -109,8 +157,8 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+   /* @Override
+    ublic boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main2, menu);
         return true;
@@ -139,7 +187,21 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }*/
+
+    @Override
+    public void onBackPressed() {
+
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(getBaseContext(),
+                    R.string.pressAgainToExit, Toast.LENGTH_SHORT)
+                    .show();
+        }
+        back_pressed = System.currentTimeMillis();
     }
+
 
     @Override
     public void onPlacementRequestValidatedFromNouveauPlacementFragment(Placement placement) {

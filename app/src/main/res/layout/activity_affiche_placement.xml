@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
@@ -68,7 +68,18 @@
                 android:src="@android:drawable/ic_menu_edit"
                 android:text="@string/btnModifier" />
 
+            <ImageButton
+                android:id="@+id/buttonBack"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="btnBackClicked"
+                android:layout_weight="1"
+                android:contentDescription="@string/btnBack"
+                android:text="@string/btnBack"
+                android:src="@android:drawable/ic_menu_revert" />
+
         </LinearLayout>
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

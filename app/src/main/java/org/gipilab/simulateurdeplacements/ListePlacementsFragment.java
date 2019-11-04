@@ -1,3 +1,43 @@
+/*
+ * Simulateur de placements
+ *
+ * Copyright Thibault et Gilbert Mondary, Laboratoire de Recherche pour le Développement Local (2006--)
+ *
+ * labo@gipilab.org
+ *
+ * Ce logiciel est un programme informatique servant à simuler des placements
+ *
+ *
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
+ * respectant les principes de diffusion des logiciels libres. Vous pouvez
+ * utiliser, modifier et/ou redistribuer ce programme sous les conditions
+ * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+ * sur le site "http://www.cecill.info".
+ *
+ * En contrepartie de l'accessibilité au code source et des droits de copie,
+ * de modification et de redistribution accordés par cette licence, il n'est
+ * offert aux utilisateurs qu'une garantie limitée. Pour les mêmes raisons,
+ * seule une responsabilité restreinte pèse sur l'auteur du programme, le
+ * titulaire des droits patrimoniaux et les concédants successifs.
+ *
+ * A cet égard l'attention de l'utilisateur est attirée sur les risques
+ * associés au chargement, à l'utilisation, à la modification et/ou au
+ * développement et à la reproduction du logiciel par l'utilisateur étant
+ * donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+ * manipuler et qui le réserve donc à des développeurs et des professionnels
+ * avertis possédant des connaissances informatiques approfondies. Les
+ * utilisateurs sont donc invités à charger et tester l'adéquation du
+ * logiciel à leurs besoins dans des conditions permettant d'assurer la
+ * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+ * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+ *
+ * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+ * pris connaissance de la licence CeCILL, et que vous en avez accepté les
+ * termes.
+ *
+ */
+
+
 package org.gipilab.simulateurdeplacements;
 
 import android.R.drawable;
@@ -6,10 +46,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog.Builder;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog.Builder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +66,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ListePlacementsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ListePlacementsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -61,8 +93,8 @@ public class ListePlacementsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (getView() != null) {
-            ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-            ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+            ListView listViewQuinzaine = getView().findViewById(id.listViewPlacementsQuinzaine);
+            ListView listViewSansQuinzaine = getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
             if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
                 ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
@@ -85,8 +117,8 @@ public class ListePlacementsFragment extends Fragment {
             return;
 
         if (getView() != null) {
-            ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-            ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+            ListView listViewQuinzaine = getView().findViewById(id.listViewPlacementsQuinzaine);
+            ListView listViewSansQuinzaine = getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
             if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
 
@@ -117,13 +149,13 @@ public class ListePlacementsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Button btnAfficher = (Button) view.findViewById(id.btnAfficher);
+        Button btnAfficher = view.findViewById(id.btnAfficher);
         btnAfficher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (getView() != null) {
-                    ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-                    ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+                    ListView listViewQuinzaine = getView().findViewById(id.listViewPlacementsQuinzaine);
+                    ListView listViewSansQuinzaine = getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
                     final ListePlacementsListAdapter adapterQuinzaine = (ListePlacementsListAdapter) listViewQuinzaine.getAdapter();
                     final ListePlacementsListAdapter adapterSansQuinzaine = (ListePlacementsListAdapter) listViewSansQuinzaine.getAdapter();
@@ -156,14 +188,14 @@ public class ListePlacementsFragment extends Fragment {
 
 
 
-        Button btnCompare = (Button) view.findViewById(id.btnComparer);
+        Button btnCompare = view.findViewById(id.btnComparer);
         if (btnCompare != null) {
             btnCompare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (getView() != null) {
-                        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-                        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+                        ListView listViewQuinzaine = getView().findViewById(id.listViewPlacementsQuinzaine);
+                        ListView listViewSansQuinzaine = getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
                         if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
 
@@ -206,7 +238,7 @@ public class ListePlacementsFragment extends Fragment {
             });
         }
 
-        Button btnSupprimer = (Button) view.findViewById(id.btnSupprimerPlacement);
+        Button btnSupprimer = view.findViewById(id.btnSupprimerPlacement);
 
         if (btnSupprimer != null) {
             btnSupprimer.setOnClickListener(new View.OnClickListener() {
@@ -215,8 +247,8 @@ public class ListePlacementsFragment extends Fragment {
 
                     if (getView() != null) {
 
-                        ListView listViewQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsQuinzaine);
-                        ListView listViewSansQuinzaine = (ListView) getView().findViewById(id.listViewPlacementsSansQuinzaine);
+                        ListView listViewQuinzaine = getView().findViewById(id.listViewPlacementsQuinzaine);
+                        ListView listViewSansQuinzaine = getView().findViewById(id.listViewPlacementsSansQuinzaine);
 
                         if (listViewQuinzaine != null && listViewSansQuinzaine != null) {
 
@@ -263,8 +295,8 @@ public class ListePlacementsFragment extends Fragment {
     }
 
     private void setListViewListeners(View v) {
-        final ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
-        ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
+        final ListView listViewQuinzaine = v.findViewById(id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = v.findViewById(id.listViewPlacementsSansQuinzaine);
 
 
         //Click handlers
@@ -308,11 +340,11 @@ public class ListePlacementsFragment extends Fragment {
     }
 
     public void updateListView(View v) {
-        ListView listViewQuinzaine = (ListView) v.findViewById(id.listViewPlacementsQuinzaine);
-        ListView listViewSansQuinzaine = (ListView) v.findViewById(id.listViewPlacementsSansQuinzaine);
+        ListView listViewQuinzaine = v.findViewById(id.listViewPlacementsQuinzaine);
+        ListView listViewSansQuinzaine = v.findViewById(id.listViewPlacementsSansQuinzaine);
 
-        TextView emptyView1 = (TextView) v.findViewById(id.emptyListView1);
-        TextView emptyView2 = (TextView) v.findViewById(id.emptyListView2);
+        TextView emptyView1 = v.findViewById(id.emptyListView1);
+        TextView emptyView2 = v.findViewById(id.emptyListView2);
 
         listViewQuinzaine.setEmptyView(emptyView1);
         listViewSansQuinzaine.setEmptyView(emptyView2);
