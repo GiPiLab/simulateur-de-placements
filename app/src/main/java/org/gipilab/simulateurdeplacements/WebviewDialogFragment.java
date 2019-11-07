@@ -52,7 +52,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 public class WebviewDialogFragment extends DialogFragment {
@@ -60,8 +62,6 @@ public class WebviewDialogFragment extends DialogFragment {
     private static final String ARG_FILENAMETODISPlAY = "arg_filename_to_display";
 
     private String mFilenameToDisplay;
-
-    //private OnFragmentInteractionListener mListener;
 
     public WebviewDialogFragment() {
         // Required empty public constructor
@@ -94,7 +94,6 @@ public class WebviewDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        // request a window without the title
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
 
@@ -121,7 +120,6 @@ public class WebviewDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_presentation, container, false);
     }
@@ -131,45 +129,19 @@ public class WebviewDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         WebView webview = view.findViewById(R.id.webView);
+        //Needed to display iframes
+        webview.setWebViewClient(new WebViewClient());
         webview.loadUrl(mFilenameToDisplay);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    /*public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-       /* if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        //mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-   /* public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

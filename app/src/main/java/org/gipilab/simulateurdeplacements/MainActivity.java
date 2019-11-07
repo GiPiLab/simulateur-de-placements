@@ -117,16 +117,10 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
 
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case SectionsPagerAdapter.FRAGMENT_LISTE_PLACEMENTS_ID:
-                        //getSupportActionBar().hide();
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        if (getCurrentFocus() != null)
-                            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                        break;
-                    default:
-                        //getSupportActionBar().show();
-                        break;
+                if (position == SectionsPagerAdapter.FRAGMENT_PRESENTATION_ID || position == SectionsPagerAdapter.FRAGMENT_LISTE_PLACEMENTS_ID) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (getCurrentFocus() != null)
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 }
             }
 
@@ -144,50 +138,8 @@ public class MainActivity extends AppCompatActivity implements NouveauPlacementF
         }
         tabLayout.setupWithViewPager(mViewPager);
 
-  /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
     }
 
-
-   /* @Override
-    ublic boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main2, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        FragmentManager fm = getSupportFragmentManager();
-        WebviewDialogFragment frag;
-
-        switch (id) {
-            case R.id.action_licence:
-
-                String language = getResources().getConfiguration().locale.getISO3Language();
-                if (language.equals("fra") || language.equals("fre")) {
-                    frag = WebviewDialogFragment.newInstance("file:///android_asset/cecill_fr.html");
-                } else {
-                    frag = WebviewDialogFragment.newInstance("file:///android_asset/cecill_en.html");
-                }
-                frag.show(fm, "licence");
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public void onBackPressed() {
