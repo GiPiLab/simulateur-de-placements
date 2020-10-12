@@ -46,7 +46,8 @@ import org.gipilab.simulateurdeplacements.R.string;
 
 enum enumFrequenceVariation {
     MENSUELLE(string.periodiciteVariationMois),
-    TRIMESTRIELLE(string.periodiciteVariationTrimestre);
+    TRIMESTRIELLE(string.periodiciteVariationTrimestre),
+    ANNUELLE(string.periodiciteVariationAnnee);
 
 
     private final int ressourceId;

@@ -5,11 +5,11 @@ android {
     }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "org.gipilab.simulateurdeplacements"
+        applicationId "org.gipilab.simulateurdeplacementsdeb"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.0.2"
+        versionCode 6
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -19,7 +19,7 @@ android {
     }
     productFlavors {
     }
-    buildToolsVersion '29.0.2'
+    buildToolsVersion '29.0.3'
 }
 
 repositories {
@@ -30,9 +30,9 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.5'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'joda-time:joda-time:2.10.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
 }

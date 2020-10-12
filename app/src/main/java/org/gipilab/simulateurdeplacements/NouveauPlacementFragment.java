@@ -158,6 +158,9 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
                     case 1:
                         placement.setFrequenceVariation(enumFrequenceVariation.TRIMESTRIELLE);
                         break;
+                    case 2:
+                        placement.setFrequenceVariation(enumFrequenceVariation.ANNUELLE);
+                        break;
                     default:
                         throw new IllegalArgumentException("frequence variation");
                 }
@@ -456,6 +459,9 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
                 break;
             case TRIMESTRIELLE:
                 freqVar.setSelection(1);
+                break;
+            case ANNUELLE:
+                freqVar.setSelection(2);
                 break;
         }
 

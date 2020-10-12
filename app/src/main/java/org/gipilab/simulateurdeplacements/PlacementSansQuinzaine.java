@@ -174,6 +174,12 @@ class PlacementSansQuinzaine extends Placement {
                             capitalPlace = capitalPlace.add(getVariation());
                         }
                         break;
+                    case ANNUELLE:
+                        if ((i - 1) % 12 == 0) {
+                            mensualite.setVariation(getVariation());
+                            capitalPlace = capitalPlace.add(getVariation());
+                        }
+                        break;
                 }
             }
             mensualite.setIeme(i);
@@ -221,6 +227,13 @@ class PlacementSansQuinzaine extends Placement {
 
                     case TRIMESTRIELLE:
                         if ((i - 1) % 3 == 0) {
+                            lastEcheance.setVariation(getVariation());
+                            capitalPlace = capitalPlace.add(getVariation());
+                        }
+                        break;
+
+                    case ANNUELLE:
+                        if ((i - 1) % 12 == 0) {
                             lastEcheance.setVariation(getVariation());
                             capitalPlace = capitalPlace.add(getVariation());
                         }

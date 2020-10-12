@@ -43,6 +43,8 @@
 
     <string name="periodiciteVariationMois">mois</string>
     <string name="periodiciteVariationTrimestre">trimestre</string>
+    <string name="periodiciteVariationAnnee">an</string>
+
     <string name="descriptionPlacementLivret"><![CDATA["Placement sur livret de <b>%1$s</b> à <b>%2$s</b> pendant <b>%3$s</b> du %4$s au %5$s"]]></string>
     <string name="descriptionPlacementSansLivret"><![CDATA["Placement de <b>%1$s</b> à <b>%2$s</b> pendant <b>%3$s</b> du %4$s au %5$s"]]></string>
     <string name="avecRetraitDe"><![CDATA[" avec <i>retrait de %1$s par %2$s</i>"]]></string>
@@ -63,6 +65,7 @@
     <string-array name="periodiciteVariation">
         <item>mois</item>
         <item>trimestre</item>
+        <item>an</item>
     </string-array>
     <string name="action_settings">Options</string>
 

@@ -154,8 +154,9 @@ class PlacementQuinzaine extends Placement {
 
     /**
      * Calcule de la durée en quinzaines
+     *
      * @param dateDebut la date de début
-     * @param dateFin la date de fin
+     * @param dateFin   la date de fin
      * @return le nombre de quinzaines exacte
      */
     int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin) {
@@ -242,6 +243,7 @@ class PlacementQuinzaine extends Placement {
 
     /**
      * Le tableau de placements en quinzaines
+     *
      * @return la liste d'échéances
      */
     @Override
@@ -293,6 +295,12 @@ class PlacementQuinzaine extends Placement {
 
                     case TRIMESTRIELLE:
                         if ((i - 1) % 6 == 0) {
+                            quinzaine.setVariation(getVariation());
+                            capitalPlace = capitalPlace.add(getVariation());
+                        }
+                        break;
+                    case ANNUELLE:
+                        if ((i - 1) % 24 == 0) {
                             quinzaine.setVariation(getVariation());
                             capitalPlace = capitalPlace.add(getVariation());
                         }

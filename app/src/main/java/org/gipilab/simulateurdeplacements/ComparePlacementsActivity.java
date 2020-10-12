@@ -201,7 +201,8 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             }
         }
 
-        LineData chartData = new LineData(xLabels, dataSets);
+//        LineData chartData = new LineData(xLabels, dataSets);
+        LineData chartData=new LineData(dataSets);
         chart.setData(chartData);
 
         chart.invalidate();

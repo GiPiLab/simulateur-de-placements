@@ -44,6 +44,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import com.github.mikephil.charting.components.Description;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
@@ -93,7 +95,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         chart.setHighlightPerTapEnabled(true);
         chart.setOnChartValueSelectedListener(this);
 
-        chart.setDescription(getString(string.chartAxisDescriptionEcheance));
+        chart.getDescription().setText(getString(string.chartAxisDescriptionEcheance));
         //chart.setDescription(null);
         XAxis xaxis = chart.getXAxis();
         chart.getAxisRight().setEnabled(false);
@@ -112,8 +114,8 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         for (Echeance aMens : mens) {
             // xLabels.add(dateFormat.print(aMens.getDateDebutEcheance()));
             xLabels.add(String.valueOf(aMens.getIeme()));
-            valuesValeurAcquise.add(new Entry(aMens.getValeurAcquise().floatValue(), aMens.getIeme() - 1));
-            valuesCapitalPlace.add(new Entry(aMens.getCapitalCourant().floatValue(), aMens.getIeme() - 1));
+            valuesValeurAcquise.add(new Entry(aMens.getIeme()-1,aMens.getValeurAcquise().floatValue()));
+            valuesCapitalPlace.add(new Entry(aMens.getIeme()-1,aMens.getCapitalCourant().floatValue()));
         }
 
 
@@ -142,7 +144,9 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         dataSets.add(dataSetValeurAcquise);
         dataSets.add(dataSetCapitalPlace);
 
-        LineData chartData = new LineData(xLabels, dataSets);
+        //LineData chartData = new LineData(xLabels, dataSets);
+        LineData chartData = new LineData(dataSets);
+
         chart.setData(chartData);
         chart.invalidate();
 
@@ -200,7 +204,8 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
                     return true;
                 }
 
-                if (flatPosition >= 0 && flatPosition < chart.getLineData().getXValCount()) {
+                //if (flatPosition >= 0 && flatPosition < chart.getLineData().getXValCount()) {
+                if (flatPosition >= 0 && flatPosition < chart.getLineData().getEntryCount()) {
                     chart.highlightValue(flatPosition, 0);
 
                 } else {
@@ -234,7 +239,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
     }
 
     @Override
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+    public void onValueSelected(Entry e, Highlight h) {
         ExpandableListView elv = findViewById(id.listViewResult);
         if (elv == null) {
             Log.e("SIMUPLACEMENT", "Null expandable list view");
@@ -245,12 +250,13 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             Log.e("SIMUPLACEMENT", "Null adapter");
             return;
         }
-        Pair<Integer, Integer> groupAndChildId = adapter.findGroupAndChildFromFlatIndex(e.getXIndex());
+        Pair<Integer, Integer> groupAndChildId = adapter.findGroupAndChildFromFlatIndex((int)e.getX());
         elv.expandGroup(groupAndChildId.first);
         adapter.setSelected(groupAndChildId.first, groupAndChildId.second);
 
         elv.setSelectedChild(groupAndChildId.first, groupAndChildId.second, true);
     }
+
 
     @Override
     public void onNothingSelected() {
