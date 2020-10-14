@@ -42,9 +42,11 @@ package org.gipilab.simulateurdeplacements;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -52,8 +54,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 
 
 public class WebviewDialogFragment extends DialogFragment {
@@ -128,8 +135,29 @@ public class WebviewDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         WebView webview = view.findViewById(R.id.webView);
-        //Needed to display iframes
-        webview.setWebViewClient(new WebViewClient());
+
+        webview.setWebViewClient(new WebViewClient() {
+
+            //To open links in external browser
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (URLUtil.isNetworkUrl(url)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    view.getContext().startActivity(intent);
+                    return true;
+                } else return false;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (URLUtil.isNetworkUrl(request.getUrl().toString())) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
+                    view.getContext().startActivity(intent);
+                    return true;
+                } else return false;
+            }
+        });
         webview.loadUrl(mFilenameToDisplay);
     }
 
