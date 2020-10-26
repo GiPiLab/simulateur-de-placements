@@ -41,11 +41,12 @@
 package org.gipilab.simulateurdeplacements;
 
 
+import android.util.SparseArray;
+import android.view.ViewGroup;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import android.util.SparseArray;
-import android.view.ViewGroup;
 
 /**
  * Found on https://gist.github.com/nesquena/c715c9b22fb873b1d259
@@ -63,7 +64,7 @@ abstract class SmartFragmentStatePagerAdapter extends FragmentStatePagerAdapter 
     private final SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
     SmartFragmentStatePagerAdapter(FragmentManager fragmentManager) {
-        super(fragmentManager);
+        super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     // Register the fragment when the item is instantiated

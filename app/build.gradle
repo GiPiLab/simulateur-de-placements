@@ -1,23 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-    }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "org.gipilab.simulateurdeplacementsdeb"
+        applicationId "org.gipilab.simulateurdeplacements"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 6
+        versionCode 7
         versionName "1.0.3"
-    }
-    buildTypes {
-        release {
-                minifyEnabled false
-            proguardFiles 'proguard-rules.pro'
-        }
-    }
-    productFlavors {
     }
     buildToolsVersion '29.0.3'
 }
@@ -31,7 +21,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'joda-time:joda-time:2.10.5'
+    implementation 'joda-time:joda-time:2.10.7'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'

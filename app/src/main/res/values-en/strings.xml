@@ -17,7 +17,6 @@
     <string name="confirmerSupprimerPlacement">Do you want to delete selected placements ?</string>
     <string name="dateDebutPlacement">Placement start date</string>
     <string name="dateFinPlacement">Placement end date</string>
-    <string name="descriptionDuAu">From %1$s to %2$s</string>
     <string name="dureeDoitEtrePositive">Duration must be positive</string>
     <string name="dureeTropLongue">Duration is too long</string>
     <string name="dureeXmois">Duration : %1$s</string>
@@ -36,8 +35,6 @@
     <string name="descriptionValeurAcquise"><![CDATA["Vested value at the end of the period <b>%1$s</b>"]]></string>
     <string name="echeanceVide">No interest have been produced due to the fortnight rule</string>
     <string name="echeance">"Step %1$d from %2$s to %3$s"</string>
-    <string name="editCapitalHint"><i>invested capital</i></string>
-    <string name="editTauxHint"><i>annual interest rate in %</i></string>
     <string name="editVariationHint"><i><![CDATA["deposit (>0) or withdrawals (<0)"]]></i></string>
     <string name="interetsObtenusSurAnnee">Interest earned during the period = %1s</string>
     <string name="interetsTotaux"><![CDATA["Total amount of interests : %1s"]]></string>
@@ -72,7 +69,6 @@
     <string name="valeurAcquiseFinAnnee">Vested value at the end of the period = %1s</string>
     <string name="variationDoitEtreInferieureAuCapital">The amount of variation must be lower than the invested capital</string>
     <string name="versementDe"><![CDATA["<i>deposit of %1s</i>"]]></string>
-    <string name="action_settings">Settings</string>
 
     <string-array name="periodiciteVariation">
         <item>month</item>
@@ -83,7 +79,6 @@
 
     <string name="placementDejaEnregistre">Placement already saved</string>
     <string name="emptyListPlacement">No placement saved</string>
-    <string name="menu_about">About…</string>
     <string name="chartAxisDescriptionEcheance">Step</string>
     <string name="valeurs_acquises">Vested values</string>
     <string name="pressAgainToExit">Press again to exit</string>

@@ -166,9 +166,4 @@ public class WebviewDialogFragment extends DialogFragment {
         super.onAttach(context);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 }

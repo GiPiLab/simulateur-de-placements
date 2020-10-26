@@ -225,9 +225,9 @@ abstract class Placement implements Serializable {
             } else if (getValeurAcquise().compareTo(valeurAcquiseVoulue) < 0) {
                 dateFinEstimee = dateFinEstimee.plusMonths(1);
             } else {
-                depasse=true;
+                depasse = true;
             }
-        }while(depasse==false);
+        } while (!depasse);
         return dateFinEstimee;
     }
 

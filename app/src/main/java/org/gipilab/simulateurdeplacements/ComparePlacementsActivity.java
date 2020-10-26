@@ -42,18 +42,20 @@ package org.gipilab.simulateurdeplacements;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -154,13 +156,17 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        ArrayList<String> xLabels = new ArrayList<String>();
+        xaxis.setValueFormatter(new IndexAxisValueFormatter() {
 
-        DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
+            DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
 
-        for (long currentTimeStamp = minTimeStamp; currentTimeStamp <= maxTimeStamp; currentTimeStamp += 86400000) {
-            xLabels.add(dateFormat.print(new LocalDate(currentTimeStamp)));
-        }
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+
+                //Log.d("Date value axis format",dateFormat.print((long)value));
+                return dateFormat.print((long) value);
+            }
+        });
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
 
@@ -174,8 +180,10 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             ArrayList<Echeance> mens = _dataToPlot.get(placement);
 
             for (Echeance aMens : mens) {
-                int index = getIndex(aMens.getDateFinEcheance().toDate().getTime());
-                values.add(new Entry(aMens.getValeurAcquise().floatValue(), index));
+                long timeIndex = aMens.getDateFinEcheance().toDate().getTime();
+                Entry ent = new Entry(timeIndex, aMens.getValeurAcquise().floatValue());
+                //Log.d("Entry = " ,timeIndex+ " - " + aMens.getValeurAcquise().floatValue());
+                values.add(new Entry(timeIndex, aMens.getValeurAcquise().floatValue()));
             }
 
             modeQuinzaine = placement.getModeCalculPlacement() == enumModeCalculPlacement.QUINZAINE;
@@ -187,7 +195,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             dataSetValeurAcquise.setColor(colors[i]);
 
             dataSetValeurAcquise.setCircleColor(colors[i]);
-            if (modeQuinzaine == true)
+            if (modeQuinzaine)
                 dataSetValeurAcquise.setMode(LineDataSet.Mode.STEPPED);
             else
                 dataSetValeurAcquise.setMode(LineDataSet.Mode.LINEAR);
@@ -201,7 +209,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
             }
         }
 
-//        LineData chartData = new LineData(xLabels, dataSets);
         LineData chartData=new LineData(dataSets);
         chart.setData(chartData);
 

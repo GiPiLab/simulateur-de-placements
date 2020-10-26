@@ -30,8 +30,6 @@
     <string name="dureeXmois">"Durée du placement : %1$s"</string>
     <string name="dateDebutPlacement">Date de début du placement</string>
     <string name="dateFinPlacement">Date de fin du placement</string>
-    <string name="editCapitalHint"><i>le capital placé</i></string>
-    <string name="editTauxHint"><i>le taux annuel en %</i></string>
     <string name="editVariationHint"><i><![CDATA["somme versée (>0) ou retirée (<0)"]]></i></string>
     <string name="radioReglerDateDebut">Régler la date de début</string>
     <string name="radioReglerDateFin">Régler la date de fin</string>
@@ -59,7 +57,6 @@
 
 
     <string name="btnEnregistrerPlacement">Enregistrer</string>
-    <string name="descriptionDuAu">Du %1$s au %2$s</string>
 
 
     <string-array name="periodiciteVariation">
@@ -67,7 +64,6 @@
         <item>trimestre</item>
         <item>an</item>
     </string-array>
-    <string name="action_settings">Options</string>
 
     <string name="ongletNouveauPlacement">Nouveau placement</string>
     <string name="ongletPlacementsEnregistres">Placements enregistrés</string>
@@ -91,7 +87,6 @@
 
 
     <string name="placementDejaEnregistre">Le placement est déjà enregistré</string>
-    <string name="menu_about">A propos…</string>
 
     <string name="emptyListPlacement">Pas de placement enregistré</string>
     <string name="chartAxisDescriptionEcheance">Echéances</string>

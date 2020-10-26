@@ -44,18 +44,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.github.mikephil.charting.components.Description;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.util.Pair;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -67,6 +65,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
@@ -106,14 +105,8 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
 
         ArrayList<Entry> valuesValeurAcquise = new ArrayList<Entry>();
         ArrayList<Entry> valuesCapitalPlace = new ArrayList<Entry>();
-        ArrayList<String> xLabels = new ArrayList<String>();
-
-        //DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
-
 
         for (Echeance aMens : mens) {
-            // xLabels.add(dateFormat.print(aMens.getDateDebutEcheance()));
-            xLabels.add(String.valueOf(aMens.getIeme()));
             valuesValeurAcquise.add(new Entry(aMens.getIeme()-1,aMens.getValeurAcquise().floatValue()));
             valuesCapitalPlace.add(new Entry(aMens.getIeme()-1,aMens.getCapitalCourant().floatValue()));
         }
@@ -124,7 +117,7 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         dataSetValeurAcquise.setDrawValues(false);
         dataSetValeurAcquise.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         dataSetValeurAcquise.setCircleColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        if (modeQuinzaine == true)
+        if (modeQuinzaine)
             dataSetValeurAcquise.setMode(LineDataSet.Mode.STEPPED);
         dataSetValeurAcquise.setDrawCircles(false);
         dataSetValeurAcquise.setHighLightColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -169,7 +162,6 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         if (dbHelper.placementExists(placement)) {
             Snackbar snackbar = Snackbar.make(v, string.placementDejaEnregistre, Snackbar.LENGTH_SHORT);
             snackbar.show();
-            return;
         } else {
             dbHelper.addPlacement(placement);
             setResult(RESULT_OK);
