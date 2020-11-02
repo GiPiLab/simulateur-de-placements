@@ -95,13 +95,13 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
         chart.setOnChartValueSelectedListener(this);
 
         chart.getDescription().setText(getString(string.chartAxisDescriptionEcheance));
-        //chart.setDescription(null);
         XAxis xaxis = chart.getXAxis();
         chart.getAxisRight().setEnabled(false);
 
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxisPosition.BOTTOM);
 
+        chart.setMarker(new MyMarkerView(getApplicationContext(), layout.my_markerview_layout));
 
         ArrayList<Entry> valuesValeurAcquise = new ArrayList<Entry>();
         ArrayList<Entry> valuesCapitalPlace = new ArrayList<Entry>();
