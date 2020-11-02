@@ -11,9 +11,9 @@ import com.github.mikephil.charting.utils.MPPointF;
 import java.text.NumberFormat;
 
 public class MyMarkerView extends MarkerView {
-    private TextView tvContent;
+    private final TextView tvContent;
 
-    private NumberFormat formatter;
+    private final NumberFormat formatter;
 
     public MyMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);

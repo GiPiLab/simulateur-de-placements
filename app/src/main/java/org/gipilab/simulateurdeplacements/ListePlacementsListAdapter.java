@@ -41,13 +41,14 @@
 package org.gipilab.simulateurdeplacements;
 
 import android.content.Context;
-import androidx.core.content.ContextCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
+
+import androidx.core.content.ContextCompat;
 
 import org.gipilab.simulateurdeplacements.R.id;
 import org.gipilab.simulateurdeplacements.R.layout;
@@ -62,7 +63,7 @@ class ListePlacementsListAdapter extends BaseAdapter {
     private final TreeMap<Long, Placement> _placementIdToPlacement;
     private final Context _context;
     private final ArrayList<Placement> _lesPlacements;
-    PlacementDatabaseHelper dbHelper;
+    final PlacementDatabaseHelper dbHelper;
     private HashSet<Long> _checkedItemsIds;
 
     ListePlacementsListAdapter(Context context, ArrayList<Placement> lesPlacements) {

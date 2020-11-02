@@ -68,7 +68,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
     private HashMap<Placement, ArrayList<Echeance>> _dataToPlot;
     private LineChart chart;
 
-    private long minTimeStamp, maxTimeStamp;
+    private long minTimeStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         _dataToPlot = new HashMap<Placement, ArrayList<Echeance>>();
 
         minTimeStamp = getMinTimestamp();
-        maxTimeStamp = getMaxTimestamp();
 
         computeData();
         displayChart();
@@ -139,7 +138,8 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         boolean modeQuinzaine;
 
         chart.setTouchEnabled(true);
-        chart.setHighlightPerTapEnabled(false);
+        chart.setHighlightPerTapEnabled(true);
+        chart.setMarker(new MyMarkerView(getApplicationContext(), R.layout.my_markerview_layout));
         // chart.setOnChartValueSelectedListener(this);
 
 
@@ -158,7 +158,7 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
 
         xaxis.setValueFormatter(new IndexAxisValueFormatter() {
 
-            DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
+            final DateTimeFormatter dateFormat = DateTimeFormat.shortDate();
 
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
@@ -181,8 +181,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
 
             for (Echeance aMens : mens) {
                 long timeIndex = aMens.getDateFinEcheance().toDate().getTime();
-                Entry ent = new Entry(timeIndex, aMens.getValeurAcquise().floatValue());
-                //Log.d("Entry = " ,timeIndex+ " - " + aMens.getValeurAcquise().floatValue());
                 values.add(new Entry(timeIndex, aMens.getValeurAcquise().floatValue()));
             }
 
