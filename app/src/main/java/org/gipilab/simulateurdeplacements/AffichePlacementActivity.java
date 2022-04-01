@@ -272,9 +272,6 @@ public class AffichePlacementActivity extends AppCompatActivity implements OnCha
             displayChart(echeancesEtAnnualites.first);
             TextView tvResult = findViewById(id.textViewResult);
 
-          /*  if (getSupportActionBar() != null)
-                getSupportActionBar().hide();
-*/
             if (tvResult != null) {
                 tvResult.setText(Html.fromHtml(placement.toLocalizedStringForDetailedView(activity)));
             } else {

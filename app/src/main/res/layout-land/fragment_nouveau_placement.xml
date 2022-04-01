@@ -43,7 +43,8 @@
                 android:hint="@string/editVariationHint"
                 android:inputType="numberSigned|numberDecimal"
                 android:text="0"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/textViewEurosPar"
@@ -242,7 +243,8 @@
                 android:id="@+id/editCapital"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:importantForAutofill="no" />
         </LinearLayout>
 
         <LinearLayout
@@ -264,7 +266,8 @@
                 android:id="@+id/editTaux"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:importantForAutofill="no" />
         </LinearLayout>
 
     </RelativeLayout>

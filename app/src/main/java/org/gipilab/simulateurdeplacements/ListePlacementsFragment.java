@@ -81,11 +81,6 @@ public class ListePlacementsFragment extends Fragment {
      * @return A new instance of fragment ListePlacementsFragment.
      */
     public static ListePlacementsFragment newInstance() {
-        //Bundle args = new Bundle();
-        /*
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return new ListePlacementsFragment();
     }
 
@@ -314,29 +309,6 @@ public class ListePlacementsFragment extends Fragment {
                 adapter.swapCheckedState(adapter.getItemId(i));
             }
         });
-
-        //Long click handlers
-/*
-        listViewQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-
-                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
-                adapter.swapCheckedState(adapter.getItemId(i));
-                return true;
-            }
-        });
-
-
-        listViewSansQuinzaine.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-                ListePlacementsListAdapter adapter = (ListePlacementsListAdapter) adapterView.getAdapter();
-                adapter.swapCheckedState(adapter.getItemId(i));
-                return true;
-            }
-        });
-        */
     }
 
     public void updateListView(View v) {

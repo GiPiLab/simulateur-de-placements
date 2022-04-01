@@ -66,7 +66,8 @@
                 android:contentDescription="@string/btnEnregistrerPlacement"
                 android:onClick="btnSaveClicked"
                 android:src="@android:drawable/ic_menu_save"
-                android:text="@string/btnEnregistrerPlacement" />
+                android:text="@string/btnEnregistrerPlacement"
+                tools:ignore="UsingOnClickInXml" />
 
             <ImageButton
                 android:id="@+id/buttonModifier"

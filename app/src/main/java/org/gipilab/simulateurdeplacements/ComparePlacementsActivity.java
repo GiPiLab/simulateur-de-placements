@@ -86,9 +86,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
         }
 
 
-        /*if (getSupportActionBar() != null)
-            getSupportActionBar().hide();
-*/
         chart = findViewById(R.id.lineChart);
         _dataToPlot = new HashMap<Placement, ArrayList<Echeance>>();
 
@@ -144,9 +141,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
 
 
         //FIXME : Legend word wrap seems to not working
-        //Legend legend=chart.getLegend();
-        //legend.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        //legend.setWordWrapEnabled(true);
 
         chart.setDescription(null);
 
@@ -214,21 +208,6 @@ public class ComparePlacementsActivity extends AppCompatActivity {// implements 
 
 
     }
-/*
-
-    @Override
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-
-        Log.d("GIPI", "selected");
-        if (e != null) {
-            Log.d("GIPI", "Selected " + e.getXIndex() + " val = " + e.getVal());
-        }
-    }
-
-    @Override
-    public void onNothingSelected() {
-
-    }*/
 }
 
 

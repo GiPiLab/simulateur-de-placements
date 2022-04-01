@@ -100,10 +100,6 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
      */
 
     public static NouveauPlacementFragment newInstance() {
-        /*    Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return new NouveauPlacementFragment();
     }
 
@@ -133,15 +129,13 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
                     return;
                 }
                 Placement placement;
-                switch (groupMode.getCheckedRadioButtonId()) {
-                    case id.radioButtonModeQuinzaine:
-                        placement = new PlacementQuinzaine();
-                        break;
-
-                    case id.radioButtonModeNormal:
-                        placement = new PlacementSansQuinzaine();
-                        break;
-                    default:
+                int radioId=groupMode.getCheckedRadioButtonId();
+                if(radioId == id.radioButtonModeQuinzaine) {
+                    placement = new PlacementQuinzaine();
+                }else if(radioId == id.radioButtonModeNormal) {
+                    placement = new PlacementSansQuinzaine();
+                }
+                else{
                         throw new IllegalArgumentException("Erreur mode");
                 }
 
@@ -308,18 +302,17 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         int dureeApprochee, maxEcheances;
         RadioGroup groupMode = getView().findViewById(id.radioGroupMode);
-        switch (groupMode.getCheckedRadioButtonId()) {
-            case id.radioButtonModeQuinzaine:
-                dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
-                maxEcheances = PlacementQuinzaine.getMAXECHEANCES();
-                break;
-
-            case id.radioButtonModeNormal:
-                dureeApprochee = PlacementSansQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
-                maxEcheances = PlacementSansQuinzaine.getMAXECHEANCES();
-                break;
-            default:
-                throw new IllegalArgumentException("Erreur mode");
+        int radioButtonId=groupMode.getCheckedRadioButtonId();
+        if(radioButtonId==id.radioButtonModeQuinzaine) {
+            dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+            maxEcheances = PlacementQuinzaine.getMAXECHEANCES();
+        }
+        else if(radioButtonId==id.radioButtonModeNormal) {
+            dureeApprochee = PlacementSansQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+            maxEcheances = PlacementSansQuinzaine.getMAXECHEANCES();
+        }
+        else{
+            throw new IllegalArgumentException("Erreur mode");
         }
 
 
@@ -365,18 +358,17 @@ public class NouveauPlacementFragment extends Fragment implements OnDateChangedL
 
         RadioGroup groupMode = getView().findViewById(id.radioGroupMode);
         int dureeApprochee, maxEcheances;
-        switch (groupMode.getCheckedRadioButtonId()) {
-            case id.radioButtonModeQuinzaine:
-                dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
-                maxEcheances = PlacementQuinzaine.getMAXECHEANCES();
-                break;
-
-            case id.radioButtonModeNormal:
-                dureeApprochee = PlacementSansQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
-                maxEcheances = PlacementSansQuinzaine.getMAXECHEANCES();
-                break;
-            default:
-                throw new IllegalArgumentException("Erreur mode");
+        int radioButtonId=groupMode.getCheckedRadioButtonId();
+        if(radioButtonId==id.radioButtonModeQuinzaine) {
+            dureeApprochee = PlacementQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+            maxEcheances = PlacementQuinzaine.getMAXECHEANCES();
+        }
+        else if(radioButtonId==id.radioButtonModeNormal) {
+            dureeApprochee = PlacementSansQuinzaine.approximeDureeEnEcheances(dateDebut, dateFin);
+            maxEcheances = PlacementSansQuinzaine.getMAXECHEANCES();
+        }
+        else{
+            throw new IllegalArgumentException("Erreur mode");
         }
 
 

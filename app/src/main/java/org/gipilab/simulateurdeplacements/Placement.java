@@ -84,10 +84,6 @@ abstract class Placement implements Serializable {
         modeCalculPlacement = mode;
     }
 
-    //abstract int getMAXECHEANCES();
-
-    //abstract int approximeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
-
     abstract int calculeDureeEnEcheances(LocalDate dateDebut, LocalDate dateFin);
 
     abstract ArrayList<Annualite> echeancesToAnnualites(ArrayList<Echeance> lesEcheances);

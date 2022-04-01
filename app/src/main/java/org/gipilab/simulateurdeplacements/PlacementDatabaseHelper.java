@@ -115,19 +115,19 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
                 PlacementQuinzaine p;
                 do {
                     p = new PlacementQuinzaine();
-                    p.setCapitalInitial(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_CAPITAL_INITIAL))));
-                    p.setDatesPlacement(new LocalDate(cursor.getLong(cursor.getColumnIndex(FIELD_TIMESTAMP_DEBUT))), new LocalDate(cursor.getLong(cursor.getColumnIndex(FIELD_TIMESTAMP_FIN))));
-                    p.setFrequenceVariation(enumFrequenceVariation.valueOf(cursor.getString(cursor.getColumnIndex(FIELD_FREQUENCE_VARIATION))));
-                    p.setVariation(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_VARIATION))));
-                    p.setTauxAnnuel(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_TAUX_ANNUEL))));
-                    p.setValeurAcquise(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_VALEUR_ACQUISE))));
-                    p.setInteretsObtenus(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_INTERETS_OBTENUS))));
+                    p.setCapitalInitial(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_CAPITAL_INITIAL))));
+                    p.setDatesPlacement(new LocalDate(cursor.getLong(cursor.getColumnIndexOrThrow(FIELD_TIMESTAMP_DEBUT))), new LocalDate(cursor.getLong(cursor.getColumnIndexOrThrow(FIELD_TIMESTAMP_FIN))));
+                    p.setFrequenceVariation(enumFrequenceVariation.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_FREQUENCE_VARIATION))));
+                    p.setVariation(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_VARIATION))));
+                    p.setTauxAnnuel(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_TAUX_ANNUEL))));
+                    p.setValeurAcquise(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_VALEUR_ACQUISE))));
+                    p.setInteretsObtenus(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_INTERETS_OBTENUS))));
                     placements.add(p);
 
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e("GIPI", "Error reading DB " + e.toString());
+            Log.e("GIPI", "Error reading DB " + e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -145,19 +145,19 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
                 PlacementSansQuinzaine p;
                 do {
                     p = new PlacementSansQuinzaine();
-                    p.setCapitalInitial(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_CAPITAL_INITIAL))));
-                    p.setDatesPlacement(new LocalDate(cursor.getLong(cursor.getColumnIndex(FIELD_TIMESTAMP_DEBUT))), new LocalDate(cursor.getLong(cursor.getColumnIndex(FIELD_TIMESTAMP_FIN))));
-                    p.setFrequenceVariation(enumFrequenceVariation.valueOf(cursor.getString(cursor.getColumnIndex(FIELD_FREQUENCE_VARIATION))));
-                    p.setVariation(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_VARIATION))));
-                    p.setTauxAnnuel(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_TAUX_ANNUEL))));
-                    p.setValeurAcquise(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_VALEUR_ACQUISE))));
-                    p.setInteretsObtenus(new BigDecimal(cursor.getString(cursor.getColumnIndex(FIELD_INTERETS_OBTENUS))));
+                    p.setCapitalInitial(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_CAPITAL_INITIAL))));
+                    p.setDatesPlacement(new LocalDate(cursor.getLong(cursor.getColumnIndexOrThrow(FIELD_TIMESTAMP_DEBUT))), new LocalDate(cursor.getLong(cursor.getColumnIndexOrThrow(FIELD_TIMESTAMP_FIN))));
+                    p.setFrequenceVariation(enumFrequenceVariation.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_FREQUENCE_VARIATION))));
+                    p.setVariation(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_VARIATION))));
+                    p.setTauxAnnuel(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_TAUX_ANNUEL))));
+                    p.setValeurAcquise(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_VALEUR_ACQUISE))));
+                    p.setInteretsObtenus(new BigDecimal(cursor.getString(cursor.getColumnIndexOrThrow(FIELD_INTERETS_OBTENUS))));
                     placements.add(p);
 
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e("GIPI", "Error reading DB " + e.toString());
+            Log.e("GIPI", "Error reading DB " + e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -188,7 +188,7 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e("GIPI", "Exception getting ids " + e.toString());
+            Log.e("GIPI", "Exception getting ids " + e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -218,11 +218,11 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
             }
             if (cursor.moveToFirst()) {
                 do {
-                    id = cursor.getLong(cursor.getColumnIndex(FIELD_ID));
+                    id = cursor.getLong(cursor.getColumnIndexOrThrow(FIELD_ID));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e("GIPI", "Exception getting ids " + e.toString());
+            Log.e("GIPI", "Exception getting ids " + e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -254,7 +254,7 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
             db.insertOrThrow(TABLE_NAME, null, values);
             db.setTransactionSuccessful();
         } catch (SQLException e) {
-            Log.e("GIPI", "Exception inserting placement" + e.toString());
+            Log.e("GIPI", "Exception inserting placement" + e);
         } finally {
             db.endTransaction();
         }
@@ -269,7 +269,7 @@ public class PlacementDatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_NAME, FIELD_ID + "=" + placementId, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.e("GIPI", "Error while deleting record " + e.toString());
+            Log.e("GIPI", "Error while deleting record " + e);
         } finally {
             db.endTransaction();
         }

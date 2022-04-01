@@ -138,9 +138,6 @@ class PlacementQuinzaine extends Placement {
     @Override
     void setDatesPlacement(LocalDate dateDebut, LocalDate dateFin) {
 
-        //  this.dateDebut = aligneDateDebutSurQuinzaine(dateDebut);
-        //  this.dateFin = aligneDateFinSurQuinzaine(dateFin);
-
         setDateDebut(dateDebut);
         setDateFin(dateFin);
 

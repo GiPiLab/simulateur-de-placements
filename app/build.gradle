@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 32 
     defaultConfig {
         applicationId "org.gipilab.simulateurdeplacements"
         minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 7
-        versionName "1.0.3"
+        targetSdkVersion 32
+        versionCode 8
+        versionName "1.0.4"
     }
-    buildToolsVersion '29.0.3'
 }
 
 repositories {
@@ -19,10 +18,10 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'joda-time:joda-time:2.10.7'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
 }
